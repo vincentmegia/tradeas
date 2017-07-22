@@ -1,0 +1,62 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" value="Symbol" class="form-control" />
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            </div>
+        </div>
+        <div class="col-md-5"></div>
+        <div class="col-md-1">
+            <div class="input-group">
+                <button class="btn btn-primary btn-sm" data-toggle="modal" href="#myModal"><i class="ti-plus"></i> Add</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        <i class="ti-calendar"></i>
+                        <span class="spacer-left-5">July Trades</span>
+                    </h4>
+                    <p class="category">
+                    </p>
+                </div>
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let cell of tableData1.headerRow">{{cell}} <b class="caret"></b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of tableData1.dataRows">
+                                <ng-container *ngFor="let cell of row; let i = index">
+                                    <td *ngIf="i == 0 || i == 1 || i == 8">
+                                        {{cell}}
+                                    </td>
+                                    <td *ngIf="i == 2 || i == 3 || i == 4 || i == 5">
+                                        {{cell}}&#8369;
+                                    </td>
+                                    <td *ngIf="i == 6">
+                                        <p class="gain">{{cell}}</p>
+                                    </td>
+                                    <td *ngIf="i == 7">
+                                        <a target="_blank" href="{{cell}}">Chart</a>
+                                    </td>
+                                    <td *ngIf="i == 9">
+                                        <i class="ti-star"></i>
+                                        <i class="ti-star"></i>
+                                        <i class="ti-star"></i>
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
