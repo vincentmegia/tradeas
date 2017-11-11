@@ -1,4 +1,4 @@
-export class MockData {
+export class PortfolioMockData {
     static MONTHLYPERFORMANCE: any[] = [
         22.20,
         34.90,

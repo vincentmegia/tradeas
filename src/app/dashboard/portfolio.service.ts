@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Chartist from 'chartist';
-import { MockData } from './mock-data';
+import { PortfolioMockData } from './portfolio-mock-data';
 import { Chart } from './chart';
 
 @Injectable()
@@ -13,14 +13,8 @@ export class PortfolioService {
         var data = {
             labels: Chart.MONTHS,
             //data here will be replace in the future by a service call
-            series: [ MockData.MONTHLYPERFORMANCE ]
+            series: [ PortfolioMockData.MONTHLYPERFORMANCE ]
         };
         return data;
     }
-
-    // getYearlyPerformance(): any {
-    //     var data = {
-    //         labels:
-    //     }
-    // }
 }

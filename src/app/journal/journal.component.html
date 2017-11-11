@@ -18,8 +18,8 @@
             <div class="card">
                 <div class="header">
                     <h4 class="title">
-                        <i class="ti-calendar"></i>
-                        <span class="spacer-left-5">July Trades</span>
+                        <!-- <i class="ti-calendar"></i> -->
+                        <span>{{currentMonth}} idea(s)</span>
                     </h4>
                     <p class="category">
                     </p>
@@ -32,26 +32,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let row of tableData1.dataRows">
-                                <ng-container *ngFor="let cell of row; let i = index">
-                                    <td *ngIf="i == 0 || i == 1 || i == 8">
-                                        {{cell}}
-                                    </td>
-                                    <td *ngIf="i == 2 || i == 3 || i == 4 || i == 5">
-                                        {{cell}}&#8369;
-                                    </td>
-                                    <td *ngIf="i == 6">
-                                        <p class="gain">{{cell}}</p>
-                                    </td>
-                                    <td *ngIf="i == 7">
-                                        <a target="_blank" href="{{cell}}">Chart</a>
-                                    </td>
-                                    <td *ngIf="i == 9">
+                            <tr *ngFor="let idea of ideas">
+                                <td>{{idea.symbol}}</td>
+                                <td>{{idea.type}}</td>
+                                <td>{{idea.shares | number:'.2'}}</td>
+                                <td>{{idea.averagePrice | currency:'PHP'}}</td>
+                                <td>{{idea.sell | currency:'PHP'}}</td>
+                                <td>
+                                    <p *ngIf="idea.gainLoss >= 0" class="gain">+{{idea.gainLoss | percent}}</p>
+                                    <p *ngIf="idea.gainLoss < 0" class="loss">{{idea.gainLoss | percent}}</p>
+                                </td>
+                                <td>{{idea.marketValue | currency:'PHP'}}</td>
+                                <td><a target="_blank" href="{{idea.chart}}">Link</a></td>
+                                <td>{{idea.entryDate | date:mediumDate}}</td>
+                                <td>
+                                    <ng-container *ngFor="let star of idea.stars">
                                         <i class="ti-star"></i>
-                                        <i class="ti-star"></i>
-                                        <i class="ti-star"></i>
-                                    </td>
-                                </ng-container>
+                                    </ng-container>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

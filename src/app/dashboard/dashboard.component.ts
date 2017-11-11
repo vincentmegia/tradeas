@@ -41,3 +41,4 @@ export class DashboardComponent implements OnInit {
         this.portfolioChartRenderer.drawAnnualPerformance("#annualPerformanceChart", null);
     }
 }
+                                                        
