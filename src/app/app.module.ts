@@ -15,7 +15,7 @@ import { JournalComponent } from './journal/journal.component';
 import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { AddIDeaComponent } from './shared/add-idea/add-idea.component';
+import { IdeaComponent } from './journal/idea/idea.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -27,7 +27,7 @@ import { FormsModule } from '@angular/forms';
         TypographyComponent,
         IconsComponent,
         NotificationsComponent,
-        AddIDeaComponent
+        IdeaComponent
     ],
     imports: [
         BrowserModule,

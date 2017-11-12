@@ -1,4 +1,4 @@
-import { Idea } from './idea';
+import { Idea } from './idea/idea';
 import * as moment from "moment";
 
 export class JournalMockData {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Idea } from './idea';
+import { Idea } from './idea/idea';
 import { JournalMockData } from './journa-mock-data';
 
 @Injectable()
