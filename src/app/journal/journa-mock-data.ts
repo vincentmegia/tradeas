@@ -1,4 +1,5 @@
 import { Idea } from './idea/idea';
+import { Star } from './idea/star';
 import * as moment from "moment";
 
 export class JournalMockData {
@@ -9,9 +10,9 @@ export class JournalMockData {
             shares: 100000, 
             averagePrice: 20, 
             sell: 28.5,  
-            chart: 'https://storage.investagrams.com/files/Chart/tv/2017/07/16/20170716-093124-gThWEagL.jpg', 
-            entryDate: moment(new Date(2017, 4, 20)),
-            stars: [0,1,2]
+            chart: 'https://storage.investagrams.com/files/Chart/tv/2017/07/16/20170716-093124-gThWEagL.jpg',
+            stars: [new Star({id: 0}), new Star({id: 1}), new Star({id: 2})],
+            entryDate: moment(new Date(2017, 4, 20))
         }),
         new Idea({
             symbol: 'MAC', 
@@ -21,7 +22,7 @@ export class JournalMockData {
             sell: 9, 
             chart: 'https://storage.investagrams.com/files/Chart/tv/2017/07/16/20170716-094405-EmwJ8Bqn.jpg',
             entryDate: moment(new Date(2017, 7, 16)), 
-            stars: [0,1,2] 
+            stars: [new Star({id: 0}), new Star({id: 1}), new Star({id: 2})] 
         }),
         new Idea({
             symbol: 'PXP', 
@@ -31,7 +32,7 @@ export class JournalMockData {
             sell: 8.46, 
             chart: 'https://storage.investagrams.com/files/Chart/tv/2017/11/11/20171111-152441-4iqNjOKc.jpg', 
             entryDate: moment(new Date(2017, 11, 11)),
-            stars: [0]
+            stars: [new Star({id: 0})],
         }),
         new Idea({
             symbol: 'GSMI', 
@@ -41,7 +42,7 @@ export class JournalMockData {
             sell: 26.8, 
             chart: 'https://storage.investagrams.com/files/Chart/tv/2017/11/11/20171111-153535-qFtiU8s1.jpg', 
             entryDate: moment(new Date(2017, 11, 11)),
-            stars: [0]
+            stars: [new Star({id: 0})],
         })
     ];
 }

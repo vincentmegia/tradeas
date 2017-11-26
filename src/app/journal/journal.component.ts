@@ -27,9 +27,9 @@ export class JournalComponent implements OnInit{
         this.ideas = this.journalService.getIdeas(null, null);
         this.dateModel = moment(new Date());
         this.currentMonth = this.dateModel.format('MMMM');
+        console.log(this.ideas);
 
         //data is of array type and should be later changed to a more model centric appraoch
         this.columns = ['Symbol', 'Type', 'Shares', 'Average Price', 'Sell', '%Gain/Loss', 'Market Value', 'Chart', 'Entry Date', 'Rating']
-        console.log(this.columns);
     }
 }

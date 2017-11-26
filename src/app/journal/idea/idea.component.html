@@ -14,7 +14,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Enter stock symbol here" />
+                                    <input type="text" class="form-control" placeholder="Enter stock symbol here" [(ngModel)]="idea.symbol" />
                                     <span class="input-group-addon">
                                         <i class="fa fa-search"></i>
                                     </span>
@@ -28,27 +28,27 @@
                             <div class="col-md-3">
                                 <div class="dropdown">
                                     <a href="#" class="btn dropdown-toggle" data-toggle="dropdown">
-                                        ---
+                                        {{idea.type}}
                                         <b class="caret"></b>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a>Trend Following</a>
+                                            <a (click)="setTradeType('Trend Following')">Trend Following</a>
                                         </li>
                                         <li>
-                                            <a>Swing</a>
+                                            <a (click)="setTradeType('Swing')">Swing</a>
                                         </li>
                                         <li>
-                                            <a>Tsupit</a>
+                                            <a (click)="setTradeType('Tsupit')">Tsupit</a>
                                         </li>
                                         <li>
-                                            <a>Breakout</a>
+                                            <a (click)="setTradeType('Breakout')">Breakout</a>
                                         </li>
                                         <li>
-                                            <a>Anticipate Breakout</a>
+                                            <a (click)="setTradeType('Anticipate Breakout')">Anticipate Breakout</a>
                                         </li>
                                         <li>
-                                            <a>Position</a>
+                                            <a (click)="setTradeType('Positionay')">Position</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -67,7 +67,7 @@
                                 <p class="label-entry">Shares</p>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" placeholder="Enter no. of shares bought here" class="form-control" />
+                                <input type="text" placeholder="Enter no. of shares bought here" class="form-control" [(ngModel)]="idea.shares" />
                             </div>
                             <div class="col-md-1">
                             </div>
@@ -91,7 +91,7 @@
                                 <p class="label-entry">Sell</p>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" placeholder="Enter average sell price here" class="form-control" />
+                                <input type="text" placeholder="Enter average sell price here" class="form-control" [(ngModel)]="idea.sell" />
                             </div>
                             <div class="col-md-1">
                             </div>
@@ -99,7 +99,7 @@
                                 <p class="label-entry">Chart Link</p>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" placeholder="Enter chart link here" class="form-control" />
+                                <input type="text" placeholder="Enter chart link here" class="form-control" [(ngModel)]="idea.chart" />
                             </div>
                             <div class="col"></div>
                         </div>
@@ -115,9 +115,11 @@
                                 <p class="label-entry">Rating</p>
                             </div>
                             <div class="col-md-2">
-                                <i class="ti-star"></i>
-                                <i class="ti-star"></i>
-                                <i class="ti-star"></i>
+                                <div class="rating" style="margin-top: 10px;">
+                                    <span [className]="idea.stars[0].class" (click)="setStars(0)"></span>
+                                    <span [className]="idea.stars[1].class" (click)="setStars(1)"></span>
+                                    <span [className]="idea.stars[2].class" (click)="setStars(2)"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -125,7 +127,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
             </div>
         </div>
     </div>
