@@ -16,7 +16,6 @@ export class Idea {
 
     public constructor(init?: Partial<Idea>) {
         Object.assign(this, init);
-        this.stars = [new Star({id: 0}), new Star({id: 1}), new Star({id: 2})];
     }
     
     /**
@@ -36,22 +35,17 @@ export class Idea {
         return this._gainLoss;
     }
 
+    /**
+     * 
+     */
     initializeStars(): void {
         this.stars = [new Star({id: 0}), new Star({id: 1}), new Star({id: 2})];
     }
 
-    setStarsSelected(): void {
-        for (let star of this.stars){
-            star.selected = true;
-        }
-    }
 
-    setStarsUnselected(): void {
-        for (let star of this.stars){
-            star.selected = false;
-        }
-    }
-
+    /**
+     * 
+     */
     get isAllStarsEmpty(): boolean {
         let isAllStarsEmpty = true;
         for (let star of this.stars) {
@@ -60,5 +54,16 @@ export class Idea {
             }
         }
         return isAllStarsEmpty;
+    }
+
+    /**
+     * 
+     * @param stars 
+     * @param selected 
+     */
+    toggleStars(stars: number, selected: boolean): void {
+        for (let index = 0; index <= stars; index++){
+            this.stars[index].selected = selected;
+        }
     }
 }
