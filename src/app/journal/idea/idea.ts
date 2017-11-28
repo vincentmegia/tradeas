@@ -31,7 +31,10 @@ export class Idea {
      * Computes the capital gain loss
      */
     get gainLoss(): number {
-        this._gainLoss = ((this.sell - this.averagePrice) / this.averagePrice);
+        if (this.sell == null)
+            this._gainLoss = 0;
+        else
+            this._gainLoss = ((this.sell - this.averagePrice) / this.averagePrice);
         return this._gainLoss;
     }
 
