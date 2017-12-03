@@ -20,7 +20,7 @@ export class IdeaComponent {
 
     constructor(private ideaService: IdeaService) {
         this.idea = new Idea({type: '-----'});
-        this.idea.initializeStars();
+        this.initializeStars(this.idea);
     }
 
     /**
@@ -43,10 +43,10 @@ export class IdeaComponent {
         if (this.previousStar == null) 
             this.previousStar = selectedStar;
         if (selectedStar.id == this.previousStar.id){
-            this.idea.toggleStars(stars, !selected);
+            this.toggleStars(this.idea, stars, !selected);
         }
-        else if (this.idea.isAllStarsEmpty || this.previousStar.id < selectedStar.id) {
-            this.idea.toggleStars(stars, true);    
+        else if (this.isAllStarsEmpty(this.idea) || this.previousStar.id < selectedStar.id) {
+            this.toggleStars(this.idea,stars, true);    
         }
         else {
             for (let index = selectedStar.id + 1; index <= 2; index++) {
@@ -55,6 +55,38 @@ export class IdeaComponent {
         }
         this.previousStar = this.idea.stars[stars]; 
         console.log(this.idea);
+    }
+
+        /**
+     * 
+     */
+    initializeStars(idea: Idea): void {
+        idea.stars = [new Star({id: 0}), new Star({id: 1}), new Star({id: 2})];
+    }
+
+
+    /**
+     * 
+     */
+    isAllStarsEmpty(idea: Idea): boolean {
+        let isAllStarsEmpty = true;
+        for (let star of idea.stars) {
+            if (star.selected) {
+                isAllStarsEmpty = false;
+            }
+        }
+        return isAllStarsEmpty;
+    }
+
+    /**
+     * 
+     * @param stars 
+     * @param selected 
+     */
+    toggleStars(idea: Idea, stars: number, selected: boolean): void {
+        for (let index = 0; index <= stars; index++){
+            idea.stars[index].selected = selected;
+        }
     }
 
     /**
