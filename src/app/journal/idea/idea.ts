@@ -44,6 +44,13 @@ export class Idea {
     /**
      * 
      */
+    get isGainLoss(): boolean {
+        return this.gainLoss >= 0;
+    }
+
+    /**
+     * 
+     */
     initializeStars(): void {
         this.stars = [new Star({id: 0}), new Star({id: 1}), new Star({id: 2})];
     }
@@ -71,33 +78,5 @@ export class Idea {
         for (let index = 0; index <= stars; index++){
             this.stars[index].selected = selected;
         }
-    }
-
-    /**
-     * 
-     */
-    get selectableClass(): string {
-        let selectableClass = (this.positions.length > 0) 
-        ? 'selectable' 
-        : '';
-        return selectableClass;
-    }
-
-    /**
-     * 
-     */
-    toggleSelected(): void {
-        this.isSelected = !this.isSelected;
-        console.log(this);
-    }
-
-    /**
-     * 
-     */
-    get expandedClass(): string {
-        let expandedClass = (this.isSelected) 
-        ? 'fa fa-plus' 
-        : 'fa fa-minus';
-        return expandedClass; 
     }
 }

@@ -37,20 +37,20 @@
                         </thead>
                         <tbody>
                             <ng-container *ngFor="let idea of ideas">
-                                <tr data-toggle="collapse" [attr.data-target]="'#' + idea.id" 
-                                    [className]="idea.selectableClass"
-                                    (click)="idea.toggleSelected()">
+                                  <tr data-toggle="collapse" [attr.data-target]="'#' + idea.id" 
+                                    [className]="getSelectableClass(idea)"
+                                    (click)="onRowClick(idea)">
                                     <td>
-                                        <i [className]="idea.expandedClass" *ngIf="idea.positions.length > 0"></i>
-                                        <i class="fa fa-plus fa-plus-disabled" *ngIf="idea.positions.length <= 0"></i>
+                                        <i [className]="getExpandedClass(idea)" *ngIf="hasPositions(idea)"></i>
+                                        <i class="fa fa-plus fa-plus-disabled" *ngIf="!hasPositions(idea)"></i>
                                          {{idea.symbol}}</td>
                                     <td>{{idea.type}}</td>
                                     <td>{{idea.totalShares | number:'.2'}}</td>
                                     <td>{{idea.totalShares | currency:'PHP'}}</td>
                                     <td>{{idea.sell | currency:'PHP'}}</td>
                                     <td>
-                                        <p *ngIf="idea.gainLoss >= 0" class="gain">+{{idea.gainLoss | percent}}</p>
-                                        <p *ngIf="idea.gainLoss < 0" class="loss">{{idea.gainLoss | percent}}</p>
+                                        <p *ngIf="idea.isGainLoss" class="gain">+{{idea.gainLoss | percent}}</p>
+                                        <p *ngIf="!idea.isGainLoss" class="loss">{{idea.gainLoss | percent}}</p>
                                     </td>
                                     <td>{{idea.marketValue | currency:'PHP'}}</td>
                                     <td>
@@ -63,7 +63,7 @@
                                         </ng-container>
                                     </td>
                                 </tr>
-                                <tr *ngIf="idea.positions.length > 0" [attr.id]="idea.id" class="collapse">
+                                <tr *ngIf="hasPositions(idea)" [attr.id]="idea.id" class="collapse">
                                     <td colspan="10">
                                         <table class="table">
                                             <thead>

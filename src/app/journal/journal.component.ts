@@ -23,6 +23,43 @@ export class JournalComponent implements OnInit{
 
     /**
      * 
+     * @param idea 
+     */
+    onRowClick(idea: Idea): void {
+        idea.isSelected = !idea.isSelected;
+    }
+
+    /**
+     * 
+     * @param idea 
+     */
+    getExpandedClass(idea: Idea): string {
+        let expandedClass = (idea.isSelected) 
+        ? 'fa fa-plus' 
+        : 'fa fa-minus';
+        return expandedClass;
+    }
+
+    /**
+     * 
+     * @param idea 
+     */
+    hasPositions(idea: Idea): boolean {
+        return idea.positions.length > 0;
+    }
+
+    /**
+     * 
+     */
+    getSelectableClass(idea: Idea): string {
+        let selectableClass = this.hasPositions(idea) 
+        ? 'selectable' 
+        : '';
+        return selectableClass;
+    }
+
+    /**
+     * 
      */
     ngOnInit(){
         this.ideas = this.journalService.getIdeas(null, null);
