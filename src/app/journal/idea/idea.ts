@@ -1,18 +1,21 @@
 import { Star } from './star';
+import { Position } from './position';
 import * as moment from "moment";
 
 export class Idea {
     private _marketValue: number;
     private _gainLoss: number;
-    public id: number;
+    public id: string;
     public symbol: string;
     public type: string;
-    public shares: number;
-    public averagePrice: number;
-    public sell: number;
+    public totalShares: number;
+    public averageBuyPrice: number;
+    public averageSellPrice: number;
     public chart: string;
+    public isSelected: boolean;
     public entryDate: moment.Moment;
     public stars: Star[];
+    public positions: Position[];
 
     public constructor(init?: Partial<Idea>) {
         Object.assign(this, init);
@@ -22,7 +25,7 @@ export class Idea {
      * Computes the market value
      */
     get marketValue(): number {
-        let investedAmount = this.averagePrice * this.shares;
+        let investedAmount = this.averageBuyPrice * this.totalShares;
         this._marketValue = (this._gainLoss * investedAmount) + investedAmount;
         return this._marketValue;
     }
@@ -31,10 +34,10 @@ export class Idea {
      * Computes the capital gain loss
      */
     get gainLoss(): number {
-        if (this.sell == null)
+        if (this.averageSellPrice == null)
             this._gainLoss = 0;
         else
-            this._gainLoss = ((this.sell - this.averagePrice) / this.averagePrice);
+            this._gainLoss = ((this.averageSellPrice - this.averageBuyPrice) / this.averageBuyPrice);
         return this._gainLoss;
     }
 
@@ -68,5 +71,33 @@ export class Idea {
         for (let index = 0; index <= stars; index++){
             this.stars[index].selected = selected;
         }
+    }
+
+    /**
+     * 
+     */
+    get selectableClass(): string {
+        let selectableClass = (this.positions.length > 0) 
+        ? 'selectable' 
+        : '';
+        return selectableClass;
+    }
+
+    /**
+     * 
+     */
+    toggleSelected(): void {
+        this.isSelected = !this.isSelected;
+        console.log(this);
+    }
+
+    /**
+     * 
+     */
+    get expandedClass(): string {
+        let expandedClass = (this.isSelected) 
+        ? 'fa fa-plus' 
+        : 'fa fa-minus';
+        return expandedClass; 
     }
 }

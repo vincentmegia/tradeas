@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Idea } from './idea';
-import * as PouchDB from 'pouchdb';
+import PouchDB from 'pouchdb';
 
 @Injectable()
 export class IdeaService {
@@ -10,7 +10,10 @@ export class IdeaService {
      */
     addIdea(idea: Idea): void {
         debugger;
-        let pouchDb = new PouchDB('tradeas', {adapter: 'memory'});
+        let pouchDb = new PouchDB('tradeas');
         let response = pouchDb.put(idea);
+        let data = pouchDb.get('')
+
+        
     }
 }

@@ -1,5 +1,6 @@
 import { Idea } from './idea/idea';
 import { Star } from './idea/star';
+import { Position } from './idea/position';
 import * as moment from "moment";
 
 export class JournalMockData {
@@ -7,102 +8,128 @@ export class JournalMockData {
         new Idea({
             symbol: '2GO',
             type: 'TF', 
-            shares: 100000, 
-            averagePrice: 20, 
-            sell: 28.5,  
+            totalShares: 100000, 
+            averageBuyPrice: 20, 
+            averageSellPrice: 28.5,  
             chart: 'https://storage.investagrams.com/files/Chart/tv/2017/07/16/20170716-093124-gThWEagL.jpg',
+            entryDate: moment(new Date(2017, 4, 20)),
             stars: [new Star({id: 0}), new Star({id: 1}), new Star({id: 2})],
-            entryDate: moment(new Date(2017, 4, 20))
+            positions: []
         }),
         new Idea({
             symbol: 'MAC', 
             type: 'TF',
-            shares: 100000, 
-            averagePrice: 6, 
-            sell: 9, 
+            totalShares: 100000, 
+            averageBuyPrice: 6, 
+            averageSellPrice: 9, 
             chart: 'https://storage.investagrams.com/files/Chart/tv/2017/07/16/20170716-094405-EmwJ8Bqn.jpg',
             entryDate: moment(new Date(2017, 7, 16)), 
-            stars: [new Star({id: 0}), new Star({id: 1}), new Star({id: 2})] 
+            stars: [new Star({id: 0}), new Star({id: 1}), new Star({id: 2})],
+            positions: []
         }),
         new Idea({
             symbol: 'PXP', 
             type: 'ABO', 
-            shares: 4400, 
-            averagePrice: 9.10, 
-            sell: 8.46, 
+            totalShares: 4400, 
+            averageBuyPrice: 9.10, 
+            averageSellPrice: 8.46, 
             chart: 'https://storage.investagrams.com/files/Chart/tv/2017/11/11/20171111-152441-4iqNjOKc.jpg', 
             entryDate: moment(new Date(2017, 11, 11)),
             stars: [new Star({id: 0})],
+            positions: []
         }),
         new Idea({
             symbol: 'GSMI', 
             type: 'ABO', 
-            shares: 2400, 
-            averagePrice: 28.8, 
-            sell: 26.8, 
+            totalShares: 2400, 
+            averageBuyPrice: 28.8, 
+            averageSellPrice: 26.8, 
             chart: 'https://storage.investagrams.com/files/Chart/tv/2017/11/11/20171111-153535-qFtiU8s1.jpg', 
             entryDate: moment(new Date(2017, 11, 11)),
             stars: [new Star({id: 0})],
+            positions: []
         }),
         new Idea({
             symbol: 'NOW', 
             type: 'TF', 
-            shares: 3000, 
-            averagePrice: 2.81, 
-            sell: 2.82, 
+            totalShares: 3000, 
+            averageBuyPrice: 2.81, 
+            averageSellPrice: 2.82, 
             chart: 'https://storage.investagrams.com/files/Chart/tv/2017/11/27/20171127-231832-awLKaJV9.jpg', 
             entryDate: moment(new Date(2017, 10, 27)),
             stars: [new Star({id: 0})],
+            positions: []
         }),
         new Idea({
             symbol: 'NOW', 
             type: 'TF', 
-            shares: 3000, 
-            averagePrice: 2.81, 
-            sell: 3.06, 
+            totalShares: 3000, 
+            averageBuyPrice: 2.81, 
+            averageSellPrice: 3.06, 
             chart: 'https://storage.investagrams.com/files/Chart/tv/2017/11/27/20171127-231832-awLKaJV9.jpg', 
             entryDate: moment(new Date(2017, 10, 27)),
             stars: [new Star({id: 0})],
+            positions: []
         }),
         new Idea({
             symbol: 'STI', 
             type: 'TF', 
-            shares: 47000, 
-            averagePrice: 1.636089, 
-            sell: null, 
+            totalShares: 47000, 
+            averageBuyPrice: 1.636089, 
+            averageSellPrice: null, 
             chart: '', 
             entryDate: moment(new Date(2017, 10, 27)),
             stars: [new Star({id: 0})],
+            positions: []
         }),
         new Idea({
             symbol: 'ROCK', 
             type: 'TF', 
-            shares: 10000, 
-            averagePrice: 2.181418, 
-            sell: null, 
+            totalShares: 10000, 
+            averageBuyPrice: 2.181418, 
+            averageSellPrice: null, 
             chart: '', 
             entryDate: moment(new Date(2017, 10, 27)),
             stars: [new Star({id: 0})],
+            positions: []
         }),
         new Idea({
             symbol: 'PF', 
             type: 'TF', 
-            shares: 40, 
-            averagePrice: 527.802750, 
-            sell: null, 
+            totalShares: 40, 
+            averageBuyPrice: 527.802750, 
+            averageSellPrice: null, 
             chart: '', 
             entryDate: moment(new Date(2017, 10, 27)),
             stars: [new Star({id: 0})],
+            positions: []
         }),
         new Idea({
             symbol: 'MRC', 
             type: 'TF', 
-            shares: 50000, 
-            averagePrice: 0.3831, 
-            sell: null, 
+            totalShares: 50000, 
+            averageBuyPrice: 0.3831, 
+            averageSellPrice: 0.39, 
             chart: '', 
             entryDate: moment(new Date(2017, 10, 27)),
             stars: [new Star({id: 0})],
+            positions: []
+        }),
+        new Idea({
+            id: 'TEST5000003831',
+            symbol: 'TEST', 
+            type: 'TF', 
+            totalShares: 50000, 
+            averageBuyPrice: 0.3831, 
+            averageSellPrice: null, 
+            chart: '', 
+            entryDate: moment(new Date(2017, 10, 27)),
+            stars: [new Star({id: 0})],
+            positions: [
+                new Position({shares: 35000, buyPrice: .35, entryDate: moment(new Date(2017, 11, 3))}),
+                new Position({shares: 15000, buyPrice: .37, entryDate: moment(new Date(2017, 11, 3))})
+            ],
+            isSelected: true
         }),
     ];
 }

@@ -3,13 +3,15 @@
         <div class="col-md-6">
             <div class="input-group">
                 <input type="text" value="Symbol" class="form-control" />
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <span class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                </span>
             </div>
         </div>
         <div class="col-md-5"></div>
         <div class="col-md-1">
             <div class="input-group">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" href="#myModal"><i class="ti-plus"></i> Add</button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" href="#myModal">Add</button>
             </div>
         </div>
     </div>
@@ -28,29 +30,63 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th *ngFor="let column of columns">{{column}} <b class="caret"></b></th>
+                                <th *ngFor="let column of columns">{{column}}
+                                    <b class="caret"></b>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let idea of ideas">
-                                <td>{{idea.symbol}}</td>
-                                <td>{{idea.type}}</td>
-                                <td>{{idea.shares | number:'.2'}}</td>
-                                <td>{{idea.averagePrice | currency:'PHP'}}</td>
-                                <td>{{idea.sell | currency:'PHP'}}</td>
-                                <td>
-                                    <p *ngIf="idea.gainLoss >= 0" class="gain">+{{idea.gainLoss | percent}}</p>
-                                    <p *ngIf="idea.gainLoss < 0" class="loss">{{idea.gainLoss | percent}}</p>
-                                </td>
-                                <td>{{idea.marketValue | currency:'PHP'}}</td>
-                                <td><a target="_blank" href="{{idea.chart}}">Link</a></td>
-                                <td>{{idea.entryDate | date:mediumDate}}</td>
-                                <td>
-                                    <ng-container *ngFor="let star of idea.stars">
-                                        <i class="ti-star"></i>
-                                    </ng-container>
-                                </td>
-                            </tr>
+                            <ng-container *ngFor="let idea of ideas">
+                                <tr data-toggle="collapse" [attr.data-target]="'#' + idea.id" 
+                                    [className]="idea.selectableClass"
+                                    (click)="idea.toggleSelected()">
+                                    <td>
+                                        <i [className]="idea.expandedClass" *ngIf="idea.positions.length > 0"></i>
+                                        <i class="fa fa-plus fa-plus-disabled" *ngIf="idea.positions.length <= 0"></i>
+                                         {{idea.symbol}}</td>
+                                    <td>{{idea.type}}</td>
+                                    <td>{{idea.totalShares | number:'.2'}}</td>
+                                    <td>{{idea.totalShares | currency:'PHP'}}</td>
+                                    <td>{{idea.sell | currency:'PHP'}}</td>
+                                    <td>
+                                        <p *ngIf="idea.gainLoss >= 0" class="gain">+{{idea.gainLoss | percent}}</p>
+                                        <p *ngIf="idea.gainLoss < 0" class="loss">{{idea.gainLoss | percent}}</p>
+                                    </td>
+                                    <td>{{idea.marketValue | currency:'PHP'}}</td>
+                                    <td>
+                                        <a target="_blank" href="{{idea.chart}}">Link</a>
+                                    </td>
+                                    <td>{{idea.entryDate | date:mediumDate}}</td>
+                                    <td>
+                                        <ng-container *ngFor="let star of idea.stars">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="idea.positions.length > 0" [attr.id]="idea.id" class="collapse">
+                                    <td colspan="10">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th *ngFor="let subColumn of subColumns">{{subColumn}}
+                                                        <b class="caret"></b>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let position of idea.positions">
+                                                    <tr>
+                                                        <td>{{position.shares}}</td>
+                                                        <td>{{position.buyPrice}}</td>
+                                                        <td>{{position.sellPrice}}</td>
+                                                        <td>{{position.entryDate | date:mediumDate}}</td>
+                                                    </tr>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </ng-container>
                         </tbody>
                     </table>
                 </div>

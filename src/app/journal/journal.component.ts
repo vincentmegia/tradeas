@@ -13,6 +13,7 @@ import * as moment from "moment";
 
 export class JournalComponent implements OnInit{
     public columns: string[];
+    public subColumns: string[];
     public dateModel: moment.Moment; 
     public currentMonth: string;
     public stars: number[];
@@ -31,5 +32,6 @@ export class JournalComponent implements OnInit{
 
         //data is of array type and should be later changed to a more model centric appraoch
         this.columns = ['Symbol', 'Type', 'Shares', 'Average Price', 'Sell', '%Gain/Loss', 'Market Value', 'Chart', 'Entry Date', 'Rating']
+        this.subColumns = ['Shares', 'Buy Price', 'Sell Price', 'Entry Date'];
     }
 }
