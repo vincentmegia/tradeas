@@ -21,6 +21,7 @@ export class IdeaComponent {
     constructor(private ideaService: IdeaService) {
         this.idea = new Idea({type: '-----'});
         this.idea.initializeStars();
+        let ideas = this.ideaService.getAll();
     }
 
     /**
