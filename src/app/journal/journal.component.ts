@@ -4,6 +4,7 @@ import { IdeaService } from './idea/idea.service';
 import { Idea } from './idea/idea';
 import { Observable } from 'rxjs/rx';
 import * as moment from "moment";
+import { JournalMockData } from 'app/journal/journa-mock-data';
 
 @Component({
     selector: 'journal',
@@ -64,11 +65,14 @@ export class JournalComponent implements OnInit{
      * 
      */
     ngOnInit(){
+        this.journalService.saveIdeas();//refresh data from mock until everything works
         this.journalService
             .getIdeas(null, null)
             .subscribe(ideas => this.ideas = ideas);
+        //this.ideas = JournalMockData.IDEAS;
         this.dateModel = moment(new Date());
         this.currentMonth = this.dateModel.format('MMMM');
+        debugger;
         console.log(this.ideas);
 
         //data is of array type and should be later changed to a more model centric appraoch

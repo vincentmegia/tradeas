@@ -27,7 +27,6 @@ export class Idea {
      * Computes the market value
      */
     get marketValue(): number {
-        debugger;
         let investedAmount = this.averageBuyPrice * this.totalShares;
         this._marketValue = (this.gainLoss * investedAmount) + investedAmount;
         return this._marketValue;
