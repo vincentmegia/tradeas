@@ -3,15 +3,16 @@ import { JournalService } from './journal.service';
 import { IdeaService } from './idea/idea.service';
 import { Idea } from './idea/idea';
 import { Observable } from 'rxjs/rx';
+import { SecurityService } from '../shared/services/security.service'
 import * as moment from "moment";
-import { JournalMockData } from 'app/journal/journa-mock-data';
+import { JournalMockData } from 'app/journal/journal-mock-data';
 
 @Component({
     selector: 'journal',
     moduleId: module.id,
     templateUrl: 'journal.component.html',
     styleUrls: ['journal.component.css'],
-    providers: [ JournalService ]
+    providers: [ JournalService, SecurityService ]
 })
 
 export class JournalComponent implements OnInit{
@@ -22,7 +23,8 @@ export class JournalComponent implements OnInit{
     public stars: number[];
     public ideas: Idea[];
 
-    constructor(private journalService: JournalService) {}
+    constructor(private journalService: JournalService,
+                private securityService: SecurityService) {}
 
     /**
      * 
@@ -69,10 +71,11 @@ export class JournalComponent implements OnInit{
         this.journalService
             .getIdeas(null, null)
             .subscribe(ideas => this.ideas = ideas);
-        //this.ideas = JournalMockData.IDEAS;
+        debugger;
         this.dateModel = moment(new Date());
         this.currentMonth = this.dateModel.format('MMMM');
-        debugger;
+        let securities = this.securityService.getAll();
+
         console.log(this.ideas);
 
         //data is of array type and should be later changed to a more model centric appraoch

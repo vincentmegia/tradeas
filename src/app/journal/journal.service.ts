@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Idea } from './idea/idea';
-import { JournalMockData } from './journa-mock-data';
+//import { JournalMockData } from './journal-mock-data';
 import PouchDB from 'pouchdb';
 import { Observable } from 'rxjs/rx';
 
