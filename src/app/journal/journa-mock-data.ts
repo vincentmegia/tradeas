@@ -6,6 +6,7 @@ import * as moment from "moment";
 export class JournalMockData {
     static IDEAS: Idea[] = [
         new Idea({
+            id: '2GOApril2017120000',
             symbol: '2GO',
             type: 'TF', 
             totalShares: 100000, 
@@ -17,6 +18,7 @@ export class JournalMockData {
             positions: []
         }),
         new Idea({
+            id: 'MACJuly162007120000',
             symbol: 'MAC', 
             type: 'TF',
             totalShares: 100000, 
@@ -28,6 +30,7 @@ export class JournalMockData {
             positions: []
         }),
         new Idea({
+            id: 'PXPDecember112007120000',
             symbol: 'PXP', 
             type: 'ABO', 
             totalShares: 4400, 
@@ -39,6 +42,7 @@ export class JournalMockData {
             positions: []
         }),
         new Idea({
+            id: 'GSMIDecember112007120000',
             symbol: 'GSMI', 
             type: 'ABO', 
             totalShares: 2400, 
@@ -50,6 +54,7 @@ export class JournalMockData {
             positions: []
         }),
         new Idea({
+            id: 'NOWNovember272007120000',
             symbol: 'NOW', 
             type: 'TF', 
             totalShares: 3000, 
@@ -61,6 +66,7 @@ export class JournalMockData {
             positions: []
         }),
         new Idea({
+            id: 'NOWNovember272007120000',
             symbol: 'NOW', 
             type: 'TF', 
             totalShares: 3000, 
@@ -72,6 +78,7 @@ export class JournalMockData {
             positions: []
         }),
         new Idea({
+            id: 'STINovember272007120000',
             symbol: 'STI', 
             type: 'TF', 
             totalShares: 47000, 
@@ -83,6 +90,7 @@ export class JournalMockData {
             positions: []
         }),
         new Idea({
+            id: 'ROCKNovember272007120000',
             symbol: 'ROCK', 
             type: 'TF', 
             totalShares: 10000, 
@@ -94,6 +102,7 @@ export class JournalMockData {
             positions: []
         }),
         new Idea({
+            id: 'PFNovember272007120000',
             symbol: 'PF', 
             type: 'TF', 
             totalShares: 40, 
@@ -105,6 +114,7 @@ export class JournalMockData {
             positions: []
         }),
         new Idea({
+            id: 'MRCNovember272007120000',
             symbol: 'MRC', 
             type: 'TF', 
             totalShares: 50000, 

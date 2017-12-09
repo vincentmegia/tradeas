@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { JournalService } from './journal.service';
+import { IdeaService } from './idea/idea.service';
 import { Idea } from './idea/idea';
+import { Observable } from 'rxjs/rx';
 import * as moment from "moment";
 
 @Component({
@@ -62,7 +64,9 @@ export class JournalComponent implements OnInit{
      * 
      */
     ngOnInit(){
-        this.ideas = this.journalService.getIdeas(null, null);
+        this.journalService
+            .getIdeas(null, null)
+            .subscribe(ideas => this.ideas = ideas);
         this.dateModel = moment(new Date());
         this.currentMonth = this.dateModel.format('MMMM');
         console.log(this.ideas);

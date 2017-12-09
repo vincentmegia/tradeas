@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IdeaService } from './idea.service';
+import { JournalService } from '../journal.service'
 import { Idea } from './idea';
 import { Star } from './star';
 
@@ -8,7 +9,7 @@ import { Star } from './star';
     moduleId: module.id,
     templateUrl: 'idea.component.html',
     styleUrls: ['idea.component.css'],
-    providers: [ IdeaService ]
+    providers: [ IdeaService, JournalService ]
 })
 
 /**
@@ -18,14 +19,10 @@ export class IdeaComponent {
     idea: Idea;
     previousStar: Star;
 
-    constructor(private ideaService: IdeaService) {
+    constructor(private ideaService: IdeaService,
+        private journalService: JournalService) {
         this.idea = new Idea({type: '-----'});
-<<<<<<< HEAD
-        this.idea.initializeStars();
-        let ideas = this.ideaService.getAll();
-=======
         this.initializeStars(this.idea);
->>>>>>> 6bf28bf6a20654f8a3b1d9c39800bcdc229d8335
     }
 
     /**
