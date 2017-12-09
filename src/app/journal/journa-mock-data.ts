@@ -116,6 +116,33 @@ export class JournalMockData {
             positions: []
         }),
         new Idea({
+            symbol: 'MJC', 
+            type: 'Tsupit', 
+            totalShares: 2000, 
+            averageBuyPrice: 5.10, 
+            averageSellPrice: 5.10, 
+            chart: '', 
+            entryDate: moment(new Date(2017, 11, 5)),
+            stars: [new Star({id: 0})],
+            positions: []
+        }),
+        new Idea({
+            id: 'MJC40000',
+            symbol: 'MJC', 
+            type: 'Tsupit', 
+            totalShares: 4000, 
+            averageBuyPrice: 0, 
+            averageSellPrice: 5.9, 
+            chart: '', 
+            entryDate: moment(new Date(2017, 11, 5)),
+            stars: [new Star({id: 0})],
+            positions: [
+                new Position({shares: 2000, buyPrice: 6.11, entryDate: moment(new Date(2017, 11, 5))}),
+                new Position({shares: 2000, buyPrice: 6.06, entryDate: moment(new Date(2017, 11, 5))})
+            ],
+            isSelected: true
+        }),                
+        new Idea({
             id: 'TEST5000003831',
             symbol: 'TEST', 
             type: 'TF', 
