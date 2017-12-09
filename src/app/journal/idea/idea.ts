@@ -1,15 +1,17 @@
 import { Star } from './star';
 import { Position } from './position';
 import * as moment from "moment";
+import { forEach } from '@angular/router/src/utils/collection';
 
 export class Idea {
     private _marketValue: number;
     private _gainLoss: number;
+    private _averageBuyPrice: number;
+    private _totalShares: number;
+
     public id: string;
     public symbol: string;
     public type: string;
-    public totalShares: number;
-    public averageBuyPrice: number;
     public averageSellPrice: number;
     public chart: string;
     public isSelected: boolean;
@@ -25,8 +27,9 @@ export class Idea {
      * Computes the market value
      */
     get marketValue(): number {
+        debugger;
         let investedAmount = this.averageBuyPrice * this.totalShares;
-        this._marketValue = (this._gainLoss * investedAmount) + investedAmount;
+        this._marketValue = (this.gainLoss * investedAmount) + investedAmount;
         return this._marketValue;
     }
 
@@ -46,5 +49,46 @@ export class Idea {
      */
     get isGainLoss(): boolean {
         return this.gainLoss >= 0;
+    }
+
+    /**
+     * 
+     */
+    get averageBuyPrice(): number {
+        if (this.positions.length == 0) return this._averageBuyPrice;
+
+        let averageBuyPrice = 0;
+        for (let position of this.positions) {
+            averageBuyPrice += position.buyPrice;
+        }
+        averageBuyPrice = averageBuyPrice / this.positions.length;
+        return averageBuyPrice;
+    }
+
+    /**
+     * 
+     */
+    set averageBuyPrice(averageBuyPrice: number) {
+        this._averageBuyPrice = averageBuyPrice;
+    }
+
+    /**
+     * 
+     */
+    get totalShares(): number {
+        if (this.positions.length == 0) return this._totalShares;
+
+        let totalShares = 0;
+        for (let position of this.positions) {
+            totalShares += position.shares;
+        }
+        return totalShares;
+    }
+
+    /**
+     * 
+     */
+    set totalShares(totalShares: number) {
+        this._totalShares = totalShares;
     }
 }

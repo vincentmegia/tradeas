@@ -46,8 +46,8 @@
                                          {{idea.symbol}}</td>
                                     <td>{{idea.type}}</td>
                                     <td>{{idea.totalShares | number:'.2'}}</td>
-                                    <td>{{idea.totalShares | currency:'PHP'}}</td>
-                                    <td>{{idea.sell | currency:'PHP'}}</td>
+                                    <td>{{idea.averageBuyPrice | currency:'PHP'}}</td>
+                                    <td>{{idea.averageSellPrice | currency:'PHP'}}</td>
                                     <td>
                                         <p *ngIf="idea.isGainLoss" class="gain">+{{idea.gainLoss | percent}}</p>
                                         <p *ngIf="!idea.isGainLoss" class="loss">{{idea.gainLoss | percent}}</p>
