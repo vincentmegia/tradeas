@@ -2,11 +2,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="input-group">
-                <input type="text" placeholder="Symbol" class="form-control" 
-                [(ngModel)]="selected"
-                [typeahead]="securities"
-                typeaheadOptionField="symbol"
-                (input)="onInput($event.target.value)" />
+                <input type="text" placeholder="Symbol" class="form-control" [(ngModel)]="selected" [typeahead]="securities" typeaheadOptionField="symbol"
+                    (input)="onInput($event.target.value)" />
                 <span class="input-group-addon">
                     <i class="fa fa-search"></i>
                 </span>
@@ -41,13 +38,11 @@
                         </thead>
                         <tbody>
                             <ng-container *ngFor="let idea of ideas">
-                                  <tr data-toggle="collapse" [attr.data-target]="'#' + idea.id" 
-                                    [className]="getSelectableClass(idea)"
-                                    (click)="onRowClick(idea)">
+                                <tr data-toggle="collapse" [attr.data-target]="'#' + idea.id" [className]="getSelectableClass(idea)" (click)="onRowClick(idea)">
                                     <td>
                                         <i [className]="getExpandedClass(idea)" *ngIf="hasPositions(idea)"></i>
                                         <i class="fa fa-plus fa-plus-disabled" *ngIf="!hasPositions(idea)"></i>
-                                         {{idea.symbol}}</td>
+                                        {{idea.symbol}}</td>
                                     <td>{{idea.type}}</td>
                                     <td>{{idea.totalShares | number:'.2'}}</td>
                                     <td>{{idea.averageBuyPrice | currency:'PHP'}}</td>
@@ -90,11 +85,23 @@
                                         </table>
                                     </td>
                                 </tr>
-                                </ng-container>
+                            </ng-container>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-12 col-12 col-md-10">
+                    <pagination [directionLinks]="false" [totalItems]="totalItems" [(ngModel)]="currentPage" (numPages)="smallnumPages = $event">
+                    </pagination>
+                </div>
+                <div class="col-xs-12 col-12 col-md-2">
+                    <pager [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" pageBtnClass="" [itemsPerPage]="10"
+                        class="pull-right">
+                    </pager>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
