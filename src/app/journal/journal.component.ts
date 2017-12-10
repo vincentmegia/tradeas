@@ -27,6 +27,9 @@ export class JournalComponent implements OnInit{
     public ideasStore: Idea[];
     public selected: string;
     public securities: Security[];
+    public totalItems: number = 64;
+    public currentPage: number = 4;
+    public smallnumPages: number = 0;
 
     constructor(private journalService: JournalService,
                 private securityService: SecurityService) {}
@@ -78,26 +81,28 @@ export class JournalComponent implements OnInit{
         console.log(e);
     }
 
-    totalItems: number = 64;
-    currentPage: number = 4;
-    smallnumPages: number = 0;
+
    
     pageChanged(event: any): void {
       console.log('Page changed to: ' + event.page);
       console.log('Number items per page: ' + event.itemsPerPage);
     }
-    
+
     /**
      * 
      */
     ngOnInit(){
         //new SecurityMockData().generateData();
-        this.journalService.saveIdeas();//refresh data from mock until everything works
-        this.journalService
-            .getIdeas(null, null)
-            .subscribe(ideas => {this.ideasStore = ideas; this.ideas = ideas});
+        //this.journalService.saveIdeas();//refresh data from mock until everything works
+        let monthStart = moment().startOf('month');
+        let monthEnd = moment().endOf('month');
         this.dateModel = moment(new Date());
         this.currentMonth = this.dateModel.format('MMMM');
+
+        this.journalService
+            .getIdeas(monthStart, monthEnd)
+            .subscribe(ideas => {this.ideasStore = ideas; this.ideas = ideas});
+        
         this.securityService
             .getAll()
             .subscribe(securities => this.securities = securities);

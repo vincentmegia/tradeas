@@ -3,6 +3,7 @@ import { Idea } from './idea/idea';
 //import { JournalMockData } from './journal-mock-data';
 import PouchDB from 'pouchdb';
 import { Observable } from 'rxjs/rx';
+import * as moment from "moment";
 
 @Injectable()
 export class JournalService {
@@ -15,7 +16,7 @@ export class JournalService {
     /**
      * Gets all Ideas based on date range
      */
-    getIdeas(from: Date, to: Date): Observable<Idea[]> {
+    getIdeas(from: moment.Moment, to: moment.Moment): Observable<Idea[]> {
         return Observable.fromPromise(
             this._pouchDb
                 .allDocs({include_docs: true})
