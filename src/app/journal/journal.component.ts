@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/rx';
 import { SecurityService } from '../shared/services/security.service'
 import { Security } from '../shared/services/security';
 import * as moment from "moment";
+import { SecurityMockData } from 'app/shared/services/security-mock-data';
 
 
 @Component({
@@ -70,6 +71,7 @@ export class JournalComponent implements OnInit{
      * 
      */
     ngOnInit(){
+        //new SecurityMockData().generateData();
         this.journalService.saveIdeas();//refresh data from mock until everything works
         this.journalService
             .getIdeas(null, null)
