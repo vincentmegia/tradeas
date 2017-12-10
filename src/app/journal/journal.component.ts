@@ -68,14 +68,14 @@ export class JournalComponent implements OnInit{
         return selectableClass;
     }
 
-    onTypeaheadSelect(e: TypeaheadMatch): void {
-        this.ideas = this.ideasStore.filter(
-            idea => idea.symbol === e.value);
-        console.log('Selected value: ', e.value);
-    }
-
+    /**
+     * 
+     * @param e 
+     */
     onInput(e: string): void {
-        if (e === "") this.ideas = this.ideasStore;
+        if (e === '') this.ideas = this.ideasStore;
+        else this.ideas = this.ideasStore.filter(idea => idea.symbol.toLowerCase().includes(e.toLowerCase()));
+        console.log(e);
     }
 
     /**

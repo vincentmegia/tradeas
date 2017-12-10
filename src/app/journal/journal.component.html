@@ -6,7 +6,6 @@
                 [(ngModel)]="selected"
                 [typeahead]="securities"
                 typeaheadOptionField="symbol"
-                (typeaheadOnSelect)="onTypeaheadSelect($event)"
                 (input)="onInput($event.target.value)" />
                 <span class="input-group-addon">
                     <i class="fa fa-search"></i>
