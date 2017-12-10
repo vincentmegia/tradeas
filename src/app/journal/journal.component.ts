@@ -7,7 +7,7 @@ import { SecurityService } from '../shared/services/security.service'
 import { Security } from '../shared/services/security';
 import * as moment from "moment";
 import { SecurityMockData } from 'app/shared/services/security-mock-data';
-
+import { TypeaheadMatch } from 'ngx-bootstrap/typeahead'
 
 @Component({
     selector: 'journal',
@@ -24,6 +24,7 @@ export class JournalComponent implements OnInit{
     public currentMonth: string;
     public stars: number[];
     public ideas: Idea[];
+    public ideasStore: Idea[];
     public selected: string;
     public securities: Security[];
 
@@ -67,6 +68,16 @@ export class JournalComponent implements OnInit{
         return selectableClass;
     }
 
+    onTypeaheadSelect(e: TypeaheadMatch): void {
+        this.ideas = this.ideasStore.filter(
+            idea => idea.symbol === e.value);
+        console.log('Selected value: ', e.value);
+    }
+
+    onInput(e: string): void {
+        if (e === "") this.ideas = this.ideasStore;
+    }
+
     /**
      * 
      */
@@ -75,15 +86,12 @@ export class JournalComponent implements OnInit{
         this.journalService.saveIdeas();//refresh data from mock until everything works
         this.journalService
             .getIdeas(null, null)
-            .subscribe(ideas => this.ideas = ideas);
+            .subscribe(ideas => {this.ideasStore = ideas; this.ideas = ideas});
         this.dateModel = moment(new Date());
         this.currentMonth = this.dateModel.format('MMMM');
         this.securityService
             .getAll()
             .subscribe(securities => this.securities = securities);
-
-        console.log(this.ideas);
-
         //data is of array type and should be later changed to a more model centric appraoch
         this.columns = ['Symbol', 'Type', 'Shares', 'Average Price', 'Sell', '%Gain/Loss', 'Market Value', 'Chart', 'Entry Date', 'Rating']
         this.subColumns = ['Shares', 'Buy Price', 'Sell Price', 'Entry Date'];
