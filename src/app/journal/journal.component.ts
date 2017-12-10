@@ -4,8 +4,9 @@ import { IdeaService } from './idea/idea.service';
 import { Idea } from './idea/idea';
 import { Observable } from 'rxjs/rx';
 import { SecurityService } from '../shared/services/security.service'
+import { Security } from '../shared/services/security';
 import * as moment from "moment";
-import { JournalMockData } from 'app/journal/journal-mock-data';
+
 
 @Component({
     selector: 'journal',
@@ -22,6 +23,8 @@ export class JournalComponent implements OnInit{
     public currentMonth: string;
     public stars: number[];
     public ideas: Idea[];
+    public selected: string;
+    public securities: Security[];
 
     constructor(private journalService: JournalService,
                 private securityService: SecurityService) {}
@@ -71,10 +74,11 @@ export class JournalComponent implements OnInit{
         this.journalService
             .getIdeas(null, null)
             .subscribe(ideas => this.ideas = ideas);
-        debugger;
         this.dateModel = moment(new Date());
         this.currentMonth = this.dateModel.format('MMMM');
-        let securities = this.securityService.getAll();
+        this.securityService
+            .getAll()
+            .subscribe(securities => this.securities = securities);
 
         console.log(this.ideas);
 

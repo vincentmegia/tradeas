@@ -15,7 +15,7 @@ import { IconsComponent } from './icons/icons.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { IdeaComponent } from './journal/idea/idea.component';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TypeaheadModule } from 'ngx-bootstrap';
 
 @NgModule({
     declarations: [
@@ -36,7 +36,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         FooterModule,
         FixedPluginModule,
         FormsModule,
-        NgbModule.forRoot()
+        TypeaheadModule.forRoot()
     ],
     exports: [
     ],
