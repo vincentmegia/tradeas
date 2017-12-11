@@ -4,6 +4,8 @@ import { Idea } from './idea/idea';
 import PouchDB from 'pouchdb';
 import { Observable } from 'rxjs/rx';
 import * as moment from "moment";
+import PouchDBFind from 'pouchdb-find'
+PouchDB.plugin(PouchDBFind);
 
 @Injectable()
 export class JournalService {
@@ -19,29 +21,32 @@ export class JournalService {
     getIdeas(from: moment.Moment, to: moment.Moment): Observable<Idea[]> {
         return Observable.fromPromise(
             this._pouchDb
-                .allDocs({include_docs: true})
-                .then(document => {
-                    // Each row has a .doc object and we just want to send an 
-                    // array of birthday objects back to the calling code,
-                    // so let's map the array to contain just the .doc objects.
-                    return document.rows.map(row => {
+                //.allDocs({include_docs: true})
+                .find({selector: {
+                        entryDate: { $gte: from, $lte: to }
+                    }
+                }).then(response => {
+                    let ideas = response.docs.map(doc => {
                         // Convert string to date, doesn't happen automatically.
                         var idea = new Idea({
-                            id: row.doc.id,
-                            symbol: row.doc.symbol, 
-                            type: row.doc.type, 
-                            totalShares: row.doc.totalShares, 
-                            averageBuyPrice: row.doc.averageBuyPrice, 
-                            averageSellPrice: row.doc.averageSellPrice, 
-                            chart: row.doc.chart, 
-                            entryDate: row.doc.entryDate,
-                            stars: row.doc.stars,
-                            positions: row.doc.positions,
-                            isSelected: row.doc.isSelected
+                            id: doc._id,
+                            symbol: doc.symbol, 
+                            type: doc.type, 
+                            totalShares: doc.totalShares, 
+                            averageBuyPrice: doc.averageBuyPrice, 
+                            averageSellPrice: doc.averageSellPrice, 
+                            chart: doc.chart, 
+                            entryDate: doc.entryDate,
+                            stars: doc.stars,
+                            positions: doc.positions,
+                            isSelected: doc.isSelected
                         });
                         return idea;
-                });
-        }));
+                    });
+                console.log(ideas);
+                return ideas;
+            })
+        );
     }
 
     saveIdeas(): void {
