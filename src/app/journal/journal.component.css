@@ -11,3 +11,20 @@
 .non-selectable {
     cursor: not-allowed;
 }
+
+:host ::ng-deep .pager .disabled > a, .pager .disabled > a:hover, .pager .disabled > a:focus, .pager .disabled > span {
+    background-color: transparent;
+    border: none;
+    color:#7A9E9F;
+    font-weight: bold
+}
+:host ::ng-deep .pager li > a, .pager li > span {
+    background-color: transparent;
+    border: none;
+    color:#7A9E9F;
+    font-weight: bold
+}
+
+:host ::ng-deep pager li[class="btn btn-primary btn-sm"] > a:hover { 
+    color: rgba(255, 255, 255, 0.7);
+}

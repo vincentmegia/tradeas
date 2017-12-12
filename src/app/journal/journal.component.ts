@@ -8,6 +8,7 @@ import { Security } from '../shared/services/security';
 import * as moment from "moment";
 import { SecurityMockData } from 'app/shared/services/security-mock-data';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead'
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
     selector: 'journal',
@@ -27,9 +28,14 @@ export class JournalComponent implements OnInit{
     public ideasStore: Idea[];
     public selected: string;
     public securities: Security[];
-    public totalItems: number = 64;
-    public currentPage: number = 4;
-    public smallnumPages: number = 0;
+    public totalItems: number;
+    public currentPage: number;
+    public smallnumPages: number;
+    public startDate: Date = new Date();
+    public endDate: Date = new Date();
+    // bsRangeValue: any = [new Date(2017, 7, 4), new Date(2017, 7, 20)];
+
+
 
     constructor(private journalService: JournalService,
                 private securityService: SecurityService) {}
@@ -91,6 +97,19 @@ export class JournalComponent implements OnInit{
     /**
      * 
      */
+    onSearch(): void {
+        this.journalService
+        .getIdeas(moment(this.startDate), moment(this.endDate))
+        .subscribe(ideas => {
+            this.ideasStore = ideas;
+            this.ideas = ideas;
+            this.totalItems = this.ideas.length;
+        });
+    }
+
+    /**
+     * 
+     */
     ngOnInit(){
         //new SecurityMockData().generateData();
         //this.journalService.saveIdeas();//refresh data from mock until everything works
@@ -101,11 +120,16 @@ export class JournalComponent implements OnInit{
 
         this.journalService
             .getIdeas(monthStart, monthEnd)
-            .subscribe(ideas => {this.ideasStore = ideas; this.ideas = ideas});
+            .subscribe(ideas => {
+                this.ideasStore = ideas;
+                this.ideas = ideas;
+                this.totalItems = 60;
+            });
         
         this.securityService
             .getAll()
             .subscribe(securities => this.securities = securities);
+        
         //data is of array type and should be later changed to a more model centric appraoch
         this.columns = ['Symbol', 'Type', 'Shares', 'Average Price', 'Sell', '%Gain/Loss', 'Market Value', 'Chart', 'Entry Date', 'Rating']
         this.subColumns = ['Shares', 'Buy Price', 'Sell Price', 'Entry Date'];
