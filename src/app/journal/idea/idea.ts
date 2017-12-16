@@ -1,7 +1,7 @@
 import { Star } from './star';
 import { Position } from './position';
 import * as moment from "moment";
-import { forEach } from '@angular/router/src/utils/collection';
+import { IdeaJson } from './idea.json';
 
 export class Idea {
     private _marketValue: number;
@@ -89,5 +89,24 @@ export class Idea {
      */
     set totalShares(totalShares: number) {
         this._totalShares = totalShares;
+    }
+
+    /**
+     * 
+     */
+    get json(): IdeaJson {
+        return {
+            _id: this.id,
+            symbol: this.symbol,
+            type: this.type,
+            totalShares: this.totalShares,
+            averageBuyPrice: this.averageBuyPrice,
+            averageSellPrice: this.averageSellPrice,
+            chart: this.chart,
+            isSelected: this.isSelected,
+            entryDate: this.entryDate,
+            stars: (this.stars == null) ? [] : this.stars,
+            positions: (this.positions == null) ? [] : this.positions
+        }
     }
 }

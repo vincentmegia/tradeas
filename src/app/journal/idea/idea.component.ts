@@ -4,6 +4,7 @@ import { JournalService } from '../journal.service'
 import { Idea } from './idea';
 import { Star } from './star';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import * as moment from "moment";
 
 @Component({
     selector: 'idea',
@@ -25,7 +26,7 @@ export class IdeaComponent {
     
     constructor(private ideaService: IdeaService,
         private journalService: JournalService) {
-        this.idea = new Idea({type: '-----'});
+        this.idea = new Idea({type: '-----', positions: []});
         this.initializeStars(this.idea);
     }
 
@@ -43,14 +44,14 @@ export class IdeaComponent {
      */
     show(): void {
         this.childModal.show();
-     }
+    }
      
      /**
       * 
       */
-     hide(): void {
+    hide(): void {
         this.childModal.hide();
-     }
+    }
 
     /**
      * 
@@ -113,9 +114,10 @@ export class IdeaComponent {
      * 
      */
     save(): void {
-        console.log('saving idea...', this.idea)
+        this.idea.entryDate = moment(new Date());
+        this.idea.id = this.idea.symbol + this.idea.entryDate.format('MMMMDDYYYYhhmmss');
+        console.log('saving idea...', this.idea);
         this.ideaService.addIdea(this.idea);
-
-        
+        this.hide();
     }
 }

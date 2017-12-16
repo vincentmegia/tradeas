@@ -71,7 +71,6 @@ export class JournalComponent implements OnInit{
      * @param idea 
      */
     hasPositions(idea: Idea): boolean {
-        console.log("idea.id " + idea.id + ", has positions " + idea.positions.length);
         return idea.positions.length > 0;
     }
 

@@ -69,7 +69,7 @@
                                 <p class="label-entry">Shares</p>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" placeholder="Enter no. of shares bought here" class="form-control" [(ngModel)]="idea.shares" />
+                                <input type="text" placeholder="Enter no. of shares bought here" class="form-control" [(ngModel)]="idea.totalShares" />
                             </div>
                             <div class="col-md-1">
                             </div>
@@ -77,7 +77,7 @@
                                 <p class="label-entry">Average Price</p>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" placeholder="Enter average entry price here" class="form-control" />
+                                <input type="text" placeholder="Enter average entry price here" class="form-control" [(ngModel)]="idea.averageBuyPrice" />
                             </div>
                             <div class="col"></div>
                         </div>
@@ -128,7 +128,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="hide()">Close</button>
                 <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
             </div>
         </div>

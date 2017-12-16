@@ -14,13 +14,18 @@ export class IdeaService {
      * Gets all Ideas based on date range
      */
     addIdea(idea: Idea): void {
-        let response = this._pouchDb.put(idea);
+        var ideaJson = idea.json;
+        let response = this._pouchDb.put(ideaJson);
     }
 
 
 
     // saveAll(ideas: Idea[]): void {
     //     debugger;
+    //     var ideaJson = [];
+    //     for (idea of ideas) {
+    //         ideaJson.push(idea.)
+    //     }
     //     this._pouchDb.bulkDocs(ideas);
     // }
 }
