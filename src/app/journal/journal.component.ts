@@ -12,7 +12,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { IdeaComponent } from './idea/idea.component';
-
+import { Pagination } from './pagination'
 
 @Component({
     selector: 'journal',
@@ -32,19 +32,20 @@ export class JournalComponent implements OnInit{
     public ideasStore: Idea[];
     public selected: string;
     public securities: Security[];
-    public totalItems: number;
-    public currentPage: number;
-    public smallnumPages: number;
+    public pagination: Pagination;
     public startDate: Date = new Date();
     public endDate: Date = new Date();
     public modalRef: BsModalRef;
-    
+
     @ViewChild('childModal') 
     public childModal: IdeaComponent;
 
     constructor(private journalService: JournalService,
                 private securityService: SecurityService,
-                private viewContainerRef: ViewContainerRef) {}
+                private viewContainerRef: ViewContainerRef) {
+
+        this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1})
+    }
 
     /**
      * 
@@ -70,6 +71,7 @@ export class JournalComponent implements OnInit{
      * @param idea 
      */
     hasPositions(idea: Idea): boolean {
+        console.log("idea.id " + idea.id + ", has positions " + idea.positions.length);
         return idea.positions.length > 0;
     }
 
@@ -109,7 +111,7 @@ export class JournalComponent implements OnInit{
         .subscribe(ideas => {
             this.ideasStore = ideas;
             this.ideas = ideas;
-            this.totalItems = this.ideas.length;
+            this.pagination.totalItems = this.ideas.length;
         });
     }
 
@@ -129,7 +131,7 @@ export class JournalComponent implements OnInit{
             .subscribe(ideas => {
                 this.ideasStore = ideas;
                 this.ideas = ideas;
-                this.totalItems = 60;
+                this.pagination.totalItems = this.ideas.length;
             });
         
         this.securityService

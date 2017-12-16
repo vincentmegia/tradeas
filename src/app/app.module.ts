@@ -20,7 +20,8 @@ import {
     PaginationModule, 
     BsDatepickerModule, 
     ModalModule,
-    BsDropdownModule
+    BsDropdownModule,
+    CollapseModule
 } from 'ngx-bootstrap';
 
 @NgModule({
@@ -46,7 +47,8 @@ import {
         PaginationModule.forRoot(),
         BsDatepickerModule.forRoot(),
         ModalModule.forRoot(),
-        BsDropdownModule.forRoot()
+        BsDropdownModule.forRoot(),
+        CollapseModule.forRoot()
     ],
     exports: [
     ],

@@ -21,12 +21,7 @@
     <!-- Date range pickers row -->
     <div class="row">
         <div class="col-md-2 form-group">
-            <input  type="text" 
-                    class="form-control" 
-                    #startDatePicker="bsDatepicker" 
-                    bsDatepicker 
-                    [(bsValue)]="startDate" 
-                    [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false}">
+            <input type="text" class="form-control" #startDatePicker="bsDatepicker" bsDatepicker [(bsValue)]="startDate" [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false}">
         </div>
         <div class="col-md-1 form-group">
             <button class="btn btn-primary btn-sm pull-right" (click)="startDatePicker.toggle()">Start Date</button>
@@ -66,7 +61,7 @@
                         </thead>
                         <tbody>
                             <ng-container *ngFor="let idea of ideas">
-                                <tr data-toggle="collapse" [attr.data-target]="'#' + idea.id" [className]="getSelectableClass(idea)" (click)="onRowClick(idea)">
+                                <tr [className]="getSelectableClass(idea)" (click)="onRowClick(idea)">
                                     <td>
                                         <i [className]="getExpandedClass(idea)" *ngIf="hasPositions(idea)"></i>
                                         <i class="fa fa-plus fa-plus-disabled" *ngIf="!hasPositions(idea)"></i>
@@ -90,27 +85,29 @@
                                         </ng-container>
                                     </td>
                                 </tr>
-                                <tr *ngIf="hasPositions(idea)" [attr.id]="idea.id" class="collapse">
+                                <tr *ngIf="hasPositions(idea)">
                                     <td colspan="10">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th *ngFor="let subColumn of subColumns">{{subColumn}}
-                                                        <b class="caret"></b>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <ng-container *ngFor="let position of idea.positions">
+                                        <div [collapse]="idea.isSelected" class="card card-block card-header">
+                                            <table class="table">
+                                                <thead>
                                                     <tr>
-                                                        <td>{{position.shares}}</td>
-                                                        <td>{{position.buyPrice}}</td>
-                                                        <td>{{position.sellPrice}}</td>
-                                                        <td>{{position.entryDate | date:mediumDate}}</td>
+                                                        <th *ngFor="let subColumn of subColumns">{{subColumn}}
+                                                            <b class="caret"></b>
+                                                        </th>
                                                     </tr>
-                                                </ng-container>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container *ngFor="let position of idea.positions">
+                                                        <tr>
+                                                            <td>{{position.shares}}</td>
+                                                            <td>{{position.buyPrice}}</td>
+                                                            <td>{{position.sellPrice}}</td>
+                                                            <td>{{position.entryDate | date:mediumDate}}</td>
+                                                        </tr>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </td>
                                 </tr>
                             </ng-container>
@@ -120,16 +117,13 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-12 col-md-10">
-                    <pagination [directionLinks]="false" 
-                                [totalItems]="totalItems" 
-                                [(ngModel)]="currentPage" 
-                                (numPages)="smallnumPages = $event"
-                                pageBtnClass="btn btn-primary btn-sm">
+                    <pagination [directionLinks]="false" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage" [(itemsPerPage)]="pagination.itemsPerPage"
+                        (numPages)="pagination.smallnumPages = $event" pageBtnClass="btn btn-primary btn-sm">
                     </pagination>
                 </div>
                 <div class="col-xs-12 col-12 col-md-2">
-                    <pager id="pager" [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" pageBtnClass="btn btn-primary btn-sm"
-                        [itemsPerPage]="10" class="pull-right">
+                    <pager id="pager" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
+                        pageBtnClass="btn btn-primary btn-sm" [(itemsPerPage)]="pagination.itemsPerPage" class="pull-right">
                     </pager>
                 </div>
             </div>
