@@ -15,7 +15,13 @@ import { IconsComponent } from './icons/icons.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { IdeaComponent } from './journal/idea/idea.component';
 import { FormsModule } from '@angular/forms';
-import { TypeaheadModule, PaginationModule, BsDatepickerModule, ModalModule } from 'ngx-bootstrap';
+import { 
+    TypeaheadModule, 
+    PaginationModule, 
+    BsDatepickerModule, 
+    ModalModule,
+    BsDropdownModule
+} from 'ngx-bootstrap';
 
 @NgModule({
     declarations: [
@@ -39,7 +45,8 @@ import { TypeaheadModule, PaginationModule, BsDatepickerModule, ModalModule } fr
         TypeaheadModule.forRoot(),
         PaginationModule.forRoot(),
         BsDatepickerModule.forRoot(),
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        BsDropdownModule.forRoot()
     ],
     exports: [
     ],

@@ -1,8 +1,9 @@
-<div bsModal #childModal="bs-modal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #childModal="bs-modal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="hide()">&times;</button>
                 <h4 class="modal-title">Add Idea</h4>
             </div>
             <div class="modal-body">
@@ -26,32 +27,33 @@
                                 <p class="label-entry">Type</p>
                             </div>
                             <div class="col-md-3">
-                                <div class="dropdown">
-                                    <a href="#" class="btn dropdown-toggle" data-toggle="dropdown">
+                                <div class="btn-group" dropdown>
+                                    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
                                         {{idea.type}}
-                                        <b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a (click)="setTradeType('Trend Following')">Trend Following</a>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                        <li role="menuitem">
+                                            <a class="dropdown-item" (click)="setTradeType('Trend Following')">Trend Following</a>
                                         </li>
-                                        <li>
-                                            <a (click)="setTradeType('Swing')">Swing</a>
+                                        <li role="menuitem">
+                                            <a class="dropdown-item" (click)="setTradeType('Swing')">Swing</a>
                                         </li>
-                                        <li>
-                                            <a (click)="setTradeType('Tsupit')">Tsupit</a>
+                                        <li role="menuitem">
+                                            <a class="dropdown-item" (click)="setTradeType('Tsupit')">Tsupit</a>
                                         </li>
-                                        <li>
-                                            <a (click)="setTradeType('Breakout')">Breakout</a>
+                                        <li role="menuitem">
+                                            <a class="dropdown-item" (click)="setTradeType('Breakout')">Breakout</a>
                                         </li>
-                                        <li>
-                                            <a (click)="setTradeType('Anticipate Breakout')">Anticipate Breakout</a>
+                                        <li role="menuitem">
+                                            <a class="dropdown-item" (click)="setTradeType('Anticipate Breakout')">Anticipate Breakout</a>
                                         </li>
-                                        <li>
-                                            <a (click)="setTradeType('Positionay')">Position</a>
+                                        <li role="menuitem">
+                                            <a class="dropdown-item" (click)="setTradeType('Position')">Position</a>
                                         </li>
                                     </ul>
                                 </div>
+
                             </div>
                             <div class="col"></div>
                         </div>
