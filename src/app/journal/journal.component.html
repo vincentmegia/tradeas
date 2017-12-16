@@ -10,23 +10,29 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-6"></div>
-        <!-- <div class="col-md-1">
+        <div class="col-md-5"></div>
+        <div class="col-md-1">
             <div class="input-group pull-right">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" href="#myModal">Add</button>
+                <button class="btn btn-primary btn-sm" (click)="childModal.show()">Add</button>
             </div>
-        </div> -->
+            <idea #childModal></idea>
+        </div>
     </div>
     <!-- Date range pickers row -->
     <div class="row">
         <div class="col-md-2 form-group">
-            <input type="text" class="form-control" #startDatePicker="bsDatepicker" bsDatepicker [(bsValue)]="startDate" [bsConfig]="{containerClass: 'theme-default'}">
+            <input  type="text" 
+                    class="form-control" 
+                    #startDatePicker="bsDatepicker" 
+                    bsDatepicker 
+                    [(bsValue)]="startDate" 
+                    [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false}">
         </div>
         <div class="col-md-1 form-group">
             <button class="btn btn-primary btn-sm pull-right" (click)="startDatePicker.toggle()">Start Date</button>
         </div>
         <div class="col-md-2 form-group">
-            <input type="text" class="form-control" #endDatePicker="bsDatepicker" bsDatepicker [(bsValue)]="endDate" [bsConfig]="{containerClass: 'theme-default'}">
+            <input type="text" class="form-control" #endDatePicker="bsDatepicker" bsDatepicker [(bsValue)]="endDate" [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false}">
         </div>
         <div class="col-md-1 form-group">
             <button class="btn btn-primary btn-sm pull-right" (click)="endDatePicker.toggle()">End Date</button>
@@ -114,11 +120,15 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-12 col-md-10">
-                    <pagination [directionLinks]="false" [totalItems]="totalItems" [(ngModel)]="currentPage" (numPages)="smallnumPages = $event">
+                    <pagination [directionLinks]="false" 
+                                [totalItems]="totalItems" 
+                                [(ngModel)]="currentPage" 
+                                (numPages)="smallnumPages = $event"
+                                pageBtnClass="btn btn-primary btn-sm">
                     </pagination>
                 </div>
                 <div class="col-xs-12 col-12 col-md-2">
-                    <pager id="page" [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" pageBtnClass="btn btn-primary btn-sm"
+                    <pager id="pager" [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" pageBtnClass="btn btn-primary btn-sm"
                         [itemsPerPage]="10" class="pull-right">
                     </pager>
                 </div>

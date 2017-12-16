@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { JournalService } from './journal.service';
 import { IdeaService } from './idea/idea.service';
 import { Idea } from './idea/idea';
@@ -9,6 +9,10 @@ import * as moment from "moment";
 import { SecurityMockData } from 'app/shared/services/security-mock-data';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead'
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { IdeaComponent } from './idea/idea.component';
+
 
 @Component({
     selector: 'journal',
@@ -33,12 +37,14 @@ export class JournalComponent implements OnInit{
     public smallnumPages: number;
     public startDate: Date = new Date();
     public endDate: Date = new Date();
-    // bsRangeValue: any = [new Date(2017, 7, 4), new Date(2017, 7, 20)];
-
-
+    public modalRef: BsModalRef;
+    
+    @ViewChild('childModal') 
+    public childModal: IdeaComponent;
 
     constructor(private journalService: JournalService,
-                private securityService: SecurityService) {}
+                private securityService: SecurityService,
+                private viewContainerRef: ViewContainerRef) {}
 
     /**
      * 

@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { IdeaService } from './idea.service';
 import { JournalService } from '../journal.service'
 import { Idea } from './idea';
 import { Star } from './star';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'idea',
@@ -16,9 +17,12 @@ import { Star } from './star';
  * Maybe rethink later, should class start with verb
  */
 export class IdeaComponent {
-    idea: Idea;
-    previousStar: Star;
-
+    public idea: Idea;
+    public previousStar: Star;
+    
+    @ViewChild('childModal') 
+    public childModal: ModalDirective;
+    
     constructor(private ideaService: IdeaService,
         private journalService: JournalService) {
         this.idea = new Idea({type: '-----'});
@@ -33,6 +37,20 @@ export class IdeaComponent {
         this.idea.type = tradeType;
         console.log(this.idea);
     }
+
+    /**
+     * 
+     */
+    show(): void {
+        this.childModal.show();
+     }
+     
+     /**
+      * 
+      */
+     hide(): void {
+        this.childModal.hide();
+     }
 
     /**
      * 
@@ -97,5 +115,7 @@ export class IdeaComponent {
     save(): void {
         console.log('saving idea...', this.idea)
         this.ideaService.addIdea(this.idea);
+
+        
     }
 }
