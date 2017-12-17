@@ -33,8 +33,8 @@ export class JournalComponent implements OnInit{
     public selected: string;
     public securities: Security[];
     public pagination: Pagination;
-    public startDate: Date = new Date();
-    public endDate: Date = new Date();
+    public startDate: moment.Moment;
+    public endDate: moment.Moment;
     public modalRef: BsModalRef;
 
     @ViewChild('childModal') 
@@ -43,7 +43,6 @@ export class JournalComponent implements OnInit{
     constructor(private journalService: JournalService,
                 private securityService: SecurityService,
                 private viewContainerRef: ViewContainerRef) {
-
         this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1})
     }
 
@@ -117,22 +116,27 @@ export class JournalComponent implements OnInit{
     /**
      * 
      */
+    private getIdeas(startDate: moment.Moment, endDate: moment.Moment): void {
+        this.journalService
+        .getIdeas(startDate, endDate)
+        .subscribe(ideas => {
+            this.ideasStore = ideas;
+            this.ideas = ideas;
+            this.pagination.totalItems = this.ideas.length;
+        });
+    }
+    /**
+     * 
+     */
     ngOnInit(){
         //new SecurityMockData().generateData();
         //this.journalService.saveIdeas();//refresh data from mock until everything works
-        let monthStart = moment().startOf('month');
-        let monthEnd = moment().endOf('month');
+        this.startDate = moment().startOf('month');
+        this.endDate = moment().endOf('month');
         this.dateModel = moment(new Date());
         this.currentMonth = this.dateModel.format('MMMM');
 
-        this.journalService
-            .getIdeas(monthStart, monthEnd)
-            .subscribe(ideas => {
-                this.ideasStore = ideas;
-                this.ideas = ideas;
-                this.pagination.totalItems = this.ideas.length;
-            });
-        
+        this.getIdeas(this.startDate, this.endDate);
         this.securityService
             .getAll()
             .subscribe(securities => this.securities = securities);
@@ -140,5 +144,9 @@ export class JournalComponent implements OnInit{
         //data is of array type and should be later changed to a more model centric appraoch
         this.columns = ['Symbol', 'Type', 'Shares', 'Average Price', 'Sell', '%Gain/Loss', 'Market Value', 'Chart', 'Entry Date', 'Rating']
         this.subColumns = ['Shares', 'Buy Price', 'Sell Price', 'Entry Date'];
+
+        this.childModal.modal.onHidden.subscribe((reason: string) => {
+            this.getIdeas(this.startDate, this.endDate);
+        });
     }
 }

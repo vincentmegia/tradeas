@@ -22,7 +22,7 @@ export class IdeaComponent {
     public previousStar: Star;
     
     @ViewChild('childModal') 
-    public childModal: ModalDirective;
+    public modal: ModalDirective;
     
     constructor(private ideaService: IdeaService,
         private journalService: JournalService) {
@@ -43,14 +43,14 @@ export class IdeaComponent {
      * 
      */
     show(): void {
-        this.childModal.show();
+        this.modal.show();
     }
      
      /**
       * 
       */
     hide(): void {
-        this.childModal.hide();
+        this.modal.hide();
     }
 
     /**
