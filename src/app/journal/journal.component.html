@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
     <!-- Search autocomplete row -->
     <div class="row">
@@ -46,6 +47,7 @@
                     <h4 class="title">
                         <!-- <i class="ti-calendar"></i> -->
                         <span>{{currentMonth}} idea(s)</span>
+                        <img src="./assets/img/spinner.gif" style="width: 70px;height:50px" *ngIf="showProgress">
                     </h4>
                     <p class="category">
                     </p>
@@ -85,31 +87,33 @@
                                         </ng-container>
                                     </td>
                                 </tr>
-                                <tr *ngIf="hasPositions(idea)">
-                                    <td colspan="10">
-                                        <div [collapse]="idea.isSelected" class="card card-block card-header">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th *ngFor="let subColumn of subColumns">{{subColumn}}
-                                                            <b class="caret"></b>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <ng-container *ngFor="let position of idea.positions">
+                                <ng-container *ngIf="hasPositions(idea)">
+                                    <tr *ngIf="!idea.isSelected">
+                                        <td colspan="10">
+                                            <div class="card card-block card-header">
+                                                <table class="table">
+                                                    <thead>
                                                         <tr>
-                                                            <td>{{position.shares}}</td>
-                                                            <td>{{position.buyPrice}}</td>
-                                                            <td>{{position.sellPrice}}</td>
-                                                            <td>{{position.entryDate | date:mediumDate}}</td>
+                                                            <th *ngFor="let subColumn of subColumns">{{subColumn}}
+                                                                <b class="caret"></b>
+                                                            </th>
                                                         </tr>
-                                                    </ng-container>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container *ngFor="let position of idea.positions">
+                                                            <tr>
+                                                                <td>{{position.shares}}</td>
+                                                                <td>{{position.buyPrice}}</td>
+                                                                <td>{{position.sellPrice}}</td>
+                                                                <td>{{position.entryDate | date:mediumDate}}</td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
                             </ng-container>
                         </tbody>
                     </table>
@@ -129,5 +133,4 @@
             </div>
         </div>
     </div>
-
 </div>

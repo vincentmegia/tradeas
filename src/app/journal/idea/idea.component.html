@@ -8,128 +8,153 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="col-md-1">
-                                <p class="label-entry">Symbol</p>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Enter stock symbol here" [(ngModel)]="idea.symbol" />
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-search"></i>
-                                    </span>
+                    <form [formGroup]="userForm" (submit)="save()">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-1">
+                                    <p class="label-entry">Symbol</p>
                                 </div>
-                            </div>
-                            <div class="col-md-1">
-                            </div>
-                            <div class="col-md-1">
-                                <p class="label-entry">Type</p>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="btn-group" dropdown>
-                                    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
-                                        {{idea.type}}
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul *dropdownMenu class="dropdown-menu" role="menu">
-                                        <li role="menuitem">
-                                            <a class="dropdown-item" (click)="setTradeType('Trend Following')">Trend Following</a>
-                                        </li>
-                                        <li role="menuitem">
-                                            <a class="dropdown-item" (click)="setTradeType('Swing')">Swing</a>
-                                        </li>
-                                        <li role="menuitem">
-                                            <a class="dropdown-item" (click)="setTradeType('Tsupit')">Tsupit</a>
-                                        </li>
-                                        <li role="menuitem">
-                                            <a class="dropdown-item" (click)="setTradeType('Breakout')">Breakout</a>
-                                        </li>
-                                        <li role="menuitem">
-                                            <a class="dropdown-item" (click)="setTradeType('Anticipate Breakout')">Anticipate Breakout</a>
-                                        </li>
-                                        <li role="menuitem">
-                                            <a class="dropdown-item" (click)="setTradeType('Position')">Position</a>
-                                        </li>
-                                    </ul>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" 
+                                                class="form-control" 
+                                                placeholder="Enter stock symbol here" 
+                                                [(ngModel)]="idea.symbol"
+                                                [typeahead]="securities" 
+                                                typeaheadOptionField="symbol"
+                                                formControlName="symbol" id="symbol" />
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                        <!-- <validation [control]="userForm.controls.symbol"></validation> -->
+                                    </div>
                                 </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-1">
+                                    <p class="label-entry">Type</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="btn-group" dropdown>
+                                        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+                                            {{idea.type}}
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                            <li role="menuitem">
+                                                <a class="dropdown-item" (click)="setTradeType('Trend Following')">Trend Following</a>
+                                            </li>
+                                            <li role="menuitem">
+                                                <a class="dropdown-item" (click)="setTradeType('Swing')">Swing</a>
+                                            </li>
+                                            <li role="menuitem">
+                                                <a class="dropdown-item" (click)="setTradeType('Tsupit')">Tsupit</a>
+                                            </li>
+                                            <li role="menuitem">
+                                                <a class="dropdown-item" (click)="setTradeType('Breakout')">Breakout</a>
+                                            </li>
+                                            <li role="menuitem">
+                                                <a class="dropdown-item" (click)="setTradeType('Anticipate Breakout')">Anticipate Breakout</a>
+                                            </li>
+                                            <li role="menuitem">
+                                                <a class="dropdown-item" (click)="setTradeType('Position')">Position</a>
+                                            </li>
+                                        </ul>
+                                    </div>
 
+                                </div>
+                                <div class="col"></div>
                             </div>
-                            <div class="col"></div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-9">
-                            <hr>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <hr>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="col-md-1">
-                                <p class="label-entry">Shares</p>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-1">
+                                    <p class="label-entry">Shares</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" 
+                                            placeholder="Enter no. of shares bought here" 
+                                            class="form-control" 
+                                            [(ngModel)]="idea.totalShares"
+                                            formControlName="totalShares" id="totalShares" />
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-1">
+                                    <p class="label-entry">Average Price</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" 
+                                            placeholder="Enter average entry price here" 
+                                            class="form-control" 
+                                            [(ngModel)]="idea.averageBuyPrice"
+                                            formControlName="averageBuyPrice" id="averageBuyPrice" />
+                                </div>
+                                <div class="col"></div>
                             </div>
-                            <div class="col-md-3">
-                                <input type="text" placeholder="Enter no. of shares bought here" class="form-control" [(ngModel)]="idea.totalShares" />
-                            </div>
-                            <div class="col-md-1">
-                            </div>
-                            <div class="col-md-1">
-                                <p class="label-entry">Average Price</p>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" placeholder="Enter average entry price here" class="form-control" [(ngModel)]="idea.averageBuyPrice" />
-                            </div>
-                            <div class="col"></div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-9">
-                            <hr>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <hr>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="col-md-1">
-                                <p class="label-entry">Sell</p>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-1">
+                                    <p class="label-entry">Sell</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" 
+                                            placeholder="Enter average sell price here" 
+                                            class="form-control" 
+                                            [(ngModel)]="idea.averageSellPrice"
+                                            formControlName="averageSellPrice" id="averageSellPrice" />
+                                </div>
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-1">
+                                    <p class="label-entry">Chart Link</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" 
+                                            placeholder="Enter chart link here" 
+                                            class="form-control" 
+                                            [(ngModel)]="idea.chart"
+                                            formControlName="chart" id="chart" />
+                                </div>
+                                <div class="col"></div>
                             </div>
-                            <div class="col-md-3">
-                                <input type="text" placeholder="Enter average sell price here" class="form-control" [(ngModel)]="idea.sell" />
-                            </div>
-                            <div class="col-md-1">
-                            </div>
-                            <div class="col-md-1">
-                                <p class="label-entry">Chart Link</p>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" placeholder="Enter chart link here" class="form-control" [(ngModel)]="idea.chart" />
-                            </div>
-                            <div class="col"></div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-9">
-                            <hr>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="col-md-1">
-                                <p class="label-entry">Rating</p>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <hr>
                             </div>
-                            <div class="col-md-2">
-                                <div class="rating" style="margin-top: 10px;">
-                                    <span [className]="idea.stars[0].class" (click)="setStars(0)"></span>
-                                    <span [className]="idea.stars[1].class" (click)="setStars(1)"></span>
-                                    <span [className]="idea.stars[2].class" (click)="setStars(2)"></span>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-1">
+                                    <p class="label-entry">Rating</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="rating" style="margin-top: 10px;">
+                                        <span [className]="idea.stars[0].class" (click)="setStars(0)"></span>
+                                        <span [className]="idea.stars[1].class" (click)="setStars(1)"></span>
+                                        <span [className]="idea.stars[2].class" (click)="setStars(2)"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" (click)="hide()">Close</button>
-                <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
+                <button type="button" class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Save changes</button>
             </div>
         </div>
     </div>

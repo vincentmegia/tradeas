@@ -10,9 +10,8 @@ import { SecurityMockData } from 'app/shared/services/security-mock-data';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead'
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { IdeaComponent } from './idea/idea.component';
-import { Pagination } from './pagination'
+import { Pagination } from './pagination';
 
 @Component({
     selector: 'journal',
@@ -33,9 +32,9 @@ export class JournalComponent implements OnInit{
     public selected: string;
     public securities: Security[];
     public pagination: Pagination;
-    public startDate: moment.Moment;
-    public endDate: moment.Moment;
-    public modalRef: BsModalRef;
+    public startDate: Date;
+    public endDate: Date;
+    public showProgress: boolean;
 
     @ViewChild('childModal') 
     public childModal: IdeaComponent;
@@ -104,13 +103,8 @@ export class JournalComponent implements OnInit{
      * 
      */
     onSearch(): void {
-        this.journalService
-        .getIdeas(moment(this.startDate), moment(this.endDate))
-        .subscribe(ideas => {
-            this.ideasStore = ideas;
-            this.ideas = ideas;
-            this.pagination.totalItems = this.ideas.length;
-        });
+        this.showProgress = true;
+        this.getIdeas(moment(this.startDate), moment(this.endDate));
     }
 
     /**
@@ -123,20 +117,23 @@ export class JournalComponent implements OnInit{
             this.ideasStore = ideas;
             this.ideas = ideas;
             this.pagination.totalItems = this.ideas.length;
+            this.showProgress = false;
         });
     }
+
     /**
      * 
      */
     ngOnInit(){
         //new SecurityMockData().generateData();
         //this.journalService.saveIdeas();//refresh data from mock until everything works
-        this.startDate = moment().startOf('month');
-        this.endDate = moment().endOf('month');
+        this.startDate = moment().startOf('month').toDate();
+        this.endDate = moment().endOf('month').toDate();
         this.dateModel = moment(new Date());
         this.currentMonth = this.dateModel.format('MMMM');
-
-        this.getIdeas(this.startDate, this.endDate);
+        
+        this.showProgress = true;
+        this.getIdeas(moment(this.startDate), moment(this.endDate));
         this.securityService
             .getAll()
             .subscribe(securities => this.securities = securities);
@@ -146,7 +143,7 @@ export class JournalComponent implements OnInit{
         this.subColumns = ['Shares', 'Buy Price', 'Sell Price', 'Entry Date'];
 
         this.childModal.modal.onHidden.subscribe((reason: string) => {
-            this.getIdeas(this.startDate, this.endDate);
+            this.getIdeas(moment(this.startDate), moment(this.endDate));
         });
     }
 }

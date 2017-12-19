@@ -14,15 +14,20 @@ import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { IdeaComponent } from './journal/idea/idea.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
     TypeaheadModule, 
     PaginationModule, 
     BsDatepickerModule, 
     ModalModule,
     BsDropdownModule,
-    CollapseModule
+    CollapseModule,
+    AccordionModule,
+    ProgressbarModule
 } from 'ngx-bootstrap';
+import { ValidationComponent } from 'app/shared/validation/validation.component';
+import { Security } from 'app/shared/services/security';
+import { SecurityService } from './shared/services/security.service';
 
 @NgModule({
     declarations: [
@@ -33,7 +38,8 @@ import {
         TypographyComponent,
         IconsComponent,
         NotificationsComponent,
-        IdeaComponent
+        IdeaComponent,
+        ValidationComponent
     ],
     imports: [
         BrowserModule,
@@ -43,16 +49,19 @@ import {
         FooterModule,
         FixedPluginModule,
         FormsModule,
+        ReactiveFormsModule,
         TypeaheadModule.forRoot(),
         PaginationModule.forRoot(),
         BsDatepickerModule.forRoot(),
         ModalModule.forRoot(),
         BsDropdownModule.forRoot(),
-        CollapseModule.forRoot()
+        CollapseModule.forRoot(),
+        AccordionModule.forRoot(),
+        ProgressbarModule.forRoot()
     ],
     exports: [
     ],
-    providers: [],
+    providers: [SecurityService],
     bootstrap: [AppComponent],
 })
 export class AppModule { }

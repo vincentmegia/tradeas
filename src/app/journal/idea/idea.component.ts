@@ -4,6 +4,10 @@ import { JournalService } from '../journal.service'
 import { Idea } from './idea';
 import { Star } from './star';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { SecurityService } from '../../shared/services/security.service';
+import { Security } from '../../shared/services/security';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ValidationComponent } from '../../shared/validation/validation.component';
 import * as moment from "moment";
 
 @Component({
@@ -20,14 +24,30 @@ import * as moment from "moment";
 export class IdeaComponent {
     public idea: Idea;
     public previousStar: Star;
+    public securities: Security[];
+    public userForm: any;
     
     @ViewChild('childModal') 
     public modal: ModalDirective;
     
     constructor(private ideaService: IdeaService,
-        private journalService: JournalService) {
+                private journalService: JournalService,
+                private securityService: SecurityService,
+                private formBuilder: FormBuilder) {
         this.idea = new Idea({type: '-----', positions: []});
         this.initializeStars(this.idea);
+        
+        this.securityService
+        .getAll()
+        .subscribe(securities => this.securities = securities);
+
+        this.userForm = this.formBuilder.group({
+            'symbol': ['', Validators.required],
+            'totalShares': ['', Validators.required],
+            'averageBuyPrice': ['', Validators.required],
+            'averageSellPrice': ['', Validators.required],
+            'chart': ['', Validators.required]
+        });
     }
 
     /**
@@ -114,6 +134,10 @@ export class IdeaComponent {
      * 
      */
     save(): void {
+        if (this.userForm.dirty && this.userForm.valid) {
+            alert(`Name: ${this.userForm.value.name}`);
+        }
+
         this.idea.entryDate = moment(new Date());
         this.idea.id = this.idea.symbol + this.idea.entryDate.format('MMMMDDYYYYhhmmss');
         console.log('saving idea...', this.idea);

@@ -21,11 +21,16 @@ export class JournalService {
     getIdeas(from: moment.Moment, to: moment.Moment): Observable<Idea[]> {
         return Observable.fromPromise(
             this._pouchDb
-                //.allDocs({include_docs: true})
-                .find({selector: {
-                        entryDate: { $gte: from, $lte: to }
+                .find({
+                    selector: {
+                        entryDate: { 
+                            $gte: from, 
+                            $lte: to
+                        }
                     }
-                }).then(response => {
+                })
+                .then(response => {
+                    console.log(response);
                     let ideas = response.docs.map(doc => {
                         // Convert string to date, doesn't happen automatically.
                         var idea = new Idea({
@@ -42,7 +47,7 @@ export class JournalService {
                             isSelected: doc.isSelected
                         });
                         return idea;
-                    });
+                });
                 console.log(ideas);
                 return ideas;
             })
