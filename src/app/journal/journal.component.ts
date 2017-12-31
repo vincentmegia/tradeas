@@ -12,6 +12,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { IdeaComponent } from './idea/idea.component';
 import { Pagination } from './pagination';
+import { TransactionService } from './idea/transaction.service';
 
 @Component({
     selector: 'journal',
@@ -41,6 +42,7 @@ export class JournalComponent implements OnInit{
 
     constructor(private journalService: JournalService,
                 private securityService: SecurityService,
+                private transactionService: TransactionService,
                 private viewContainerRef: ViewContainerRef) {
         this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1})
     }
@@ -68,15 +70,18 @@ export class JournalComponent implements OnInit{
      * 
      * @param idea 
      */
-    hasPositions(idea: Idea): boolean {
-        return idea.positions.length > 0;
+    hasTransactions(idea: Idea): boolean {
+        var hasTransactions = (idea != null && idea.position != null && idea.position.transactions != null)
+            ? idea.position.transactions.length > 0
+            : false;
+        return hasTransactions;
     }
 
     /**
      * 
      */
     getSelectableClass(idea: Idea): string {
-        let selectableClass = this.hasPositions(idea) 
+        let selectableClass = this.hasTransactions(idea) 
         ? 'selectable' 
         : '';
         return selectableClass;
@@ -112,12 +117,12 @@ export class JournalComponent implements OnInit{
      */
     private getIdeas(startDate: moment.Moment, endDate: moment.Moment): void {
         this.journalService
-        .getIdeas(startDate, endDate)
-        .subscribe(ideas => {
-            this.ideasStore = ideas;
-            this.ideas = ideas;
-            this.pagination.totalItems = this.ideas.length;
-            this.showProgress = false;
+            .getIdeas(startDate, endDate, false)
+            .subscribe(ideas => {
+                this.ideasStore = ideas;
+                this.ideas = ideas;
+                this.pagination.totalItems = this.ideas.length;
+                this.showProgress = false;
         });
     }
 
@@ -139,8 +144,8 @@ export class JournalComponent implements OnInit{
             .subscribe(securities => this.securities = securities);
         
         //data is of array type and should be later changed to a more model centric appraoch
-        this.columns = ['Symbol', 'Type', 'Shares', 'Average Price', 'Sell', '%Gain/Loss', 'Market Value', 'Chart', 'Entry Date', 'Rating']
-        this.subColumns = ['Shares', 'Buy Price', 'Sell Price', 'Entry Date'];
+        this.columns = ['Symbol', 'Type', 'Shares', 'Remaining Shares', 'Average Price', 'Sell', '%Gain/Loss', 'Market Value', 'Chart', 'Entry Date', 'Rating']
+        this.subColumns = ['Matched Quantity', 'Price', 'Side', 'Status', 'Created Date'];
 
         this.childModal.modal.onHidden.subscribe((reason: string) => {
             this.getIdeas(moment(this.startDate), moment(this.endDate));

@@ -34,7 +34,7 @@ export class IdeaComponent {
                 private journalService: JournalService,
                 private securityService: SecurityService,
                 private formBuilder: FormBuilder) {
-        this.idea = new Idea({type: '-----', positions: []});
+        this.idea = new Idea({type: '-----'});
         this.initializeStars(this.idea);
         
         this.securityService
@@ -44,9 +44,9 @@ export class IdeaComponent {
         this.userForm = this.formBuilder.group({
             'symbol': ['', Validators.required],
             'totalShares': ['', Validators.required],
-            'averageBuyPrice': ['', Validators.required],
-            'averageSellPrice': ['', Validators.required],
-            'chart': ['', Validators.required]
+            'averageBuyPrice': [''],
+            'averageSellPrice': [''],
+            'chart': ['']
         });
     }
 

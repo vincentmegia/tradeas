@@ -7,7 +7,7 @@ export class IdeaService {
     private _pouchDb: PouchDB;
 
     constructor() {
-        this._pouchDb = new PouchDB('http://localhost:5984/tradeas');
+        this._pouchDb = new PouchDB('http://localhost:5984/journal');
     }
 
     /**

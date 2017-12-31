@@ -65,18 +65,19 @@
                             <ng-container *ngFor="let idea of ideas">
                                 <tr [className]="getSelectableClass(idea)" (click)="onRowClick(idea)">
                                     <td>
-                                        <i [className]="getExpandedClass(idea)" *ngIf="hasPositions(idea)"></i>
-                                        <i class="fa fa-plus fa-plus-disabled" *ngIf="!hasPositions(idea)"></i>
+                                        <i [className]="getExpandedClass(idea)" *ngIf="hasTransactions(idea)"></i>
+                                        <i class="fa fa-plus fa-plus-disabled" *ngIf="!hasTransactions(idea)"></i>
                                         {{idea.symbol}}</td>
                                     <td>{{idea.type}}</td>
-                                    <td>{{idea.totalShares | number:'.2'}}</td>
-                                    <td>{{idea.averageBuyPrice | currency:'PHP'}}</td>
-                                    <td>{{idea.averageSellPrice | currency:'PHP'}}</td>
+                                    <td>{{idea.position.totalShares | number:'.2'}}</td>
+                                    <td>{{idea.position.remainingShares | number:'.2'}}</td>
+                                    <td>{{idea.position.averageBuyPrice | currency:'PHP'}}</td>
+                                    <td>{{idea.position.averageSellPrice | currency:'PHP'}}</td>
                                     <td>
-                                        <p *ngIf="idea.isGainLoss" class="gain">+{{idea.gainLoss | percent}}</p>
-                                        <p *ngIf="!idea.isGainLoss" class="loss">{{idea.gainLoss | percent}}</p>
+                                        <p *ngIf="idea.position.isGainLoss" class="gain">+{{idea.position.gainLoss | percent}}</p>
+                                        <p *ngIf="!idea.position.isGainLoss" class="loss">{{idea.position.gainLoss | percent}}</p>
                                     </td>
-                                    <td>{{idea.marketValue | currency:'PHP'}}</td>
+                                    <td>{{idea.position.marketValue | currency:'PHP'}}</td>
                                     <td>
                                         <a target="_blank" href="{{idea.chart}}">Link</a>
                                     </td>
@@ -87,9 +88,9 @@
                                         </ng-container>
                                     </td>
                                 </tr>
-                                <ng-container *ngIf="hasPositions(idea)">
+                                <ng-container *ngIf="hasTransactions(idea)">
                                     <tr *ngIf="!idea.isSelected">
-                                        <td colspan="10">
+                                        <td colspan="11">
                                             <div class="card card-block card-header">
                                                 <table class="table">
                                                     <thead>
@@ -100,12 +101,13 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <ng-container *ngFor="let position of idea.positions">
+                                                        <ng-container *ngFor="let transaction of idea.position.transactions">
                                                             <tr>
-                                                                <td>{{position.shares}}</td>
-                                                                <td>{{position.buyPrice}}</td>
-                                                                <td>{{position.sellPrice}}</td>
-                                                                <td>{{position.entryDate | date:mediumDate}}</td>
+                                                                <td>{{transaction.matchedQuantity}}</td>
+                                                                <td>{{transaction.price}}</td>
+                                                                <td>{{transaction.side}}</td>
+                                                                <td>{{transaction.status}}</td>
+                                                                <td>{{transaction.createdDate | date:mediumDate}}</td>
                                                             </tr>
                                                         </ng-container>
                                                     </tbody>

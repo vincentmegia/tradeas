@@ -28,6 +28,7 @@ import {
 import { ValidationComponent } from 'app/shared/validation/validation.component';
 import { Security } from 'app/shared/services/security';
 import { SecurityService } from './shared/services/security.service';
+import { TransactionService } from 'app/journal/idea/transaction.service';
 
 @NgModule({
     declarations: [
@@ -61,7 +62,10 @@ import { SecurityService } from './shared/services/security.service';
     ],
     exports: [
     ],
-    providers: [SecurityService],
+    providers: [
+        SecurityService, 
+        TransactionService
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule { }
