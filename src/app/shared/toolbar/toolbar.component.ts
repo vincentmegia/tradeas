@@ -6,17 +6,19 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 @Component({
     moduleId: module.id,
     selector: 'toolbar',
-    templateUrl: 'toolbar.component.html'
+    templateUrl: 'toolbar.component.html',
+    styleUrls: ['toolbar.component.css'],
 })
 
-export class NavbarComponent implements OnInit{
+export class ToolbarComponent implements OnInit{
     private listTitles: any[];
-    location: Location;
+    private location: Location;
     private nativeElement: Node;
     private toggleButton;
     private sidebarVisible: boolean;
 
-    @ViewChild("toolbar") button;
+    @ViewChild("toolbar") 
+    public button;
 
     constructor(location:Location, private renderer : Renderer, private element : ElementRef) {
         this.location = location;
@@ -29,6 +31,10 @@ export class NavbarComponent implements OnInit{
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
     }
+
+    /**
+     * 
+     */
     getTitle(){
         var titlee = window.location.pathname;
         titlee = titlee.substring(1);
@@ -39,6 +45,10 @@ export class NavbarComponent implements OnInit{
         }
         return 'Dashboard';
     }
+
+    /**
+     * 
+     */
     sidebarToggle(){
         var toggleButton = this.toggleButton;
         var body = document.getElementsByTagName('body')[0];

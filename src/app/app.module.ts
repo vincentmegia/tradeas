@@ -29,6 +29,7 @@ import { ValidationComponent } from 'app/shared/validation/validation.component'
 import { Security } from 'app/shared/services/security';
 import { SecurityService } from './shared/services/security.service';
 import { TransactionService } from 'app/journal/idea/transaction.service';
+import { ToolbarComponent } from 'app/shared/toolbar/toolbar.component';
 
 @NgModule({
     declarations: [
@@ -40,13 +41,14 @@ import { TransactionService } from 'app/journal/idea/transaction.service';
         IconsComponent,
         NotificationsComponent,
         IdeaComponent,
-        ValidationComponent
+        ValidationComponent,
+        ToolbarComponent
     ],
     imports: [
         BrowserModule,
         RouterModule.forRoot(AppRoutes),
         SidebarModule,
-        ToolbarModule,
+        //ToolbarModule,
         FooterModule,
         FixedPluginModule,
         FormsModule,
