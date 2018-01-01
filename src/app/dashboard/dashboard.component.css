@@ -1,0 +1,9 @@
+a.dashboard-label {
+    font-weight: normal;
+    color: #777;
+    font-size: 20px;
+}
+
+a.dashboard-label:hover {
+    font-weight: bolder
+}

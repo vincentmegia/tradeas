@@ -12,6 +12,7 @@ declare var $: any;
     selector: 'dashboard-cmp',
     moduleId: module.id,
     templateUrl: 'dashboard.component.html',
+    styleUrls: ['dashboard.component.css'],
     providers: [
         PortfolioService,
         PortfolioChartRenderer,
@@ -22,7 +23,9 @@ declare var $: any;
 
 export class DashboardComponent implements OnInit {
     constructor(private portfolioService: PortfolioService,
-        private portfolioChartRenderer: PortfolioChartRenderer,
+        private dailyChartRenderer: PortfolioChartRenderer,
+        private weeklyChartRenderer: PortfolioChartRenderer,
+        private monthlyChartRenderer: PortfolioChartRenderer,
         private tradetisticsService: TradetisticsService,
         private tradetisticsRenderer: TradetisticsRenderer) {}
 
@@ -30,15 +33,23 @@ export class DashboardComponent implements OnInit {
      * 
      */
     ngOnInit() {
-        var portfolioPerformanceData = new Chart();
-        portfolioPerformanceData.data = this.portfolioService.getMonthlyPerformance();
-        this.portfolioChartRenderer.drawMonthlyPerformance("#portfolioPerformanceChart", portfolioPerformanceData);
+        var dailyChart = new Chart();
+        dailyChart.data = this.portfolioService.getDailyPerformance();
+        this.dailyChartRenderer.drawMonthlyPerformance("#dailyPerformanceChart", dailyChart);
+
+        var weeklyChart = new Chart();
+        weeklyChart.data = this.portfolioService.getWeeklyPerformance()
+        this.weeklyChartRenderer.drawMonthlyPerformance("#weeklyPerformanceChart", weeklyChart);
+
+        var monthlyChart = new Chart();
+        monthlyChart.data = this.portfolioService.getMonthlyPerformance();
+        this.monthlyChartRenderer.drawMonthlyPerformance("#monthlyPerformanceChart", monthlyChart);
 
         var tradetisticsData = new Chart();
         tradetisticsData.data = this.tradetisticsService.getMonthlyPerformance();
         this.tradetisticsRenderer.drawPerformance("#tradetisticsChart", tradetisticsData);
 
-        this.portfolioChartRenderer.drawAnnualPerformance("#annualPerformanceChart", null);
+        this.weeklyChartRenderer.drawAnnualPerformance("#annualPerformanceChart", null);
     }
 }
                                                         

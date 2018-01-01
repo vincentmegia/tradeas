@@ -1,174 +1,262 @@
 <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-info text-center">
-                                    <i class="ti-wallet"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Annual Target</p>
-                                    $10000 <p class="gain">+500%</p>
-                                </div>
+    <!-- capital/balance/equity -->
+    <div class="row">
+        <!-- equity card -->
+        <div class="col-lg-4 col-sm-6">
+            <div class="card">
+                <div class="content">
+                    <div class="row pull-right">
+                        <div class="col-xs-12">
+                            <i class="ti-close mouse-pointer"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <div class="icon-big icon-info text-center">
+                                <i class="ti-wallet"></i>
                             </div>
                         </div>
-                        <div class="footer">
-                            <hr />
-                            <div class="stats">
-                                <i class="ti-calendar"></i> 6 months remaining
+                        <div class="col-xs-10">
+                            <div class="numbers">
+                                <p>Starting equity</p>
+                                <span>100,000,000.0000</span>
+                                <span class="pull-right">PHP</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-success text-center">
-                                    <i class="ti-stats-up"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Annual YTD</p>
-                                    $1,345
-                                    <p class="gain">+75%</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer">
+                    <div class="row">
+                        <div class="col-xs-12">
                             <hr />
-                            <div class="stats">
-                                <i class="ti-calendar"></i> Annual is up
+                        </div>
+                    </div>
+                    <div class="row stats">
+                        <div class="col-xs-5">
+                            Actual equity:
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="pull-right">
+                                <b>100,500,000.0000</b>
+                                <span class="pull-right">PHP</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>      
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-info text-center">
-                                    <i class="ti-pulse"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Monthly Target</p>
-                                    $500
-                                    <p class="gain">+20%</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer">
-                            <hr />
-                            <div class="stats">
-                                <i class="ti-timer"></i> Monthly is up
+                    <div class="row stats">
+                        <div class="col-xs-5">Profit/Loss:</div>
+                        <div class="col-xs-7">
+                            <div class="gain pull-right">
+                                <b>+500,000.0000</b>
+                                <span class="pull-right">PHP</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-success text-center">
-                                    <i class="ti-stats-up"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Monthly Target</p>
-                                    $5000
-                                    <p class="gain">+10%</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer">
-                            <hr />
-                            <div class="stats">
-                                <i class="ti-reload"></i>13 day(s) remaining
-                            </div>
+                    <div class="footer">
+                        <hr/>
+                        <div class="stats">
+                            <i class="ti-reload"></i> Portfolio is up for 2 consecutive day(s)
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Portfolio Performance</h4>
-                        <p class="category">2017</p>
+        <!-- cash balance card -->
+        <div class="col-lg-4 col-sm-6">
+            <div class="card">
+                <div class="content">
+                    <div class="row pull-right">
+                        <div class="col-xs-12">
+                            <i class="ti-close mouse-pointer"></i>
+                        </div>
                     </div>
-                    <div class="content">
-                        <div id="portfolioPerformanceChart" class="ct-chart"></div>
-                        <div class="footer">
-                            <div class="chart-legend">
-                                <i class="fa fa-circle text-info"></i> Open
-                                <i class="fa fa-circle text-danger"></i> Click
-                                <i class="fa fa-circle text-warning"></i> Click Second Time
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <div class="icon-big icon-info text-center">
+                                <i class="ti-wallet"></i>
                             </div>
-                            <hr>
-                            <div class="stats">
-                                <i class="ti-reload"></i> Updated 3 minutes ago
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="numbers">
+                                <p>Cash balance</p>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row stats">
+                        <div class="col-xs-5">
+                            Actual balance:
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="pull-right">
+                                <b>100,500,000.0000</b>
+                                <span class="pull-right">PHP</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row stats">
+                        <div class="col-xs-5">Buying power:</div>
+                        <div class="col-xs-7">
+                            <div class="gain pull-right">
+                                <b>+500,000.0000</b>
+                                <span class="pull-right">PHP</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <hr/>
+                        <div class="stats">
+                            <i class="ti-reload"></i> Portfolio is up for 2 consecutive day(s)
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Tradetistics</h4>
-                        <p class="category">2017 Performance</p>
+        <div class="col-lg-4 col-sm-6">
+            <div class="card">
+                <div class="content">
+                    <div class="row pull-right">
+                        <div class="col-xs-12">
+                            <i class="ti-close mouse-pointer"></i>
+                        </div>
                     </div>
-                    <div class="content">
-                        <div id="tradetisticsChart" class="ct-chart ct-perfect-fourth"></div>
-
-                        <div class="footer">
-                            <div class="chart-legend">
-                                <i class="fa fa-circle text-info"></i> Trend Following
-                                <i class="fa fa-circle text-danger"></i> Bounce
-                                <i class="fa fa-circle text-warning"></i> Tsupit
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <div class="icon-big icon-info text-center">
+                                <i class="ti-wallet"></i>
                             </div>
-                            <hr>
-                            <div class="stats">
-                                <i class="ti-reload"></i> Updated 3 minutes ago
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="numbers">
+                                <p>Day change</p>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row stats">
+                        <div class="col-xs-5">
+                            Day change percentage:
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="pull-right gain">
+                                <b>+5.34%</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row stats">
+                        <div class="col-xs-5">Day change value:</div>
+                        <div class="col-xs-7">
+                            <div class="gain pull-right">
+                                <b>+500,000.0000</b>
+                                <span class="pull-right">PHP</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <hr/>
+                        <div class="stats">
+                            <i class="ti-reload"></i> Portfolio is up for 2 consecutive day(s)
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card ">
-                    <div class="header">
-                        <h4 class="title">2016 vs 2017 Performance</h4>
-                        <p class="category">All products including Taxes</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <hr/>
+        </div>
+    </div>
+    <!-- daily objectives card -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="header">
+                    <a (click)="isDailyCollapsed = !isDailyCollapsed" class="mouse-pointer dashboard-label">Daily Performance</a>
+                    <div class="pull-right">
+                        <i class="ti-angle-up mouse-pointer" (click)="isDailyCollapsed = true;"></i>
+                        <i class="ti-angle-down mouse-pointer" (click)="isDailyCollapsed = false;"></i>
                     </div>
-                    <div class="content">
-                        <div id="annualPerformanceChart" class="ct-chart"></div>
-                        <div class="footer">
-                            <div class="chart-legend">
-                                <i class="fa fa-circle text-info"></i> 2015
-                                <i class="fa fa-circle text-info"></i> 2016
-                                <i class="fa fa-circle text-warning"></i> 2017
+                    <hr/>
+                </div>
+                <div class="content" [collapse]="isDailyCollapsed">
+                    <!-- daily objectives -->
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card">
+                                <div class="content">
+                                    <div class="row pull-right">
+                                        <div class="col-xs-12">
+                                            <i class="ti-close mouse-pointer"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="icon-big icon-info text-center">
+                                                <i class="ti-wallet"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <div class="numbers">
+                                                <p>Daily Target (Tsupitero mode)</p>
+                                                10000PHP
+                                                <p class="gain">+500%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <hr />
+                                        </div>
+                                    </div>
+                                    <div class="row stats">
+                                        <div class="col-xs-5">
+                                            Actual:
+                                        </div>
+                                        <div class="col-xs-7">
+                                            <div class="pull-right">
+                                                <b>5,000.0000</b>
+                                                <span class="pull-right">PHP</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="footer">
+                                        <hr />
+                                        <div class="stats">
+                                            <i class="ti-time"></i> 3 hour(s) remaining
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <hr>
-                            <div class="stats">
-                                <i class="ti-reload"></i> Updated 3 minutes ago
+                        </div>
+                    </div>
+                    <!-- daily performance -->
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Daily Performance</h4>
+                                    <p class="category">Week 1 (January 1 - 5)</p>
+                                </div>
+                                <div class="content">
+                                    <div id="dailyPerformanceChart" class="ct-chart"></div>
+                                    <div class="footer">
+                                        <!-- <div class="chart-legend">
+                                            <i class="fa fa-circle text-info"></i> Open
+                                            <i class="fa fa-circle text-danger"></i> Click
+                                            <i class="fa fa-circle text-warning"></i> Click Second Time
+                                        </div> -->
+                                        <hr>
+                                        <div class="stats">
+                                            <i class="ti-reload"></i> Updated 3 minutes ago
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -176,3 +264,237 @@
             </div>
         </div>
     </div>
+    <!-- weekly objectives card -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="header">
+                    <a (click)="isWeeklyCollapsed = !isWeeklyCollapsed" class="mouse-pointer dashboard-label">Weekly Performance</a>
+                    <div class="pull-right">
+                        <i class="ti-angle-up mouse-pointer" (click)="isWeeklyCollapsed = true;"></i>
+                        <i class="ti-angle-down mouse-pointer" (click)="isWeeklyCollapsed = false;"></i>
+                    </div>
+                    <hr/>
+                </div>
+                <div class="content" [collapse]="isWeeklyCollapsed">
+                    <!-- weekly objetives -->
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card">
+                                <div class="content">
+                                    <div class="row pull-right">
+                                        <div class="col-xs-12">
+                                            <i class="ti-close mouse-pointer"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="icon-big icon-info text-center">
+                                                <i class="ti-wallet"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <div class="numbers">
+                                                <p>Weekly Target</p>
+                                                50000PHP
+                                                <p>+5%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <hr />
+                                        </div>
+                                    </div>
+                                    <div class="row stats">
+                                        <div class="col-xs-5">
+                                            Actual:
+                                        </div>
+                                        <div class="col-xs-7">
+                                            <div class="pull-right loss">
+                                                <b>-2,000.0000</b>
+                                                <span class="pull-right">PHP</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="footer">
+                                        <hr />
+                                        <div class="stats">
+                                            <i class="ti-time"></i> 4 day(s) remaining
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- weekly performance -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Weekly Performance</h4>
+                                    <p class="category">Week 1 of Week 52</p>
+                                </div>
+                                <div class="content">
+                                    <div id="weeklyPerformanceChart" class="ct-chart"></div>
+                                    <div class="footer">
+                                        <!-- <div class="chart-legend">
+                                            <i class="fa fa-circle text-info"></i> Open
+                                            <i class="fa fa-circle text-danger"></i> Click
+                                            <i class="fa fa-circle text-warning"></i> Click Second Time
+                                        </div> -->
+                                        <hr>
+                                        <div class="stats">
+                                            <i class="ti-reload"></i> Updated 3 minutes ago
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- monthly objectives pane -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="header">
+                    <a (click)="isMonthlyCollapsed = !isMonthlyCollapsed" class="mouse-pointer dashboard-label">Monthly Performance</a>
+                    <div class="pull-right">
+                        <i class="ti-angle-up mouse-pointer" (click)="isMonthlyCollapsed = true;"></i>
+                        <i class="ti-angle-down mouse-pointer" (click)="isMonthlyCollapsed = false;"></i>
+                    </div>
+                    <hr/>
+                </div>
+                <div class="content" [collapse]="isMonthlyCollapsed">
+                    <!-- monthly objetives -->
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card">
+                                <div class="content">
+                                    <div class="row pull-right">
+                                        <div class="col-xs-12">
+                                            <i class="ti-close mouse-pointer"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="icon-big icon-info text-center">
+                                                <i class="ti-wallet"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <div class="numbers">
+                                                <p>Monthly Target</p>
+                                                100,000PHP
+                                                <p>+20%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <hr />
+                                        </div>
+                                    </div>
+                                    <div class="row stats">
+                                        <div class="col-xs-5">
+                                            Actual:
+                                        </div>
+                                        <div class="col-xs-7">
+                                            <div class="pull-right loss">
+                                                <b>+50,000.0000</b>
+                                                <span class="pull-right">PHP</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="footer">
+                                        <hr />
+                                        <div class="stats">
+                                            <i class="ti-time"></i> 26 day(s) remaining
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- monthly performance -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Monthly Performance</h4>
+                                    <p class="category">2017</p>
+                                </div>
+                                <div class="content">
+                                    <div id="monthlyPerformanceChart" class="ct-chart"></div>
+                                    <div class="footer">
+                                        <!-- <div class="chart-legend">
+                                            <i class="fa fa-circle text-info"></i> Open
+                                            <i class="fa fa-circle text-danger"></i> Click
+                                            <i class="fa fa-circle text-warning"></i> Click Second Time
+                                        </div> -->
+                                        <hr>
+                                        <div class="stats">
+                                            <i class="ti-reload"></i> Updated 3 minutes ago
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- tradetistics -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Tradetistics</h4>
+                    <p class="category">2017 Performance</p>
+                </div>
+                <div class="content">
+                    <div id="tradetisticsChart" class="ct-chart ct-perfect-fourth"></div>
+
+                    <div class="footer">
+                        <div class="chart-legend">
+                            <i class="fa fa-circle text-info"></i> Trend Following
+                            <i class="fa fa-circle text-danger"></i> Bounce
+                            <i class="fa fa-circle text-warning"></i> Tsupit
+                        </div>
+                        <hr>
+                        <div class="stats">
+                            <i class="ti-reload"></i> Updated 3 minutes ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card ">
+                <div class="header">
+                    <h4 class="title">2016 vs 2017 Performance</h4>
+                    <p class="category">All products including Taxes</p>
+                </div>
+                <div class="content">
+                    <div id="annualPerformanceChart" class="ct-chart"></div>
+                    <div class="footer">
+                        <div class="chart-legend">
+                            <i class="fa fa-circle text-info"></i> 2015
+                            <i class="fa fa-circle text-info"></i> 2016
+                            <i class="fa fa-circle text-warning"></i> 2017
+                        </div>
+                        <hr>
+                        <div class="stats">
+                            <i class="ti-reload"></i> Updated 3 minutes ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

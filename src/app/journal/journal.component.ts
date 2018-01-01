@@ -122,8 +122,9 @@ export class JournalComponent implements OnInit{
                 this.ideasStore = ideas;
                 this.ideas = ideas;
                 this.pagination.totalItems = this.ideas.length;
-                this.showProgress = false;
-        });
+                this.showProgress = false;},
+                error => console.log('Error: ', error),
+                () => this.showProgress = false);
     }
 
     /**

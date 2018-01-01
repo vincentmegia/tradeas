@@ -48,7 +48,6 @@ import { ToolbarComponent } from 'app/shared/toolbar/toolbar.component';
         BrowserModule,
         RouterModule.forRoot(AppRoutes),
         SidebarModule,
-        //ToolbarModule,
         FooterModule,
         FixedPluginModule,
         FormsModule,
