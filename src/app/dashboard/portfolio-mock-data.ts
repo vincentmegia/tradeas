@@ -2,16 +2,16 @@ import { Portfolio } from "app/dashboard/portfolio";
 
 export class PortfolioMockData {
     static MONTHLYPERFORMANCE: Portfolio[] = [
-        new Portfolio({totalEquity: 22.20, broker: 'colfinancial'}),
-        new Portfolio({totalEquity: 34.90, broker: 'colfinancial'}),
-        new Portfolio({totalEquity: 42.28, broker: 'colfinancial'}),
-        new Portfolio({totalEquity: 51.93, broker: 'colfinancial'}),
-        new Portfolio({totalEquity: 62.21, broker: 'colfinancial'}),
-        new Portfolio({totalEquity: 80.23, broker: 'colfinancial'}),
-        new Portfolio({totalEquity: 62.21, broker: 'colfinancial'}),
-        new Portfolio({totalEquity: 82.12, broker: 'colfinancial'}),
-        new Portfolio({totalEquity: 102.50, broker: 'colfinancial'}),
-        new Portfolio({totalEquity: 107.23, broker: 'colfinancial'})
+        new Portfolio({totalEquity: 22000.20, broker: 'colfinancial'}),
+        new Portfolio({totalEquity: 34000.90, broker: 'colfinancial'}),
+        new Portfolio({totalEquity: 42000.28, broker: 'colfinancial'}),
+        new Portfolio({totalEquity: 51000.93, broker: 'colfinancial'}),
+        new Portfolio({totalEquity: 62000.21, broker: 'colfinancial'}),
+        new Portfolio({totalEquity: 80000.23, broker: 'colfinancial'}),
+        new Portfolio({totalEquity: 62000.21, broker: 'colfinancial'}),
+        new Portfolio({totalEquity: 82000.12, broker: 'colfinancial'}),
+        new Portfolio({totalEquity: 102000.50, broker: 'colfinancial'}),
+        new Portfolio({totalEquity: 107000.23, broker: 'colfinancial'})
     ];
 
     static TRADETISTICS: any[] = [
@@ -20,14 +20,14 @@ export class PortfolioMockData {
     ];
 
     static PORTFOLIODAILY: Portfolio[] = [
-        new Portfolio({totalEquity: 10}),
-        new Portfolio({totalEquity: 20}),
-        new Portfolio({totalEquity: 30}),
+        new Portfolio({totalEquity: 1000}),
+        new Portfolio({totalEquity: 2000}),
+        new Portfolio({totalEquity: 3000}),
     ];
 
     static PORTFOLIOWEEKLY: Portfolio[] = [
-        new Portfolio({totalEquity: 10}),
-        new Portfolio({totalEquity: 20}),
-        new Portfolio({totalEquity: 30}),
+        new Portfolio({totalEquity: 10000}),
+        new Portfolio({totalEquity: 20000}),
+        new Portfolio({totalEquity: 30000}),
     ];
 }

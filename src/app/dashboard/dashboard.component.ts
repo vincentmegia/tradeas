@@ -35,15 +35,21 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         var dailyChart = new Chart();
         dailyChart.data = this.portfolioService.getDailyPerformance();
-        this.dailyChartRenderer.drawMonthlyPerformance("#dailyPerformanceChart", dailyChart);
+        dailyChart.high = 10000;
+        dailyChart.low = 1000;
+        this.dailyChartRenderer.draw("#dailyPerformanceChart", dailyChart);
 
         var weeklyChart = new Chart();
+        weeklyChart.high = 50000;
+        weeklyChart.low = 5000;
         weeklyChart.data = this.portfolioService.getWeeklyPerformance()
-        this.weeklyChartRenderer.drawMonthlyPerformance("#weeklyPerformanceChart", weeklyChart);
+        this.weeklyChartRenderer.draw("#weeklyPerformanceChart", weeklyChart);
 
         var monthlyChart = new Chart();
+        monthlyChart.high = 100000;
+        monthlyChart.low = 10000;
         monthlyChart.data = this.portfolioService.getMonthlyPerformance();
-        this.monthlyChartRenderer.drawMonthlyPerformance("#monthlyPerformanceChart", monthlyChart);
+        this.monthlyChartRenderer.draw("#monthlyPerformanceChart", monthlyChart);
 
         var tradetisticsData = new Chart();
         tradetisticsData.data = this.tradetisticsService.getMonthlyPerformance();

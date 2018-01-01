@@ -10,19 +10,19 @@ export class PortfolioChartRenderer {
      * @param elementName 
      * @param chart 
      */
-    drawMonthlyPerformance(elementName: string, chart: Chart): void {
+    draw(elementName: string, chart: Chart): void {
         var options = {
             lineSmooth: false,
             axisY: {
-                offset: 40,
+                offset: 60,
                 labelInterpolationFnc: function (value) {
-                    return '$' + value;
+                    return value;
                 }
 
             },
-            low: 10,
+            low: chart.low,
             height: "250px",
-            high: 110,
+            high: chart.high,
             classNames: {
                 point: 'ct-point ct-green',
                 line: 'ct-line ct-green'
