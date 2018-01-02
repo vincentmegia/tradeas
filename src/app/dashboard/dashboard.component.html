@@ -179,8 +179,8 @@
                 <div class="header">
                     <a (click)="isDailyCollapsed = !isDailyCollapsed" class="mouse-pointer dashboard-label">Daily Performance</a>
                     <div class="pull-right">
-                        <i class="ti-angle-up mouse-pointer" (click)="isDailyCollapsed = true;"></i>
-                        <i class="ti-angle-down mouse-pointer" (click)="isDailyCollapsed = false;"></i>
+                        <i class="mouse-pointer" [ngClass]="{'ti-angle-up': !isDailyCollapsed,
+                                     'ti-angle-down': isDailyCollapsed}" (click)="isDailyCollapsed = !isDailyCollapsed"></i>
                     </div>
                     <hr/>
                 </div>
@@ -271,8 +271,8 @@
                 <div class="header">
                     <a (click)="isWeeklyCollapsed = !isWeeklyCollapsed" class="mouse-pointer dashboard-label">Weekly Performance</a>
                     <div class="pull-right">
-                        <i class="ti-angle-up mouse-pointer" (click)="isWeeklyCollapsed = true;"></i>
-                        <i class="ti-angle-down mouse-pointer" (click)="isWeeklyCollapsed = false;"></i>
+                        <i class="mouse-pointer" [ngClass]="{'ti-angle-up': !isWeeklyCollapsed,
+                        'ti-angle-down': isWeeklyCollapsed}" (click)="isWeeklyCollapsed = !isWeeklyCollapsed"></i>
                     </div>
                     <hr/>
                 </div>
@@ -363,8 +363,8 @@
                 <div class="header">
                     <a (click)="isMonthlyCollapsed = !isMonthlyCollapsed" class="mouse-pointer dashboard-label">Monthly Performance</a>
                     <div class="pull-right">
-                        <i class="ti-angle-up mouse-pointer" (click)="isMonthlyCollapsed = true;"></i>
-                        <i class="ti-angle-down mouse-pointer" (click)="isMonthlyCollapsed = false;"></i>
+                        <i class="mouse-pointer" [ngClass]="{'ti-angle-up': !isMonthlyCollapsed,
+                        'ti-angle-down': isMonthlyCollapsed}" (click)="isMonthlyCollapsed = !isMonthlyCollapsed"></i>
                     </div>
                     <hr/>
                 </div>
