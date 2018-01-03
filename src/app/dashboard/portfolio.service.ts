@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import * as Chartist from 'chartist';
 import { PortfolioMockData } from './portfolio-mock-data';
 import { Chart } from './chart';
+import { Portfolio } from 'app/dashboard/portfolio';
+import { PortfolioSnapshot } from 'app/dashboard/portfolio-snapshot';
 
 @Injectable()
 export class PortfolioService {
@@ -9,41 +11,35 @@ export class PortfolioService {
     /**
      * 
      */
-    getMonthlyPerformance(): any {
-        var performance = PortfolioMockData.MONTHLYPERFORMANCE.map(p => p.totalEquity);
-        var data = {
-            labels: Chart.MONTHS,
-            //data here will be replace in the future by a service call
-            series: [ performance ]
-        };
-        console.log("monthly performance ", data);
-        return data;
+    getPortfolio(): Portfolio {
+        var portfolio = PortfolioMockData.PORTFOLIO;
+        return portfolio;
     }
 
     /**
      * 
      */
-    getDailyPerformance(): any {
-        var performance = PortfolioMockData.PORTFOLIODAILY.map(p => p.totalEquity);
-        var data = {
-            labels: Chart.DAYS,
-            //data here will be replace in the future by a service call
-            series: [ performance ]
-        };
-        console.log("daily performance ", data);
-        return data;
+    getMonthlyPerformance(): PortfolioSnapshot[] {
+        var performance = PortfolioMockData.MONTHLYPERFORMANCE;
+        console.log("monthly performance ", performance);
+        return performance;
     }
 
     /**
      * 
      */
-    getWeeklyPerformance(): any {
-        var performance = PortfolioMockData.PORTFOLIOWEEKLY.map(p => p.totalEquity);
-        var data = {
-            labels: Chart.WEEKS,
-            //data here will be replace in the future by a service call
-            series: [ performance ]
-        };
-        return data;
+    getDailyPerformance(): PortfolioSnapshot[] {
+        var performance = PortfolioMockData.PORTFOLIODAILY;
+        console.log("daily performance ", performance);
+        return performance;
+    }
+
+    /**
+     * 
+     */
+    getWeeklyPerformance(): PortfolioSnapshot[] {
+        var performance = PortfolioMockData.PORTFOLIOWEEKLY;
+        console.log("weekly performance ", performance);
+        return performance;
     }
 }

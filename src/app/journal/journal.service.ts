@@ -21,7 +21,7 @@ export class JournalService {
     /**
      * Gets all Ideas based on date range
      */
-    getIdeas(from: moment.Moment, to: moment.Moment, isLazyTransactions: boolean): Observable<Idea[]> {
+    getIdeas(from: moment.Moment, to: moment.Moment): Observable<Idea[]> {
         return Observable.fromPromise(
             this._pouchDb
                 .find({
@@ -36,14 +36,9 @@ export class JournalService {
                     console.log(response);
                     let ideas = response.docs.map(doc => {
                         //check for transactions
-                        var transactions = [];
+                        let transactionsList = [];
                         if (doc.position.transactions != null && doc.position.transactions.length > 0) {
-                            transactions = doc.position.transactions.map(t => {
-                                    var transaction = new Transaction({
-                                        id: t.id
-                                });
-                                return transaction;
-                            });
+                            transactionsList = doc.position.transactions.map(t => t.id);
                         }
                         // Convert string to date, doesn't happen automatically.
                         var idea = new Idea({
@@ -60,18 +55,18 @@ export class JournalService {
                                 symbol: doc.position.symbol,
                                 status: doc.position.status,
                                 createdDate: doc.position.createdDate,
-                                transactions: transactions
+                                transactionsList: transactionsList
                             }),
+                            isSelected: false
                         });
 
-                        if (isLazyTransactions) return;
-                        if (idea.position.transactions.length > 0) {
+                        if (doc.position.transactions != null && doc.position.transactions.length > 0) {
                             this.transactionService
                                 .getTransactions([idea])
                                 .subscribe(transactions => {
-                                    idea.position.transactions = transactions;
+                                    idea.position.transactionsStore = transactions;
                                     idea.isSelected = true;
-                                })
+                                });
                         }
                         return idea;
                     });

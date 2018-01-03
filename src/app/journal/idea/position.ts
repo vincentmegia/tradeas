@@ -5,13 +5,15 @@ export class Position {
     private _marketValue: number;
     private _gainLoss: number;
 
-    public orderId: string;
-    public transactionId: string;
-    public status: string;
-    public symbol: string;
-    public entryDate: moment.Moment
-    public createdDate: moment.Moment;
-    public transactions: Transaction[];
+    orderId: string;
+    transactionId: string;
+    status: string;
+    symbol: string;
+    entryDate: moment.Moment
+    createdDate: moment.Moment;
+    transactions: Transaction[];
+    transactionsList: string[];
+    transactionsStore: Transaction[];
 
     public constructor(init?: Partial<Position>) {
         Object.assign(this, init); 
@@ -37,8 +39,8 @@ export class Position {
      * 
      */
     get totalShares(): number {
-        if (this.transactions === null || !this.transactions[0].side) return 0;
-        let totalShares = this.transactions
+        if (!this.transactionsStore) return 0;
+        let totalShares = this.transactionsStore
             .filter(t => t.side.toLowerCase() == "buy")
             .map(t => t.matchedQuantity)
             .reduce((a, b)=> a + b);
@@ -49,8 +51,8 @@ export class Position {
      * 
      */
     get remainingShares(): number {
-        if (this.transactions === null || !this.transactions[0].side) return 0;
-        let remainingShares = this.transactions
+        if (!this.transactionsStore) return 0;
+        let remainingShares = this.transactionsStore
             .filter(t => t.side.toLowerCase() == "sell")
             .map(t => t.matchedQuantity)
             .reduce((a, b)=> a + b);
@@ -62,7 +64,7 @@ export class Position {
      * Computes the capital gain loss
      */
     get gainLoss(): number {
-        if (this.averageSellPrice == null)
+        if (!this.averageSellPrice)
             this._gainLoss = 0;
         else
             this._gainLoss = ((this.averageSellPrice - this.averageBuyPrice) / this.averageBuyPrice);
@@ -73,8 +75,8 @@ export class Position {
      * 
      */
     get averageBuyPrice(): number {
-        if (this.transactions === null || !this.transactions[0].side) return 0;
-        let buyTransasctions = this.transactions
+        if (!this.transactionsStore) return 0;
+        let buyTransasctions = this.transactionsStore
             .filter(t => t.side.toLowerCase() == "buy")
             .map(t => t.price);
         let averageBuyPrice = buyTransasctions.reduce((a, b)=> a + b);
@@ -86,8 +88,8 @@ export class Position {
      * 
      */
     get averageSellPrice(): number {
-        if (this.transactions === null || !this.transactions[0].side) return 0;
-        let sellTransactions = this.transactions
+        if (!this.transactionsStore) return 0;
+        let sellTransactions = this.transactionsStore
             .filter(t => t.side.toLowerCase() == "sell")
             .map(t => t.price);
         let averageBuyPrice = sellTransactions.reduce((a, b)=> a + b);

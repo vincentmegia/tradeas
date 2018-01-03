@@ -1,7 +1,8 @@
 export class Chart {
-    public data: any;
-    public high: number;
-    public low: number;
+    data: any;
+    high: number;
+    low: number;
+    ticks: number[];
 
     static DAYS: any[] = [
         'Monday',

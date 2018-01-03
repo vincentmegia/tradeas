@@ -30,6 +30,8 @@ import { Security } from 'app/shared/services/security';
 import { SecurityService } from './shared/services/security.service';
 import { TransactionService } from 'app/journal/idea/transaction.service';
 import { ToolbarComponent } from 'app/shared/toolbar/toolbar.component';
+import { ChartService } from 'app/dashboard/chart.service';
+import { PortfolioService } from 'app/dashboard/portfolio.service';
 
 @NgModule({
     declarations: [
@@ -65,7 +67,9 @@ import { ToolbarComponent } from 'app/shared/toolbar/toolbar.component';
     ],
     providers: [
         SecurityService, 
-        TransactionService
+        TransactionService,
+        ChartService,
+        PortfolioService
     ],
     bootstrap: [AppComponent],
 })

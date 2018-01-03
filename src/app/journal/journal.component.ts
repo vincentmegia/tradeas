@@ -53,6 +53,11 @@ export class JournalComponent implements OnInit{
      */
     onRowClick(idea: Idea): void {
         idea.isSelected = !idea.isSelected;
+        this.transactionService
+            .getTransactions([idea])
+            .subscribe(transactions => {
+                idea.position.transactions = transactions;
+            });
     }
 
     /**
@@ -71,8 +76,8 @@ export class JournalComponent implements OnInit{
      * @param idea 
      */
     hasTransactions(idea: Idea): boolean {
-        var hasTransactions = (idea != null && idea.position != null && idea.position.transactions != null)
-            ? idea.position.transactions.length > 0
+        var hasTransactions = (idea != null && idea.position != null && idea.position.transactionsStore != null)
+            ? idea.position.transactionsStore.length > 0
             : false;
         return hasTransactions;
     }
@@ -117,7 +122,7 @@ export class JournalComponent implements OnInit{
      */
     private getIdeas(startDate: moment.Moment, endDate: moment.Moment): void {
         this.journalService
-            .getIdeas(startDate, endDate, false)
+            .getIdeas(startDate, endDate)
             .subscribe(ideas => {
                 this.ideasStore = ideas;
                 this.ideas = ideas;

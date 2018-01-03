@@ -18,7 +18,7 @@ export class TransactionService {
     //  * Gets all transaction for a position
     //  */
     getTransactions(ideas: Idea[]): Observable<Transaction[]> {
-        var keys = ideas.map(i => i.position.transactions.map(t => t.id))[0];
+        var keys = ideas.map(i => i.position.transactionsList.map(t => t))[0];
         var options = {
             include_docs: true,
             keys: keys
