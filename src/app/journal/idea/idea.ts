@@ -1,7 +1,6 @@
 import { Star } from './star';
 import { Position } from './position';
 import * as moment from "moment";
-import { IdeaJson } from './idea.json';
 
 export class Idea {
     public id: string;
@@ -21,7 +20,7 @@ export class Idea {
     /**
      * 
      */
-    get json(): IdeaJson {
+    get json(): any {
         return {
             _id: this.id,
             symbol: this.symbol,

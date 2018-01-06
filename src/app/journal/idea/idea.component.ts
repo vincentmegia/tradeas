@@ -9,6 +9,10 @@ import { Security } from '../../shared/services/security';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ValidationComponent } from '../../shared/validation/validation.component';
 import * as moment from "moment";
+import { Position } from 'app/journal/idea/position';
+import { TransactionService } from 'app/journal/idea/transaction.service';
+import { Transaction } from 'app/journal/idea/transaction';
+import { v4 as uuid } from 'uuid';
 
 @Component({
     selector: 'idea',
@@ -33,8 +37,9 @@ export class IdeaComponent {
     constructor(private ideaService: IdeaService,
                 private journalService: JournalService,
                 private securityService: SecurityService,
+                private transactionService: TransactionService,
                 private formBuilder: FormBuilder) {
-        this.idea = new Idea({type: '-----'});
+        this.idea = new Idea({type: '-----', position: new Position()});
         this.initializeStars(this.idea);
         
         this.securityService
@@ -44,9 +49,9 @@ export class IdeaComponent {
         this.userForm = this.formBuilder.group({
             'symbol': ['', Validators.required],
             'totalShares': ['', Validators.required],
-            'averageBuyPrice': [''],
+            'averageBuyPrice': ['', Validators.required],
             'averageSellPrice': [''],
-            'chart': ['']
+            'chart': ['', Validators.required]
         });
     }
 
@@ -134,13 +139,35 @@ export class IdeaComponent {
      * 
      */
     save(): void {
-        if (this.userForm.dirty && this.userForm.valid) {
-            alert(`Name: ${this.userForm.value.name}`);
-        }
-
-        this.idea.entryDate = moment(new Date());
+        let today = moment(new Date());
+        this.idea.entryDate = today;
         this.idea.id = this.idea.symbol + this.idea.entryDate.format('MMMMDDYYYYhhmmss');
+
+        let id = `col${uuid()}`;
+        let transaction = new Transaction({
+            id: id, 
+            transactionId: '', 
+            orderId: '', 
+            symbol: this.idea.symbol,
+            quantity: this.idea.position.totalShares,
+            matchedQuantity: this.idea.position.totalShares,
+            price: this.idea.position.averageBuyPrice,
+            side: 'Buy',
+            status: 'Executed',
+            createdDate: today
+        })
+        this.transactionService.saveAll([transaction]);
+
+        this.idea.position = new Position({
+            transactionId: '', 
+            orderId: '', 
+            symbol: this.idea.symbol, 
+            status: 'Executed', 
+            createdDate: moment(new Date()),
+            transactionIds: [id]
+        })
         console.log('saving idea...', this.idea);
+
         this.ideaService.addIdea(this.idea);
         this.hide();
     }

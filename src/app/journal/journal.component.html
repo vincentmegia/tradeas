@@ -47,7 +47,7 @@
                     <h4 class="title">
                         <!-- <i class="ti-calendar"></i> -->
                         <span>{{currentMonth}} idea(s)</span>
-                        <img src="./assets/img/spinner.gif" style="width: 70px;height:50px" *ngIf="showProgress">
+                        <!-- <img src="./assets/img/spinner.gif" style="width: 70px;height:50px" *ngIf="showProgress"> -->
                     </h4>
                     <p class="category">
                     </p>
@@ -69,7 +69,7 @@
                                         <i class="fa fa-plus fa-plus-disabled" *ngIf="!hasTransactions(idea)"></i>
                                         {{idea.symbol}}</td>
                                     <td>{{idea.type}}</td>
-                                    <td>{{idea.position.totalShares | number:'.2'}}</td>
+                                    <td>{{idea.position.computedTotalShares | number:'.2'}}</td>
                                     <td>{{idea.position.remainingShares | number:'.2'}}</td>
                                     <td>{{idea.position.averageBuyPrice | currency:'PHP'}}</td>
                                     <td>{{idea.position.averageSellPrice | currency:'PHP'}}</td>

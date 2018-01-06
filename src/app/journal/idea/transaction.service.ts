@@ -18,7 +18,7 @@ export class TransactionService {
     //  * Gets all transaction for a position
     //  */
     getTransactions(ideas: Idea[]): Observable<Transaction[]> {
-        var keys = ideas.map(i => i.position.transactionsList.map(t => t))[0];
+        var keys = ideas.map(i => i.position.transactionIds)[0];
         var options = {
             include_docs: true,
             keys: keys
@@ -47,12 +47,15 @@ export class TransactionService {
             );
     }
 
-    // saveAll(ideas: Idea[]): void {
-    //     debugger;
-    //     var ideaJson = [];
-    //     for (idea of ideas) {
-    //         ideaJson.push(idea.)
-    //     }
-    //     this._pouchDb.bulkDocs(ideas);
-    // }
+    /**
+     * 
+     * @param ideas 
+     */
+    saveAll(transactions: Transaction[]): void {
+        var transactionsJson = [];
+        for (let transaction of transactions) {
+            transactionsJson.push(transaction.json);
+        }
+        this._pouchDb.bulkDocs(transactionsJson);
+    }
 }

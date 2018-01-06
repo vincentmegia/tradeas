@@ -35,7 +35,7 @@
                         <div class="col-xs-7">
                             <div class="pull-right">
                                 <b *ngIf="nowPerformance.totalEquity >= 0" class="gain">+{{nowPerformance.totalEquity | currency:'PHP'}}</b>
-                                <b *ngIf="nowPerformance.totalEquity < 0" class="loss">{{nowPerformance.totalEquity | currency:'PHP'}}</b>
+                                <b *ngIf="nowPerformance.totalEquity < 0" class="loss">-{{nowPerformance.totalEquity | currency:'PHP'}}</b>
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,8 @@
                         <div class="col-xs-5">Profit/Loss:</div>
                         <div class="col-xs-7">
                             <div class="gain pull-right">
-                                <b>+PHP500,000.0000</b>
+                                <b *ngIf="nowPerformance.totalEquity >= portfolio.totalEquity" class="gain">+{{totalProfitLoss | currency:'PHP'}}</b>
+                                <b *ngIf="nowPerformance.totalEquity < portfolio.totalEquity" class="loss">{{totalProfitLoss | currency:'PHP'}}</b>
                             </div>
                         </div>
                     </div>

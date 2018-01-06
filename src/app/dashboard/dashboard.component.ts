@@ -9,6 +9,7 @@ import * as moment from "moment";
 import { PortfolioSnapshot } from 'app/dashboard/portfolio-snapshot';
 import { ChartService } from 'app/dashboard/chart.service';
 import { Portfolio } from 'app/dashboard/portfolio';
+import { fr } from 'ngx-bootstrap/bs-moment/i18n/fr';
 
 @Component({
     selector: 'dashboard-cmp',
@@ -38,10 +39,24 @@ export class DashboardComponent implements OnInit {
     /**
      * 
      */
-    ngOnInit() {
+    get totalProfitLoss(): number {
+        return this.nowPerformance.totalEquity - this.portfolio.totalEquity;
+    }
+
+    /**
+     * 
+     */
+    ngOnInit(): void {
         this.portfolio = this.portfolioService.getPortfolio();
         let dailyData = this.portfolioService.getDailyPerformance();
-        this.nowPerformance = dailyData.find(d => d.createdDate.isSame(new Date(), 'day'));
+        
+        this.nowPerformance = dailyData.find(d => {
+            let weekDay = moment().weekday();
+            let date = moment(new Date());
+            if (weekDay === 6) date = date.subtract(1, 'day');
+            if (weekDay === 7) date = date.subtract(2, 'day');
+            return d.createdDate.isSame(date, 'day');
+        });
         
         let dailyChart = new Chart();
         dailyChart.data = this.chartService.getDailyPerformance();

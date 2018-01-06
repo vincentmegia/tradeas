@@ -1,14 +1,15 @@
 <div bsModal #childModal="bs-modal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="hide()">&times;</button>
-                <h4 class="modal-title">Add Idea</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <form [formGroup]="userForm" (submit)="save()">
+        <form [formGroup]="userForm" (submit)="save()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="hide()">&times;</button>
+                    <h4 class="modal-title">Add Idea</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-md-1">
@@ -16,17 +17,12 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="input-group">
-                                        <input type="text" 
-                                                class="form-control" 
-                                                placeholder="Enter stock symbol here" 
-                                                [(ngModel)]="idea.symbol"
-                                                [typeahead]="securities" 
-                                                typeaheadOptionField="symbol"
-                                                formControlName="symbol" id="symbol" />
+                                        <input type="text" class="form-control" placeholder="Enter stock symbol here" [(ngModel)]="idea.symbol" [typeahead]="securities"
+                                            typeaheadOptionField="symbol" formControlName="symbol" id="symbol" />
                                         <span class="input-group-addon">
                                             <i class="fa fa-search"></i>
                                         </span>
-                                        <!-- <validation [control]="userForm.controls.symbol"></validation> -->
+                                        <validation [control]="userForm.controls.symbol"></validation>
                                     </div>
                                 </div>
                                 <div class="col-md-1">
@@ -77,11 +73,9 @@
                                     <p class="label-entry">Shares</p>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" 
-                                            placeholder="Enter no. of shares bought here" 
-                                            class="form-control" 
-                                            [(ngModel)]="idea.totalShares"
-                                            formControlName="totalShares" id="totalShares" />
+                                    <input type="text" placeholder="Enter no. of shares bought here" class="form-control" [(ngModel)]="idea.position.totalShares"
+                                        formControlName="totalShares" id="totalShares" />
+                                    <validation [control]="userForm.controls.totalShares"></validation>
                                 </div>
                                 <div class="col-md-1">
                                 </div>
@@ -89,11 +83,9 @@
                                     <p class="label-entry">Buy</p>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" 
-                                            placeholder="Enter average entry price here" 
-                                            class="form-control" 
-                                            [(ngModel)]="idea.averageBuyPrice"
-                                            formControlName="averageBuyPrice" id="averageBuyPrice" />
+                                    <input type="text" placeholder="Enter average entry price here" class="form-control" [(ngModel)]="idea.position.averageBuyPrice"
+                                        formControlName="averageBuyPrice" id="averageBuyPrice" />
+                                    <validation [control]="userForm.controls.averageBuyPrice"></validation>
                                 </div>
                                 <div class="col"></div>
                             </div>
@@ -109,11 +101,8 @@
                                     <p class="label-entry">Sell</p>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" 
-                                            placeholder="Enter average sell price here" 
-                                            class="form-control" 
-                                            [(ngModel)]="idea.averageSellPrice"
-                                            formControlName="averageSellPrice" id="averageSellPrice" />
+                                    <input type="text" placeholder="Enter average sell price here" class="form-control" [(ngModel)]="idea.position.averageSellPrice"
+                                        formControlName="averageSellPrice" id="averageSellPrice" />
                                 </div>
                                 <div class="col-md-1">
                                 </div>
@@ -121,11 +110,9 @@
                                     <p class="label-entry">Chart Link</p>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" 
-                                            placeholder="Enter chart link here" 
-                                            class="form-control" 
-                                            [(ngModel)]="idea.chart"
-                                            formControlName="chart" id="chart" />
+                                    <input type="text" placeholder="Enter chart link here" class="form-control" [(ngModel)]="idea.chart" formControlName="chart"
+                                        id="chart" />
+                                    <validation [control]="userForm.controls.chart"></validation>
                                 </div>
                                 <div class="col"></div>
                             </div>
@@ -149,13 +136,14 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="hide()">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Save changes</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="hide()">Close</button>
-                <button type="button" class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Save changes</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>

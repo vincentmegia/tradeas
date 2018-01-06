@@ -35,11 +35,6 @@ export class JournalService {
                 .then(response => {
                     console.log(response);
                     let ideas = response.docs.map(doc => {
-                        //check for transactions
-                        let transactionsList = [];
-                        if (doc.position.transactions != null && doc.position.transactions.length > 0) {
-                            transactionsList = doc.position.transactions.map(t => t.id);
-                        }
                         // Convert string to date, doesn't happen automatically.
                         var idea = new Idea({
                             id: doc._id,
@@ -55,12 +50,12 @@ export class JournalService {
                                 symbol: doc.position.symbol,
                                 status: doc.position.status,
                                 createdDate: doc.position.createdDate,
-                                transactionsList: transactionsList
+                                transactionIds: doc.position.transactionIds
                             }),
                             isSelected: false
                         });
 
-                        if (doc.position.transactions != null && doc.position.transactions.length > 0) {
+                        if (doc.position.transactionIds != null && doc.position.transactionIds.length > 0) {
                             this.transactionService
                                 .getTransactions([idea])
                                 .subscribe(transactions => {
