@@ -53,13 +53,16 @@ export class DashboardComponent implements OnInit {
         this.nowPerformance = dailyData.find(d => {
             let weekDay = moment().weekday();
             let date = moment(new Date());
-            if (weekDay === 6) date = date.subtract(1, 'day');
-            if (weekDay === 7) date = date.subtract(2, 'day');
-            return d.createdDate.isSame(date, 'day');
+            if (weekDay === 6) date.subtract(1, 'days');
+            if (weekDay === 0) date.subtract(2, 'days');
+            return d.createdDate.isSame(date, 'days');
         });
         
+        let monday = moment().startOf('isoweek' as moment.unitOfTime.StartOf);
+        let friday = moment().startOf('isoweek' as moment.unitOfTime.StartOf).add(4, 'days');
         let dailyChart = new Chart();
-        dailyChart.data = this.chartService.getDailyPerformance();
+        dailyChart.data = this.chartService.getPerformanceByRange(monday, friday);
+        dailyChart.data.series[0].unshift(0);
         dailyChart.high = 10000;
         dailyChart.low = -10000;
         this.dailyChartRenderer.draw("#dailyPerformanceChart", dailyChart);

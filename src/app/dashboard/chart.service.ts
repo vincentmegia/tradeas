@@ -3,6 +3,7 @@ import * as Chartist from 'chartist';
 import { PortfolioMockData } from './portfolio-mock-data';
 import { Chart } from './chart';
 import { PortfolioService } from 'app/dashboard/portfolio.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class ChartService {
@@ -16,10 +17,10 @@ export class ChartService {
      * 
      */
     getMonthlyPerformance(): any {
-        var performance = this.portfolioService
+        let performance = this.portfolioService
             .getMonthlyPerformance()
             .map(p => p.totalEquity);
-        var data = {
+        let data = {
             labels: Chart.MONTHS,
             //data here will be replace in the future by a service call
             series: [ performance ]
@@ -31,11 +32,11 @@ export class ChartService {
     /**
      * 
      */
-    getDailyPerformance(): any {
-        var performance = this.portfolioService
-            .getDailyPerformance()
+    getPerformanceByRange(startDate: moment.Moment, endDate: moment.Moment): any {
+        let performance = this.portfolioService
+            .getPerformanceByRange(startDate, endDate)
             .map(p => p.dayChangeValue);
-        var data = {
+        let data = {
             labels: Chart.DAYS,
             //data here will be replace in the future by a service call
             series: [ performance ]

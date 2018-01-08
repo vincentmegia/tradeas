@@ -5,6 +5,7 @@ export class Chart {
     ticks: number[];
 
     static DAYS: any[] = [
+        'Sunday',
         'Monday',
         'Tuesday',
         'Wednesday',

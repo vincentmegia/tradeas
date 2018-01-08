@@ -3,15 +3,16 @@ import { Position } from './position';
 import * as moment from "moment";
 
 export class Idea {
-    public id: string;
-    public revision: string;
-    public symbol: string;
-    public type: string;
-    public chart: string;
-    public isSelected: boolean;
-    public entryDate: moment.Moment;
-    public stars: Star[];
-    public position: Position;
+    id: string;
+    revision: string;
+    symbol: string;
+    type: string;
+    chart: string;
+    isSelected: boolean;
+    entryDate: moment.Moment;
+    status: string;
+    stars: Star[];
+    position: Position;
 
     public constructor(init?: Partial<Idea>) {
         Object.assign(this, init);

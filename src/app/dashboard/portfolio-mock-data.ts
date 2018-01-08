@@ -33,7 +33,9 @@ export class PortfolioMockData {
         new PortfolioSnapshot({totalEquity: 1098316.34, balance: 980480.49, buyingPower: 980480.49, gainLossValue: -4216.39, gainLossPercentage: -3.45, 
             dayChangeValue: -812.66, dayChangePercentage: -0.07, createdDate: moment(new Date(2018, 0, 4)), broker: 'colfinancial'}),
         new PortfolioSnapshot({totalEquity: 1093919.02, balance: 866881.36, buyingPower: 866881.36, gainLossValue: -7034.96, gainLossPercentage: -3.01, 
-                dayChangeValue: -4397.31, dayChangePercentage: -0.40, createdDate: moment(new Date(2018, 0, 5)), broker: 'colfinancial'}),
+            dayChangeValue: -4397.31, dayChangePercentage: -0.40, createdDate: moment(new Date(2018, 0, 5)), broker: 'colfinancial'}),           
+        new PortfolioSnapshot({totalEquity: 1092968.96, balance: 866902.53, buyingPower: 866902.53, gainLossValue: -8006.19, gainLossPercentage: -3.42, 
+            dayChangeValue: -971.23, dayChangePercentage: -0.09, createdDate: moment(new Date(2018, 0, 8)), broker: 'colfinancial'}),                
     ];
 
     static PORTFOLIOWEEKLY: PortfolioSnapshot[] = [

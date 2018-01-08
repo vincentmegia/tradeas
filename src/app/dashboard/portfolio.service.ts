@@ -4,6 +4,7 @@ import { PortfolioMockData } from './portfolio-mock-data';
 import { Chart } from './chart';
 import { Portfolio } from 'app/dashboard/portfolio';
 import { PortfolioSnapshot } from 'app/dashboard/portfolio-snapshot';
+import * as moment from 'moment';
 
 @Injectable()
 export class PortfolioService {
@@ -12,7 +13,7 @@ export class PortfolioService {
      * 
      */
     getPortfolio(): Portfolio {
-        var portfolio = PortfolioMockData.PORTFOLIO;
+        let portfolio = PortfolioMockData.PORTFOLIO;
         return portfolio;
     }
 
@@ -20,7 +21,7 @@ export class PortfolioService {
      * 
      */
     getMonthlyPerformance(): PortfolioSnapshot[] {
-        var performance = PortfolioMockData.MONTHLYPERFORMANCE;
+        let performance = PortfolioMockData.MONTHLYPERFORMANCE;
         console.log("monthly performance ", performance);
         return performance;
     }
@@ -29,7 +30,16 @@ export class PortfolioService {
      * 
      */
     getDailyPerformance(): PortfolioSnapshot[] {
-        var performance = PortfolioMockData.PORTFOLIODAILY;
+        let dailySnapshots = PortfolioMockData.PORTFOLIODAILY;
+        return dailySnapshots;
+    }
+
+    /**
+     * 
+     */
+    getPerformanceByRange(monday: moment.Moment, friday: moment.Moment): PortfolioSnapshot[] {
+        let dailySnapshots = PortfolioMockData.PORTFOLIODAILY;
+        let performance = dailySnapshots.filter(item => item.createdDate.isBetween(monday, friday, null, '[]'));
         console.log("daily performance ", performance);
         return performance;
     }
@@ -38,7 +48,7 @@ export class PortfolioService {
      * 
      */
     getWeeklyPerformance(): PortfolioSnapshot[] {
-        var performance = PortfolioMockData.PORTFOLIOWEEKLY;
+        let performance = PortfolioMockData.PORTFOLIOWEEKLY;
         console.log("weekly performance ", performance);
         return performance;
     }

@@ -35,7 +35,6 @@ export class JournalService {
                 .then(response => {
                     console.log(response);
                     let ideas = response.docs.map(doc => {
-                        // Convert string to date, doesn't happen automatically.
                         var idea = new Idea({
                             id: doc._id,
                             revision: doc._rev,
@@ -43,6 +42,7 @@ export class JournalService {
                             type: doc.type, 
                             chart: doc.chart, 
                             entryDate: doc.entryDate,
+                            status: doc.status,
                             stars: doc.stars,
                             position: new Position({
                                 transactionId: doc.position.transactionId,
