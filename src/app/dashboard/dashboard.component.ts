@@ -9,7 +9,6 @@ import * as moment from "moment";
 import { PortfolioSnapshot } from 'app/dashboard/portfolio-snapshot';
 import { ChartService } from 'app/dashboard/chart.service';
 import { Portfolio } from 'app/dashboard/portfolio';
-import { fr } from 'ngx-bootstrap/bs-moment/i18n/fr';
 
 @Component({
     selector: 'dashboard-cmp',
@@ -27,6 +26,9 @@ import { fr } from 'ngx-bootstrap/bs-moment/i18n/fr';
 export class DashboardComponent implements OnInit {
     nowPerformance: PortfolioSnapshot;
     portfolio: Portfolio;
+    monday: moment.Moment;
+    friday: moment.Moment;
+    today: moment.Moment;
 
     constructor(private portfolioService: PortfolioService,
         private chartService: ChartService,
@@ -47,22 +49,21 @@ export class DashboardComponent implements OnInit {
      * 
      */
     ngOnInit(): void {
+        this.today = moment(new Date());
         this.portfolio = this.portfolioService.getPortfolio();
         let dailyData = this.portfolioService.getDailyPerformance();
         
         this.nowPerformance = dailyData.find(d => {
             let weekDay = moment().weekday();
-            let date = moment(new Date());
-            if (weekDay === 6) date.subtract(1, 'days');
-            if (weekDay === 0) date.subtract(2, 'days');
-            return d.createdDate.isSame(date, 'days');
+            if (weekDay === 6) this.today.subtract(1, 'days');
+            if (weekDay === 0) this.today.subtract(2, 'days');
+            return d.createdDate.isSame(this.today, 'days');
         });
         
-        let monday = moment().startOf('isoweek' as moment.unitOfTime.StartOf);
-        let friday = moment().startOf('isoweek' as moment.unitOfTime.StartOf).add(4, 'days');
+        this.monday = moment().startOf('isoweek' as moment.unitOfTime.StartOf);
+        this.friday = moment().startOf('isoweek' as moment.unitOfTime.StartOf).add(4, 'days');
         let dailyChart = new Chart();
-        dailyChart.data = this.chartService.getPerformanceByRange(monday, friday);
-        dailyChart.data.series[0].unshift(0);
+        dailyChart.data = this.chartService.getPerformanceByRange(this.monday, this.friday);
         dailyChart.high = 10000;
         dailyChart.low = -10000;
         this.dailyChartRenderer.draw("#dailyPerformanceChart", dailyChart);

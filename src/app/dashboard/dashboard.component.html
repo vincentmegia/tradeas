@@ -249,7 +249,7 @@
                             <div class="card">
                                 <div class="header">
                                     <h4 class="title">Daily Performance</h4>
-                                    <p class="category">Week 1 (January 1 - 5)</p>
+                                    <p class="category">Week {{today.isoWeek()}} ({{today.format('MMMM')}} {{monday.dayOfYear()}} - {{friday.dayOfYear()}})</p>
                                 </div>
                                 <div class="content">
                                     <div id="dailyPerformanceChart" class="ct-chart"></div>
@@ -304,7 +304,7 @@
                                         <div class="col-xs-8">
                                             <div class="numbers">
                                                 <p>Weekly Target</p>
-                                                50000PHP
+                                                10000PHP
                                                 <p>+5%</p>
                                             </div>
                                         </div>
@@ -341,7 +341,7 @@
                             <div class="card">
                                 <div class="header">
                                     <h4 class="title">Weekly Performance</h4>
-                                    <p class="category">Week 1 of Week 52</p>
+                                    <p class="category">Week {{today.isoWeek()}} of Week 52</p>
                                 </div>
                                 <div class="content">
                                     <div id="weeklyPerformanceChart" class="ct-chart"></div>
