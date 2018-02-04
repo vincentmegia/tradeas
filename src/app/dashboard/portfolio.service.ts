@@ -37,7 +37,7 @@ export class PortfolioService {
     /**
      * 
      */
-    getPerformanceByRange(monday: moment.Moment, friday: moment.Moment): PortfolioSnapshot[] {
+    getHistoryByRange(monday: moment.Moment, friday: moment.Moment): PortfolioSnapshot[] {
         let dailySnapshots = PortfolioMockData.PORTFOLIODAILY;
         let performance = dailySnapshots.filter(item => item.createdDate.isBetween(monday, friday, null, '[]'));
         console.log("daily performance ", performance);
@@ -47,7 +47,7 @@ export class PortfolioService {
     /**
      * 
      */
-    getWeeklyPerformance(): PortfolioSnapshot[] {
+    getHistoryByWeeks(): PortfolioSnapshot[] {
         let performance = PortfolioMockData.PORTFOLIOWEEKLY;
         console.log("weekly performance ", performance);
         return performance;

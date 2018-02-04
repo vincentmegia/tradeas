@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit {
     monday: moment.Moment;
     friday: moment.Moment;
     today: moment.Moment;
+    totalProfitLossPercentage: number;
 
     constructor(private portfolioService: PortfolioService,
         private chartService: ChartService,
@@ -53,25 +54,28 @@ export class DashboardComponent implements OnInit {
         this.portfolio = this.portfolioService.getPortfolio();
         let dailyData = this.portfolioService.getDailyPerformance();
         
+        debugger;
+        let weekDay = moment().weekday();
+        if (weekDay === 6) this.today = this.today.subtract(1, 'days');
+        if (weekDay === 0) this.today = this.today.subtract(2, 'days');
         this.nowPerformance = dailyData.find(d => {
-            let weekDay = moment().weekday();
-            if (weekDay === 6) this.today.subtract(1, 'days');
-            if (weekDay === 0) this.today.subtract(2, 'days');
             return d.createdDate.isSame(this.today, 'days');
         });
-        
+
+        this.totalProfitLossPercentage = (this.nowPerformance.totalEquity - this.portfolio.totalEquity ) / this.portfolio.totalEquity;
         this.monday = moment().startOf('isoweek' as moment.unitOfTime.StartOf);
         this.friday = moment().startOf('isoweek' as moment.unitOfTime.StartOf).add(4, 'days');
         let dailyChart = new Chart();
         dailyChart.data = this.chartService.getPerformanceByRange(this.monday, this.friday);
+        debugger;
         dailyChart.high = 10000;
         dailyChart.low = -10000;
         this.dailyChartRenderer.draw("#dailyPerformanceChart", dailyChart);
 
         let weeklyChart = new Chart();
-        weeklyChart.high = 50000;
-        weeklyChart.low = 5000;
         weeklyChart.data = this.chartService.getWeeklyPerformance()
+        weeklyChart.high = 1500000;
+        weeklyChart.low = -1500000;
         this.weeklyChartRenderer.draw("#weeklyPerformanceChart", weeklyChart);
 
         let monthlyChart = new Chart();

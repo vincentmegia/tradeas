@@ -34,7 +34,7 @@ export class ChartService {
      */
     getPerformanceByRange(startDate: moment.Moment, endDate: moment.Moment): any {
         let performance = this.portfolioService
-            .getPerformanceByRange(startDate, endDate)
+            .getHistoryByRange(startDate, endDate)
             .map(p => p.dayChangeValue);
         let data = {
             labels: Chart.DAYS,
@@ -50,13 +50,14 @@ export class ChartService {
      */
     getWeeklyPerformance(): any {
         let performance = this.portfolioService
-            .getWeeklyPerformance()
+            .getHistoryByWeeks()
             .map(p => p.totalEquity);
         let data = {
             labels: Chart.WEEKS,
             //data here will be replace in the future by a service call
             series: [ performance ]
         };
+        debugger;
         return data;
     }
 }

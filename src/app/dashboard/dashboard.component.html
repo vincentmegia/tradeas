@@ -48,6 +48,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row stats">
+                        <div class="col-xs-5">Profit/Loss%:</div>
+                        <div class="col-xs-7">
+                            <div class="gain pull-right">
+                                <b *ngIf="totalProfitLossPercentage >= 0" class="gain">+{{totalProfitLossPercentage | percent:'1.2-2'}}</b>
+                                <b *ngIf="totalProfitLossPercentage < 0" class="loss">{{totalProfitLossPercentage | percent:'1.2-2'}}</b>
+                            </div>
+                        </div>
+                    </div> 
                     <div class="footer">
                         <hr/>
                         <div class="stats">
