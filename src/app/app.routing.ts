@@ -4,7 +4,7 @@ import { DashboardComponent }   from './dashboard/dashboard.component';
 import { UserComponent }   from './user/user.component';
 import { JournalComponent }   from './journal/journal.component';
 import { TypographyComponent }   from './typography/typography.component';
-import { IconsComponent }   from './icons/icons.component';
+import { VolumeComponent }   from './volume/volume.component';
 import { NotificationsComponent }   from './notifications/notifications.component';
 
 export const AppRoutes: Routes = [
@@ -30,8 +30,8 @@ export const AppRoutes: Routes = [
         component: TypographyComponent
     },
     {
-        path: 'icons',
-        component: IconsComponent
+        path: 'volume',
+        component: VolumeComponent
     },
     {
         path: 'notifications',

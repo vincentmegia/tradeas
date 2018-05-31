@@ -1,0 +1,90 @@
+
+<div class="container-fluid">
+    <!-- Search autocomplete row -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" placeholder="Symbol" class="form-control" [(ngModel)]="selected" [typeahead]="securities" typeaheadOptionField="symbol"
+                       (input)="onInput($event.target.value)" />
+                <span class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-5"></div>
+    </div>
+    <!-- Date range pickers row -->
+    <div class="row">
+        <div class="col-md-2 form-group">
+            <input type="text" class="form-control" #startDatePicker="bsDatepicker" bsDatepicker [(bsValue)]="startDate" [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false}">
+        </div>
+        <div class="col-md-1 form-group">
+            <button class="btn btn-primary btn-sm pull-right" (click)="startDatePicker.toggle()">Start Date</button>
+        </div>
+        <div class="col-md-2 form-group">
+            <input type="text" class="form-control" #endDatePicker="bsDatepicker" bsDatepicker [(bsValue)]="endDate" [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false}">
+        </div>
+        <div class="col-md-1 form-group">
+            <button class="btn btn-primary btn-sm pull-right" (click)="endDatePicker.toggle()">End Date</button>
+        </div>
+    </div>
+    <!-- Search -->
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <button class="btn btn-primary btn-sm pull-right" (click)="onSearch()">Search</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        <!-- <i class="ti-calendar"></i> -->
+                        <span>Buyers & Sellers</span>
+                        <!-- <img src="./assets/img/spinner.gif" style="width: 70px;height:50px" *ngIf="showProgress"> -->
+                    </h4>
+                    <p class="category">
+                    </p>
+                </div>
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th *ngFor="let column of columns">{{column}}
+                                <b class="caret"></b>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ng-container *ngFor="let volume of volumes">
+                            <tr>
+                                <td>{{volume.name}}</td>
+                                <td>{{volume.buyer.volume}}</td>
+                                <td>{{volume.buyer.amount}}</td>
+                                <td>{{volume.buyer.average}}</td>
+                                <td>{{volume.seller.volume}}</td>
+                                <td>{{volume.seller.amount}}</td>
+                                <td>{{volume.seller.average}}</td>
+                                <td>{{volume.netAmount}}</td>
+                                <td>{{volume.totalValue}}</td>
+                            </tr>
+                        </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-12 col-md-10">
+                    <!--<pagination [directionLinks]="false" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage" [(itemsPerPage)]="pagination.itemsPerPage"-->
+                                <!--(numPages)="pagination.smallnumPages = $event" pageBtnClass="btn btn-primary btn-sm">-->
+                    <!--</pagination>-->
+                </div>
+                <div class="col-xs-12 col-12 col-md-2">
+                    <!--<pager id="pager" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"-->
+                           <!--pageBtnClass="btn btn-primary btn-sm" [(itemsPerPage)]="pagination.itemsPerPage" class="pull-right">-->
+                    <!--</pager>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

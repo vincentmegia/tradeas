@@ -11,7 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './user/user.component';
 import { JournalComponent } from './journal/journal.component';
 import { TypographyComponent } from './typography/typography.component';
-import { IconsComponent } from './icons/icons.component';
+import { VolumeComponent } from './volume/volume.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { IdeaComponent } from './journal/idea/idea.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -40,7 +40,7 @@ import { PortfolioService } from 'app/dashboard/portfolio.service';
         UserComponent,
         JournalComponent,
         TypographyComponent,
-        IconsComponent,
+        VolumeComponent,
         NotificationsComponent,
         IdeaComponent,
         ValidationComponent,

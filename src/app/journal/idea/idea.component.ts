@@ -155,7 +155,7 @@ export class IdeaComponent {
             side: 'Buy',
             status: 'Executed',
             createdDate: today
-        })
+        });
         this.transactionService.saveAll([transaction]);
 
         this.idea.position = new Position({
@@ -165,7 +165,7 @@ export class IdeaComponent {
             status: 'Executed', 
             createdDate: moment(new Date()),
             transactionIds: [id]
-        })
+        });
         console.log('saving idea...', this.idea);
 
         this.ideaService.addIdea(this.idea);

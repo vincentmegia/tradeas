@@ -14,7 +14,7 @@ export const ROUTES: RouteInfo[] = [
     // { path: 'user', title: 'User Profile',  icon:'ti-user', class: '' },
     { path: 'journal', title: 'Trade Journal',  icon:'ti-view-list-alt', class: '' },
     { path: 'typography', title: 'Data Wizard',  icon:'ti-text', class: '' },
-    // { path: 'icons', title: 'Icons',  icon:'ti-pencil-alt2', class: '' },
+    { path: 'volume', title: 'Volume',  icon:'ti-pencil-alt2', class: '' },
     // { path: 'maps', title: 'Maps',  icon:'ti-map', class: '' },
     // { path: 'notifications', title: 'Notifications',  icon:'ti-bell', class: '' },
     // { path: 'upgrade', title: 'Upgrade to PRO',  icon:'ti-export', class: 'active-pro' },
