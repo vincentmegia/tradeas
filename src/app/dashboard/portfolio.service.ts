@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as Chartist from 'chartist';
 import { PortfolioMockData } from './portfolio-mock-data';
-import { Chart } from './chart';
 import { Portfolio } from 'app/dashboard/portfolio';
 import { PortfolioSnapshot } from 'app/dashboard/portfolio-snapshot';
 import * as moment from 'moment';

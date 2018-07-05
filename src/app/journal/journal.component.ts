@@ -1,15 +1,9 @@
 import { Component, OnInit, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { JournalService } from './journal.service';
-import { IdeaService } from './idea/idea.service';
 import { Idea } from './idea/idea';
-import { Observable } from 'rxjs/rx';
 import { SecurityService } from '../shared/services/security.service'
 import { Security } from '../shared/services/security';
 import * as moment from "moment";
-import { SecurityMockData } from 'app/shared/services/security-mock-data';
-import { TypeaheadMatch } from 'ngx-bootstrap/typeahead'
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { IdeaComponent } from './idea/idea.component';
 import { Pagination } from './pagination';
 import { TransactionService } from './idea/transaction.service';
@@ -42,8 +36,7 @@ export class JournalComponent implements OnInit{
 
     constructor(private journalService: JournalService,
                 private securityService: SecurityService,
-                private transactionService: TransactionService,
-                private viewContainerRef: ViewContainerRef) {
+                private transactionService: TransactionService) {
         this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1})
     }
 

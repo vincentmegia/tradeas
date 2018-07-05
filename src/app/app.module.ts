@@ -26,12 +26,12 @@ import {
     ProgressbarModule
 } from 'ngx-bootstrap';
 import { ValidationComponent } from 'app/shared/validation/validation.component';
-import { Security } from 'app/shared/services/security';
 import { SecurityService } from './shared/services/security.service';
 import { TransactionService } from 'app/journal/idea/transaction.service';
 import { ToolbarComponent } from 'app/shared/toolbar/toolbar.component';
 import { ChartService } from 'app/dashboard/chart.service';
 import { PortfolioService } from 'app/dashboard/portfolio.service';
+import { VolumeService } from "./volume/volume.service";
 
 @NgModule({
     declarations: [
@@ -69,7 +69,8 @@ import { PortfolioService } from 'app/dashboard/portfolio.service';
         SecurityService, 
         TransactionService,
         ChartService,
-        PortfolioService
+        PortfolioService,
+        VolumeService
     ],
     bootstrap: [AppComponent],
 })

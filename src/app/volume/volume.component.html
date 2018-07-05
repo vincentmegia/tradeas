@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="input-group">
-                <input type="text" placeholder="Symbol" class="form-control" [(ngModel)]="selected" [typeahead]="securities" typeaheadOptionField="symbol"
+                <input type="text" placeholder="Symbol" class="form-control" [(ngModel)]="selectedSymbol" [typeahead]="securities" typeaheadOptionField="symbol"
                        (input)="onInput($event.target.value)" />
                 <span class="input-group-addon">
                     <i class="fa fa-search"></i>
@@ -39,14 +39,16 @@
             <div class="card">
                 <div class="header">
                     <h4 class="title">
-                        <!-- <i class="ti-calendar"></i> -->
                         <span>Buyers & Sellers</span>
-                        <!-- <img src="./assets/img/spinner.gif" style="width: 70px;height:50px" *ngIf="showProgress"> -->
+                        <div class="pull-right">
+                            <i class="mouse-pointer" [ngClass]="{'ti-angle-up': !isBuyerSellerCollapsed,
+                                     'ti-angle-down': isBuyerSellerCollapsed}" (click)="isBuyerSellerCollapsed = !isBuyerSellerCollapsed"></i>
+                        </div>
                     </h4>
                     <p class="category">
                     </p>
                 </div>
-                <div class="content table-responsive table-full-width">
+                <div class="content table-responsive table-full-width" [collapse]="isBuyerSellerCollapsed">
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -57,21 +59,30 @@
                         </thead>
                         <tbody>
                         <ng-container *ngFor="let volume of volumes">
-                            <tr>
-                                <td>{{volume.name}}</td>
-                                <td>{{volume.buyer.volume}}</td>
-                                <td>{{volume.buyer.amount}}</td>
-                                <td>{{volume.buyer.average}}</td>
-                                <td>{{volume.seller.volume}}</td>
-                                <td>{{volume.seller.amount}}</td>
-                                <td>{{volume.seller.average}}</td>
-                                <td>{{volume.netAmount}}</td>
-                                <td>{{volume.totalValue}}</td>
+                            <tr *ngFor="let detail of volume.details; let rowCount = index">
+                                <td>{{rowCount}}</td>
+                                <td>{{detail.brokerCode}}</td>
+                                <td class="gain">{{detail.buyer.volume | number}}</td>
+                                <td class="gain">{{detail.buyer.amount | number}}</td>
+                                <td class="gain">{{detail.buyer.average | number}}</td>
+                                <td class="loss">{{detail.seller.volume | number}}</td>
+                                <td class="loss">{{detail.seller.amount | number}}</td>
+                                <td class="loss">{{detail.seller.average | number}}</td>
+                                <td>{{detail.netAmount | number}}</td>
+                                <td>{{detail.totalValue | number}}</td>
+                                <td>
+                                    <div class="progress" >
+                                        <!--<div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%; display: block; float: right;"></div>-->
+                                        <div class="progress-bar progress-bar-success" role="progressbar" [ngStyle]="{ 'width': getProgressPercentage(detail), 'display': 'block', 'float': 'right'}"></div>
+                                        <span>{{detail.totalPercentage | number : '1.2-2'}}%</span>
+                                    </div>
+                                </td>
                             </tr>
                         </ng-container>
                         </tbody>
                     </table>
                 </div>
+                <hr *ngIf="isBuyerSellerCollapsed" />
             </div>
             <div class="row">
                 <div class="col-xs-12 col-12 col-md-10">
@@ -84,6 +95,28 @@
                            <!--pageBtnClass="btn btn-primary btn-sm" [(itemsPerPage)]="pagination.itemsPerPage" class="pull-right">-->
                     <!--</pager>-->
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- CHARTS -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        <span>Charts</span>
+                        <div class="pull-right">
+                            <i class="mouse-pointer" [ngClass]="{'ti-angle-up': !isChartCollapse,
+                                     'ti-angle-down': isChartCollapse}" (click)="isChartCollapse = !isChartCollapse"></i>
+                        </div>
+                    </h4>
+                    
+                    <p class="category"></p>
+                </div>
+                <div class="content" [collapse]="isChartCollapse">
+
+                </div>
+                <hr *ngIf="isChartCollapse" />
             </div>
         </div>
     </div>

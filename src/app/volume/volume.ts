@@ -1,13 +1,9 @@
-import * as moment from "moment";
-import { Side } from "./side";
+import {VolumeDetail} from "./volume-detail";
 
 export class Volume {
     id: string;
-    name: string;
-    buyer: Side;
-    seller: Side;
-    netAmount: number;
-    totalValue: Number;
+    symbol: string;
+    details: VolumeDetail[];
 
     public constructor(init?: Partial<Volume>) {
         Object.assign(this, init);
@@ -19,11 +15,7 @@ export class Volume {
     get json(): any {
         return {
             _id: this.id,
-            name: this.name,
-            buyer: this.buyer,
-            seller: this.seller,
-            netAmount: this.netAmount,
-            totalValue: this.totalValue
+            symbol: this.symbol
         }
     }
 }
