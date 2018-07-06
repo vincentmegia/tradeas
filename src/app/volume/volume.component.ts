@@ -5,14 +5,17 @@ import {Volume} from './volume';
 import { SecurityService } from '../shared/services/security.service'
 import {Security} from "../shared/services/security";
 import {VolumeService} from "./volume.service";
-import {Side} from "./side";
 import {VolumeDetail} from "./volume-detail";
+import {VolumeChartRenderer} from "./volume-chart-renderer";
+import {Chart} from "../dashboard/chart";
+import {DropdownItem} from "../shared/dropdown-item";
 
 @Component({
     selector: 'volume-cmp',
     moduleId: module.id,
     templateUrl: 'volume.component.html',
     styleUrls: ['volume.component.css'],
+    providers: [VolumeChartRenderer]
 })
 
 export class VolumeComponent implements OnInit {
@@ -23,11 +26,20 @@ export class VolumeComponent implements OnInit {
     startDate: Date;
     endDate: Date;
     selectedSymbol: string;
-
+    chartDropdownItems: DropdownItem[];
+    chartSelectedItem: DropdownItem;
 
     constructor(private securityService: SecurityService,
-                private volumeService: VolumeService) {
-        this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1})
+                private volumeService: VolumeService,
+                private volumeChartRenderer: VolumeChartRenderer) {
+        this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1});
+        this.chartDropdownItems = [
+            new DropdownItem({key: 'totalValue', value: 'Total value'}),
+            new DropdownItem({key: 'netAmount', value: 'Net Amount'}),
+            new DropdownItem({key: 'buyVolume', value: 'Buy volume'}),
+            new DropdownItem({key: 'sellVolume', value: 'Sell volume'}),
+        ];
+        this.chartSelectedItem = this.chartDropdownItems[0];
     }
 
     /**
@@ -45,7 +57,6 @@ export class VolumeComponent implements OnInit {
                 let hashMap = [];
                 let totalValue = 0;
                 mergedDetails.map(m => {
-                    debugger;
                     totalValue += m.totalValue;
                     if (!hashMap[m.brokerCode]) {//use id for now
                         hashMap[m.brokerCode] = m;
@@ -82,9 +93,51 @@ export class VolumeComponent implements OnInit {
                 this.volumes = [];
                 this.volumes.push(volume);
                 console.log(this.volumes);
+
+                //set chart
+                let chart = new Chart();
+                let labels = this.volumes[0].details.map(d => d.brokerCode);
+                let series = this.volumes[0].details.map(d => d.totalValue);
+                chart.data = {
+                    labels: labels,
+                    series: [series]
+                };
+                this.volumeChartRenderer.draw("#volumeChart", chart);
             });
     }
 
+    /**
+     * 
+     * @param {string} columnName
+     */
+    onChartColumnClick(columnName: string): void {
+        let chart = new Chart();
+        let labels = [];
+        let series = [];
+        if (columnName === "totalValue") {
+            this.chartSelectedItem = this.chartDropdownItems[0];
+            labels = this.volumes[0].details.map(d => d.brokerCode);
+            series = this.volumes[0].details.map(d => d.totalValue);
+        } else if (columnName === "netAmount") {
+            this.chartSelectedItem = this.chartDropdownItems[1];
+            labels = this.volumes[0].details.map(d => d.brokerCode);
+            series = this.volumes[0].details.map(d => d.netAmount);
+        } else if (columnName === "buyVolume") {
+            this.chartSelectedItem = this.chartDropdownItems[2];
+            labels = this.volumes[0].details.map(d => d.brokerCode);
+            series = this.volumes[0].details.map(d => d.buyer.volume);
+        } else if (columnName === "sellVolume") {
+            this.chartSelectedItem = this.chartDropdownItems[3];
+            labels = this.volumes[0].details.map(d => d.brokerCode);
+            series = this.volumes[0].details.map(d => d.seller.volume);
+        }
+        chart.data = {
+            labels: labels,
+            series: [series]
+        };
+        this.volumeChartRenderer.draw("#volumeChart", chart);
+    }
+    
     /**
      * 
      * @param {VolumeDetail} volumeDetail
@@ -103,6 +156,5 @@ export class VolumeComponent implements OnInit {
             .getAll()
             .subscribe(securities => this.securities = securities);
         this.columns = ['', 'Net Buyers', 'Buy Vol', 'Buy Value', 'Buy Ave', 'Sell Vol', 'Sell Amt', 'Sell Ave', 'Net Amount', 'Total Value', '% Volume'];
-
     }
 }

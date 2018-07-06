@@ -54,7 +54,6 @@ export class DashboardComponent implements OnInit {
         this.portfolio = this.portfolioService.getPortfolio();
         let dailyData = this.portfolioService.getDailyPerformance();
         
-        debugger;
         let weekDay = moment().weekday();
         if (weekDay === 6) this.today = this.today.subtract(1, 'days');
         if (weekDay === 0) this.today = this.today.subtract(2, 'days');

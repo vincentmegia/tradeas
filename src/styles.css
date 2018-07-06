@@ -16,3 +16,7 @@
 .mouse-pointer {
     cursor: pointer;
 }
+
+.no-mouse {
+    cursor: not-allowed;
+}

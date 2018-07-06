@@ -6,12 +6,7 @@
     opacity: 0.6;
     cursor: not-allowed;
 }
-.selectable {
-    cursor: pointer;
-}
-.non-selectable {
-    cursor: not-allowed;
-}
+
 :host ::ng-deep .pagination li > a {
     background-color: transparent;
     color:#7A9E9F;
