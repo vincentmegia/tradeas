@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { JournalService } from './journal.service';
 import { Idea } from './idea/idea';
 import { SecurityService } from '../shared/services/security.service'

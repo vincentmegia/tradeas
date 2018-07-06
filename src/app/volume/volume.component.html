@@ -1,11 +1,10 @@
-
 <div class="container-fluid">
     <!-- Search autocomplete row -->
     <div class="row">
         <div class="col-md-6">
             <div class="input-group">
                 <input type="text" placeholder="Symbol" class="form-control" [(ngModel)]="selectedSymbol" [typeahead]="securities" typeaheadOptionField="symbol"
-                       (input)="onInput($event.target.value)" />
+                        />
                 <span class="input-group-addon">
                     <i class="fa fa-search"></i>
                 </span>
@@ -41,8 +40,9 @@
                     <h4 class="title">
                         <span>Buyers & Sellers</span>
                         <div class="pull-right">
-                            <i class="mouse-pointer" [ngClass]="{'ti-angle-up': !isBuyerSellerCollapsed,
-                                     'ti-angle-down': isBuyerSellerCollapsed}" (click)="isBuyerSellerCollapsed = !isBuyerSellerCollapsed"></i>
+                            <i class="mouse-pointer" 
+                               [ngClass]="{'ti-angle-up': !isBuyerSellerCollapsed, 'ti-angle-down': isBuyerSellerCollapsed}" 
+                               (click)="isBuyerSellerCollapsed = !isBuyerSellerCollapsed"></i>
                         </div>
                     </h4>
                     <p class="category">
@@ -52,8 +52,14 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th *ngFor="let column of columns">
-                                <a class="mouse-pointer">{{column}}<b [ng] class="caret"></b></a>
+                            <th *ngFor="let column of columns; let row = index">
+                                <ng-container *ngIf="row != 0">
+                                    <a  class="mouse-pointer"
+                                        style="color: inherit"
+                                        (click)="onSort(column)">{{column.value}}
+                                        <i class="fas" [ngClass]="{'fa-caret-up': !column.sortFlagToggle, 'fa-caret-down': column.sortFlagToggle}"></i>
+                                    </a>
+                                </ng-container>
                             </th>
                         </tr>
                         </thead>
@@ -123,12 +129,25 @@
                             role="menu" aria-labelledby="button-basic">
                             <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('totalValue')">Total value</a></li>
                             <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('netAmount')">Net amount</a></li>
-                            <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('buyVolume')">Buy volume</a></li>
-                            <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('sellVolume')">Sell volume</a>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('buyer.volume')">Buy volume</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('seller.volume')">Sell volume</a>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('totalPercentage')">% Volume</a>
                             </li>
                         </ul>
                     </div>
-                    <div id="volumeChart" class="ct-chart"></div>
+                    <div class="btn-group" dropdown>
+                        <button id="chartTypeButton" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                                aria-controls="dropdown-basic">
+                            {{chartTypeSelectedItem.value}} <span class="caret"></span>
+                        </button>
+                        <ul id="chartType" *dropdownMenu class="dropdown-menu"
+                            role="menu" aria-labelledby="button-basic">
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartTypeClick(chartTypeDropdownItems[0].key)">{{chartTypeDropdownItems[0].value}}</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartTypeClick(chartTypeDropdownItems[1].key)">{{chartTypeDropdownItems[1].value}}</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartTypeClick(chartTypeDropdownItems[2].key)">{{chartTypeDropdownItems[2].value}}</a></li>
+                        </ul>
+                    </div>
+                    <div id="volumeChart" class="ct-chart ct-square" style="width: 100%;"></div>
                     <div class="footer">
                         <!-- <div class="chart-legend">
                             <i class="fa fa-circle text-info"></i> Open

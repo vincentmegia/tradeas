@@ -32,6 +32,7 @@ import { ToolbarComponent } from 'app/shared/toolbar/toolbar.component';
 import { ChartService } from 'app/dashboard/chart.service';
 import { PortfolioService } from 'app/dashboard/portfolio.service';
 import { VolumeService } from "./volume/volume.service";
+import { CompareService } from "./shared/services/compare.service";
 
 @NgModule({
     declarations: [
@@ -70,7 +71,8 @@ import { VolumeService } from "./volume/volume.service";
         TransactionService,
         ChartService,
         PortfolioService,
-        VolumeService
+        VolumeService,
+        CompareService
     ],
     bootstrap: [AppComponent],
 })

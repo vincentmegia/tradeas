@@ -1,25 +1,27 @@
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as moment from "moment";
-import {Pagination} from '../journal/pagination';
-import {Volume} from './volume';
+import { Pagination } from '../journal/pagination';
+import { Volume } from './volume';
 import { SecurityService } from '../shared/services/security.service'
-import {Security} from "../shared/services/security";
-import {VolumeService} from "./volume.service";
-import {VolumeDetail} from "./volume-detail";
-import {VolumeChartRenderer} from "./volume-chart-renderer";
-import {Chart} from "../dashboard/chart";
-import {DropdownItem} from "../shared/dropdown-item";
+import { Security } from "../shared/services/security";
+import { VolumeService } from "./volume.service";
+import { VolumeDetail } from "./volume-detail";
+import { VolumeChartRenderer } from "./volume-chart-renderer";
+import { Chart } from "../dashboard/chart";
+import { DropdownItem } from "../shared/dropdown-item";
+import { TableColumn } from "../shared/table-column";
+import { CompareService } from "../shared/services/compare.service";
 
 @Component({
     selector: 'volume-cmp',
     moduleId: module.id,
     templateUrl: 'volume.component.html',
     styleUrls: ['volume.component.css'],
-    providers: [VolumeChartRenderer]
+    providers: [VolumeChartRenderer, CompareService]
 })
 
 export class VolumeComponent implements OnInit {
-    columns: string[];
+    columns: TableColumn[];
     pagination: Pagination;
     volumes: Volume[];
     securities: Security[];
@@ -28,10 +30,13 @@ export class VolumeComponent implements OnInit {
     selectedSymbol: string;
     chartDropdownItems: DropdownItem[];
     chartSelectedItem: DropdownItem;
+    chartTypeDropdownItems: DropdownItem[];
+    chartTypeSelectedItem: DropdownItem;
 
     constructor(private securityService: SecurityService,
                 private volumeService: VolumeService,
-                private volumeChartRenderer: VolumeChartRenderer) {
+                private volumeChartRenderer: VolumeChartRenderer,
+                private compareService: CompareService) {
         this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1});
         this.chartDropdownItems = [
             new DropdownItem({key: 'totalValue', value: 'Total value'}),
@@ -40,6 +45,12 @@ export class VolumeComponent implements OnInit {
             new DropdownItem({key: 'sellVolume', value: 'Sell volume'}),
         ];
         this.chartSelectedItem = this.chartDropdownItems[0];
+        this.chartTypeDropdownItems = [
+            new DropdownItem({key: 'horizontalBar', value: 'Horizontal Bar'}),
+            new DropdownItem({key: 'stackedBar', value: 'Stacked Bar'}),
+            new DropdownItem({key: 'pie', value: 'Pie'})
+        ];
+        this.chartTypeSelectedItem = this.chartTypeDropdownItems[0];
     }
 
     /**
@@ -53,7 +64,7 @@ export class VolumeComponent implements OnInit {
                 volumes.map(v => {
                     v.details.map(d => mergedDetails.push(d));
                 });
-                
+
                 let hashMap = [];
                 let totalValue = 0;
                 mergedDetails.map(m => {
@@ -76,8 +87,7 @@ export class VolumeComponent implements OnInit {
 
                 let details = [];
                 //convert hasmap to array
-                hashMap.map(hashMap =>
-                {
+                hashMap.map(hashMap => {
                     //compute for vol percentage
                     hashMap.totalPercentage = (hashMap.totalValue / totalValue) * 100;
                     details.push(hashMap);
@@ -88,10 +98,11 @@ export class VolumeComponent implements OnInit {
                     if (vol1.totalValue < vol2.totalValue) return 1;
                     return 0;
                 });
-                let volume = volumes[0];
-                volume.details = details;
+
+                volumes[0].details = details;
                 this.volumes = [];
-                this.volumes.push(volume);
+                this.volumes.push(volumes[0]);
+                this.volumes = volumes.slice(0);
                 console.log(this.volumes);
 
                 //set chart
@@ -102,59 +113,107 @@ export class VolumeComponent implements OnInit {
                     labels: labels,
                     series: [series]
                 };
-                this.volumeChartRenderer.draw("#volumeChart", chart);
+                this.volumeChartRenderer.chart = chart;
+                this.volumeChartRenderer.draw(this.chartTypeSelectedItem.key,"#volumeChart");
             });
     }
 
     /**
-     * 
-     * @param {string} columnName
+     *
+     * @param {string} column
      */
-    onChartColumnClick(columnName: string): void {
+    onChartColumnClick(column: string): void {
         let chart = new Chart();
         let labels = [];
         let series = [];
-        if (columnName === "totalValue") {
+        if (column === "totalValue") {
             this.chartSelectedItem = this.chartDropdownItems[0];
             labels = this.volumes[0].details.map(d => d.brokerCode);
             series = this.volumes[0].details.map(d => d.totalValue);
-        } else if (columnName === "netAmount") {
+        } else if (column === "netAmount") {
             this.chartSelectedItem = this.chartDropdownItems[1];
             labels = this.volumes[0].details.map(d => d.brokerCode);
             series = this.volumes[0].details.map(d => d.netAmount);
-        } else if (columnName === "buyVolume") {
+        } else if (column === "buyer.volume") {
             this.chartSelectedItem = this.chartDropdownItems[2];
             labels = this.volumes[0].details.map(d => d.brokerCode);
             series = this.volumes[0].details.map(d => d.buyer.volume);
-        } else if (columnName === "sellVolume") {
+        } else if (column === "seller.volume") {
             this.chartSelectedItem = this.chartDropdownItems[3];
             labels = this.volumes[0].details.map(d => d.brokerCode);
             series = this.volumes[0].details.map(d => d.seller.volume);
+        } else if (column === "totalPercentage") {
+            this.chartSelectedItem = this.chartDropdownItems[3];
+            labels = this.volumes[0].details.map(d => d.brokerCode);
+            series = this.volumes[0].details.map(d => d.totalPercentage);
         }
         chart.data = {
             labels: labels,
             series: [series]
         };
-        this.volumeChartRenderer.draw("#volumeChart", chart);
+        this.volumeChartRenderer.chart = chart;
+        this.volumeChartRenderer.draw(this.chartTypeSelectedItem.key,"#volumeChart");
     }
-    
+
     /**
      * 
+     * @param {string} type
+     */
+    onChartTypeClick(type: string) {
+        if (type === "horizontalBar")
+            this.chartTypeSelectedItem = this.chartTypeDropdownItems[0];
+        else if (type === "stackedBar")
+            this.chartTypeSelectedItem = this.chartTypeDropdownItems[1];
+        else if (type === "pie")
+            this.chartTypeSelectedItem = this.chartTypeDropdownItems[2];
+        
+        this.volumeChartRenderer.draw(this.chartTypeSelectedItem.key,"#volumeChart");
+    }
+    
+
+    /**
+     *
+     * @param {TableColumn} column
+     */
+    onSort(column: TableColumn) {
+        console.log("sorting column:" + column);
+        this.compareService.sort(
+            this.volumes[0].details,
+            column.key, 
+            column.sortFlagToggle ? "asc" : "desc")
+            .map(item => item.totalValue);
+        column.sortFlagToggle = !column.sortFlagToggle;
+    }
+
+    /**
+     *
      * @param {VolumeDetail} volumeDetail
      * @returns {number}
      */
     getProgressPercentage(volumeDetail: VolumeDetail) {
         return volumeDetail.totalPercentage.toString() + "%";
     }
-    
+
     /**
      *
      */
-    ngOnInit(){
+    ngOnInit() {
         //data is of array type and should be later changed to a more model centric appraoch
         this.securityService
             .getAll()
             .subscribe(securities => this.securities = securities);
-        this.columns = ['', 'Net Buyers', 'Buy Vol', 'Buy Value', 'Buy Ave', 'Sell Vol', 'Sell Amt', 'Sell Ave', 'Net Amount', 'Total Value', '% Volume'];
+        this.columns = [
+            new TableColumn({key: '', value: ''}),
+            new TableColumn({key: 'brokerCode', value: 'Name'}),
+            new TableColumn({key: 'buyer.volume', value: 'Buy Vol'}),
+            new TableColumn({key: 'buyer.amount', value: 'Buy Value'}),
+            new TableColumn({key: 'buyer.average', value: 'Buy Ave'}),
+            new TableColumn({key: 'seller.volume', value: 'Sell Vol'}),
+            new TableColumn({key: 'seller.amount', value: 'Sell Amt'}),
+            new TableColumn({key: 'seller.average', value: 'Sell Ave'}),
+            new TableColumn({key: 'netAmount', value: 'Net Amount'}),
+            new TableColumn({key: 'totalValue', value: 'Total Value'}),
+            new TableColumn({key: 'percentageVolume', value: '% Volume'})
+        ];
     }
 }

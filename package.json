@@ -43,6 +43,7 @@
     "@angular/cli": "^1.6.0",
     "@angular/compiler-cli": "^5.1.0",
     "@angular/language-service": "^5.1.0",
+    "@fortawesome/fontawesome-free": "^5.1.0",
     "@types/jasmine": "2.8.2",
     "@types/node": "~8.0.57",
     "codelyzer": "~4.0.1",
