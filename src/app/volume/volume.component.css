@@ -1,17 +1,19 @@
+/**
+ * Progress bars with centered text
+ */
 
-.spacer-left-5 {
-    padding-left: -2px;
+.progress {
+    position:relative;
 }
-.fa-plus-disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+.progress span {
+    position:absolute;
+    left:0;
+    width:100%;
+    text-align:center;
+    z-index:2;
+    color: black;
 }
-.selectable {
-    cursor: pointer;
-}
-.non-selectable {
-    cursor: not-allowed;
-}
+
 :host ::ng-deep .pagination li > a {
     background-color: transparent;
     color:#7A9E9F;
@@ -47,20 +49,4 @@
 }
 :host ::ng-deep body div[class="bs-datepicker-head"] {
     background-color: #7A9E9F;
-}
-
-/**
- * Progress bars with centered text
- */
-
-.progress {
-    position:relative;
-}
-.progress span {
-    position:absolute;
-    left:0;
-    width:100%;
-    text-align:center;
-    z-index:2;
-    color: black;
 }

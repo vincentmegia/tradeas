@@ -39,34 +39,30 @@
                 <div class="header">
                     <h4 class="title">
                         <span>Buyers & Sellers</span>
-                        <div class="pull-right">
-                            <i class="mouse-pointer" 
-                               [ngClass]="{'ti-angle-up': !isBuyerSellerCollapsed, 'ti-angle-down': isBuyerSellerCollapsed}" 
+                            <i class="mouse-pointer pull-right" 
+                               [ngClass]="{'ti-angle-down': !isBuyerSellerCollapsed, 'ti-angle-up': isBuyerSellerCollapsed}" 
                                (click)="isBuyerSellerCollapsed = !isBuyerSellerCollapsed"></i>
-                        </div>
                     </h4>
                     <p class="category">
                     </p>
                 </div>
                 <div class="content table-responsive table-full-width" [collapse]="isBuyerSellerCollapsed">
+                    
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th *ngFor="let column of columns; let row = index">
-                                <ng-container *ngIf="row != 0">
+                            <th *ngFor="let column of columns">
                                     <a  class="mouse-pointer"
                                         style="color: inherit"
                                         (click)="onSort(column)">{{column.value}}
                                         <i class="fas" [ngClass]="{'fa-caret-up': !column.sortFlagToggle, 'fa-caret-down': column.sortFlagToggle}"></i>
                                     </a>
-                                </ng-container>
                             </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <ng-container *ngFor="let volume of volumes">
-                            <tr *ngFor="let detail of volume.details; let rowCount = index">
-                                <td>{{rowCount}}</td>
+                        <ng-container *ngFor="let detail of volume.details">
+                            <tr>
                                 <td>{{detail.brokerCode}}</td>
                                 <td class="gain">{{detail.buyer.volume | number}}</td>
                                 <td class="gain">{{detail.buyer.amount | number}}</td>
@@ -92,14 +88,21 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-12 col-md-10">
-                    <!--<pagination [directionLinks]="false" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage" [(itemsPerPage)]="pagination.itemsPerPage"-->
-                                <!--(numPages)="pagination.smallnumPages = $event" pageBtnClass="btn btn-primary btn-sm">-->
-                    <!--</pagination>-->
+                    <pagination [directionLinks]="false" 
+                                [totalItems]="pagination.totalItems" 
+                                [(ngModel)]="pagination.currentPage" 
+                                [(itemsPerPage)]="pagination.itemsPerPage"
+                                (numPages)="pagination.smallnumPages = $event" pageBtnClass="btn btn-primary btn-sm">
+                    </pagination>
                 </div>
                 <div class="col-xs-12 col-12 col-md-2">
-                    <!--<pager id="pager" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"-->
-                           <!--pageBtnClass="btn btn-primary btn-sm" [(itemsPerPage)]="pagination.itemsPerPage" class="pull-right">-->
-                    <!--</pager>-->
+                    <pager id="pager" 
+                           [totalItems]="pagination.totalItems" 
+                           [(ngModel)]="pagination.currentPage" 
+                           (pageChanged)="pageChanged($event)"
+                           pageBtnClass="btn btn-primary btn-sm" 
+                           [(itemsPerPage)]="pagination.itemsPerPage" class="pull-right">
+                    </pager>
                 </div>
             </div>
         </div>
@@ -111,10 +114,8 @@
                 <div class="header">
                     <h4 class="title">
                         <span>Charts</span>
-                        <div class="pull-right">
-                            <i class="mouse-pointer" [ngClass]="{'ti-angle-up': !isChartCollapse,
-                                     'ti-angle-down': isChartCollapse}" (click)="isChartCollapse = !isChartCollapse"></i>
-                        </div>
+                            <i class="mouse-pointer pull-right" [ngClass]="{'ti-angle-down': !isChartCollapse,
+                                     'ti-angle-up': isChartCollapse}" (click)="isChartCollapse = !isChartCollapse"></i>
                     </h4>
                     
                     <p class="category"></p>
