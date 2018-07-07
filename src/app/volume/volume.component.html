@@ -148,7 +148,7 @@
                             <li role="menuitem"><a class="dropdown-item" (click)="onChartTypeClick(chartTypeDropdownItems[2].key)">{{chartTypeDropdownItems[2].value}}</a></li>
                         </ul>
                     </div>
-                    <div id="volumeChart" class="ct-chart ct-square" style="width: 100%;"></div>
+                    <div id="volumeChart" class="ct-chart ct-square" style="height: 700px" [ngStyle]="{'overflow-x': getOverflowX(), 'overflow-y': getOverflowY()}" ></div>
                     <div class="footer">
                         <!-- <div class="chart-legend">
                             <i class="fa fa-circle text-info"></i> Open

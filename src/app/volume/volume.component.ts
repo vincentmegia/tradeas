@@ -57,6 +57,7 @@ export class VolumeComponent implements OnInit {
         this.volume = new Volume();
         this.isChartCollapse = true;
         this.isBuyerSellerCollapsed = true;
+        this.detailsCache = [];
     }
 
     /**
@@ -113,8 +114,8 @@ export class VolumeComponent implements OnInit {
 
                 //set chart
                 let chart = new Chart();
-                let labels = this.volume.details.map(d => d.brokerCode);
-                let series = this.volume.details.map(d => d.totalValue);
+                let labels = this.detailsCache.map(d => d.brokerCode);
+                let series = this.detailsCache.map(d => d.totalValue);
                 chart.data = {
                     labels: labels,
                     series: [series]
@@ -149,24 +150,24 @@ export class VolumeComponent implements OnInit {
         let series = [];
         if (column === "totalValue") {
             this.chartSelectedItem = this.chartDropdownItems[0];
-            labels = this.volume.details.map(d => d.brokerCode);
-            series = this.volume.details.map(d => d.totalValue);
+            labels = this.detailsCache.map(d => d.brokerCode);
+            series = this.detailsCache.map(d => d.totalValue);
         } else if (column === "netAmount") {
             this.chartSelectedItem = this.chartDropdownItems[1];
-            labels = this.volume.details.map(d => d.brokerCode);
-            series = this.volume.details.map(d => d.netAmount);
+            labels = this.detailsCache.map(d => d.brokerCode);
+            series = this.detailsCache.map(d => d.netAmount);
         } else if (column === "buyer.volume") {
             this.chartSelectedItem = this.chartDropdownItems[2];
-            labels = this.volume.details.map(d => d.brokerCode);
-            series = this.volume.details.map(d => d.buyer.volume);
+            labels = this.detailsCache.map(d => d.brokerCode);
+            series = this.detailsCache.map(d => d.buyer.volume);
         } else if (column === "seller.volume") {
             this.chartSelectedItem = this.chartDropdownItems[3];
-            labels = this.volume.details.map(d => d.brokerCode);
-            series = this.volume.details.map(d => d.seller.volume);
+            labels = this.detailsCache.map(d => d.brokerCode);
+            series = this.detailsCache.map(d => d.seller.volume);
         } else if (column === "totalPercentage") {
             this.chartSelectedItem = this.chartDropdownItems[3];
-            labels = this.volume.details.map(d => d.brokerCode);
-            series = this.volume.details.map(d => d.totalPercentage);
+            labels = this.detailsCache.map(d => d.brokerCode);
+            series = this.detailsCache.map(d => d.totalPercentage);
         }
         chart.data = {
             labels: labels,
@@ -211,10 +212,32 @@ export class VolumeComponent implements OnInit {
      * @param {VolumeDetail} volumeDetail
      * @returns {number}
      */
-    getProgressPercentage(volumeDetail: VolumeDetail) {
+    getProgressPercentage(volumeDetail: VolumeDetail): string {
         return volumeDetail.totalPercentage.toString() + "%";
     }
 
+    /**
+     * 
+     * @returns {string}
+     */
+    getOverflowX(): string {
+        if (this.chartTypeSelectedItem.key === "stackedBar")
+            return "scroll";
+        if (this.chartTypeSelectedItem.key === "horizontalBar")
+            return "hidden"
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    getOverflowY(): string {
+        if (this.chartTypeSelectedItem.key === "stackedBar")
+            return "hidden";
+        if (this.chartTypeSelectedItem.key === "horizontalBar")
+            return "scroll"
+    }
+    
     /**
      *
      */

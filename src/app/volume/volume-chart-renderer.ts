@@ -53,10 +53,15 @@ export class VolumeChartRenderer {
                 labelInterpolationFnc: function(value) {
                     return (value / 1000) + 'k';
                 }
-            }
+            },
+            width: this.computeWidth()
+        };
+        let data = {
+            labels: this.chart.data.labels,
+            series: this.chart.data.series
         };
         Chartist
-            .Bar(elementName, this.chart.data, options, responsiveOptions)
+            .Bar(elementName, data, options, responsiveOptions)
             .on('draw', function(data) {
                 if(data.type === 'bar') {
                     data.element.attr({
@@ -103,9 +108,14 @@ export class VolumeChartRenderer {
             horizontalBars: true,
             axisY: {
                 offset: 70
-            }
+            },
+            height: this.computeHeight()
         };
-        Chartist.Bar(elementName, this.chart.data, options, responsiveOptions);
+        let data = {
+            labels: this.chart.data.labels,
+            series: this.chart.data.series
+        };
+        Chartist.Bar(elementName, data, options, responsiveOptions);
     }
 
     
@@ -130,9 +140,42 @@ export class VolumeChartRenderer {
         let options = {
             labelInterpolationFnc: function(value) {
                 return value[0]
-            }
+            },
         };
-        this.chart.data.series = this.chart.data.series[0];
-        Chartist.Pie(elementName, this.chart.data, options, responsiveOptions);
+        let data = {
+            labels: this.chart.data.labels,
+            series: this.chart.data.series[0].slice(0)
+        };
+        Chartist.Pie(elementName, data, options, responsiveOptions);
+    }
+
+    /**
+     * 
+     * @returns {string}
+     */
+    private computeHeight(): string {
+        if (this.chart.data.series[0].length >= 50)
+            return this.chart.data.series[0].length * 30 + 'px';
+        if (this.chart.data.series[0].length >= 40)
+            return this.chart.data.series[0].length * 40 + 'px';
+        if (this.chart.data.series[0].length >= 30)
+            return this.chart.data.series[0].length * 50 + 'px';
+        if (this.chart.data.series[0].length >= 20)
+            return this.chart.data.series[0].length * 100 + 'px';
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    private computeWidth(): string {
+        if (this.chart.data.labels.length >= 50)
+            return this.chart.data.labels.length * 30 + 'px';
+        if (this.chart.data.labels.length >= 40)
+            return this.chart.data.labels.length * 40 + 'px';
+        if (this.chart.data.labels.length >= 30)
+            return this.chart.data.labels.length * 50 + 'px';
+        if (this.chart.data.labels.length >= 20)
+            return this.chart.data.labels.length * 100 + 'px';
     }
 }
