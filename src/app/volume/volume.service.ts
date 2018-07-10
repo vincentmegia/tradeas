@@ -6,14 +6,17 @@ import PouchDBFind from 'pouchdb-find';
 import { Volume } from './volume';
 import { Side } from "./side";
 import { VolumeDetail } from "./volume-detail";
+import { ConfigurationService } from "../shared/services/configuration.service";
 PouchDB.plugin(PouchDBFind);
 
 @Injectable()
 export class VolumeService {
     private _pouchDb: PouchDB;
 
-    constructor() {
-        this._pouchDb = new PouchDB('http://localhost:5984/broker-transactions');
+    constructor(private configurationService: ConfigurationService) {
+        let url = configurationService.items["couchdbUrl"];
+        url = 'http://localhost:5984/';
+        this._pouchDb = new PouchDB(url + 'broker-transactions');
     }
 
     /**

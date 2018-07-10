@@ -33,6 +33,8 @@ import { ChartService } from 'app/dashboard/chart.service';
 import { PortfolioService } from 'app/dashboard/portfolio.service';
 import { VolumeService } from "./volume/volume.service";
 import { CompareService } from "./shared/services/compare.service";
+import {BrokerService} from "./shared/services/broker.service";
+import {ConfigurationService} from "./shared/services/configuration.service";
 
 @NgModule({
     declarations: [
@@ -72,7 +74,9 @@ import { CompareService } from "./shared/services/compare.service";
         ChartService,
         PortfolioService,
         VolumeService,
-        CompareService
+        CompareService,
+        BrokerService,
+        ConfigurationService
     ],
     bootstrap: [AppComponent],
 })

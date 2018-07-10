@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Idea } from './idea/idea';
-import { Transaction } from './idea/transaction';
 import { Position } from './idea/position';
-//import { JournalMockData } from './journal-mock-data';
 import PouchDB from 'pouchdb';
 import { Observable } from 'rxjs/rx';
 import * as moment from "moment";
 import PouchDBFind from 'pouchdb-find'
 import { TransactionService } from './idea/transaction.service';
+import { ConfigurationService } from "../shared/services/configuration.service";
 PouchDB.plugin(PouchDBFind);
 
 @Injectable()
 export class JournalService {
     private _pouchDb: PouchDB;
 
-    constructor(private transactionService: TransactionService) {
-        this._pouchDb = new PouchDB('http://localhost:5984/journal');
+    constructor(private transactionService: TransactionService,
+                private configurationService: ConfigurationService) {
+        let url = configurationService.items["couchdbUrl"];
+        this._pouchDb = new PouchDB(url + 'journal');
     }
 
     /**

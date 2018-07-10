@@ -11,6 +11,8 @@ import { Chart } from "../dashboard/chart";
 import { DropdownItem } from "../shared/dropdown-item";
 import { TableColumn } from "../shared/table-column";
 import { CompareService } from "../shared/services/compare.service";
+import {Broker} from "../shared/services/broker";
+import {BrokerService} from "../shared/services/broker.service";
 
 @Component({
     selector: 'volume-cmp',
@@ -19,7 +21,6 @@ import { CompareService } from "../shared/services/compare.service";
     styleUrls: ['volume.component.css'],
     providers: [VolumeChartRenderer, CompareService]
 })
-
 export class VolumeComponent implements OnInit {
     columns: TableColumn[];
     pagination: Pagination;
@@ -35,11 +36,13 @@ export class VolumeComponent implements OnInit {
     chartTypeSelectedItem: DropdownItem;
     isChartCollapse: boolean;
     isBuyerSellerCollapsed: boolean;
+    brokers: Broker[];
 
     constructor(private securityService: SecurityService,
                 private volumeService: VolumeService,
                 private volumeChartRenderer: VolumeChartRenderer,
-                private compareService: CompareService) {
+                private compareService: CompareService,
+                private brokerService: BrokerService) {
         this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1});
         this.chartDropdownItems = [
             new DropdownItem({key: 'totalValue', value: 'Total value'}),
@@ -76,11 +79,14 @@ export class VolumeComponent implements OnInit {
                 let totalValue = 0;
                 mergedDetails.map(m => {
                     totalValue += m.totalValue;
+                    let broker = this.brokers.find(broker => broker.id === m.brokerCode);
+                    m.brokerName = broker.name;
                     if (!hashMap[m.brokerCode]) {//use id for now
                         hashMap[m.brokerCode] = m;
                         return m;
                     }
 
+                    
                     hashMap[m.brokerCode].buyer.average += m.buyer.average;
                     hashMap[m.brokerCode].buyer.amount += m.buyer.amount;
                     hashMap[m.brokerCode].buyer.volume += m.buyer.volume;
@@ -114,7 +120,7 @@ export class VolumeComponent implements OnInit {
 
                 //set chart
                 let chart = new Chart();
-                let labels = this.detailsCache.map(d => d.brokerCode);
+                let labels = this.detailsCache.map(d => d.brokerName);
                 let series = this.detailsCache.map(d => d.totalValue);
                 chart.data = {
                     labels: labels,
@@ -132,7 +138,6 @@ export class VolumeComponent implements OnInit {
      * @param event
      */
     pageChanged(event: any): void {
-        debugger;
         let start = event.page * event.itemsPerPage;
         let end = start + event.itemsPerPage;
         this.volume.details = this.detailsCache.slice(start, end);
@@ -150,23 +155,23 @@ export class VolumeComponent implements OnInit {
         let series = [];
         if (column === "totalValue") {
             this.chartSelectedItem = this.chartDropdownItems[0];
-            labels = this.detailsCache.map(d => d.brokerCode);
+            labels = this.detailsCache.map(d => d.brokerName);
             series = this.detailsCache.map(d => d.totalValue);
         } else if (column === "netAmount") {
             this.chartSelectedItem = this.chartDropdownItems[1];
-            labels = this.detailsCache.map(d => d.brokerCode);
+            labels = this.detailsCache.map(d => d.brokerName);
             series = this.detailsCache.map(d => d.netAmount);
         } else if (column === "buyer.volume") {
             this.chartSelectedItem = this.chartDropdownItems[2];
-            labels = this.detailsCache.map(d => d.brokerCode);
+            labels = this.detailsCache.map(d => d.brokerName);
             series = this.detailsCache.map(d => d.buyer.volume);
         } else if (column === "seller.volume") {
             this.chartSelectedItem = this.chartDropdownItems[3];
-            labels = this.detailsCache.map(d => d.brokerCode);
+            labels = this.detailsCache.map(d => d.brokerName);
             series = this.detailsCache.map(d => d.seller.volume);
         } else if (column === "totalPercentage") {
             this.chartSelectedItem = this.chartDropdownItems[3];
-            labels = this.detailsCache.map(d => d.brokerCode);
+            labels = this.detailsCache.map(d => d.brokerName);
             series = this.detailsCache.map(d => d.totalPercentage);
         }
         chart.data = {
@@ -242,6 +247,9 @@ export class VolumeComponent implements OnInit {
      *
      */
     ngOnInit() {
+        this.brokerService
+            .getAll()
+            .subscribe(brokers => this.brokers = brokers);
         //data is of array type and should be later changed to a more model centric appraoch
         this.securityService
             .getAll()

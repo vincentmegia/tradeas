@@ -1,12 +1,16 @@
 import { Security } from './security';
 import PouchDB from 'pouchdb';
 import { Observable } from 'rxjs/rx';
+import { ConfigurationService } from "./configuration.service";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class SecurityService {
     private _pouchDb: PouchDB;
-    
-    constructor() {
-        this._pouchDb = new PouchDB('http://localhost:5984/securities');
+
+    constructor(private configurationService: ConfigurationService) {
+        let url = configurationService.items["couchdbUrl"];
+        this._pouchDb = new PouchDB(url + 'securities');
     }
 
     /**
@@ -22,7 +26,7 @@ export class SecurityService {
                     // so let's map the array to contain just the .doc objects.
                     return document.rows.map(row => {
                         // Convert string to date, doesn't happen automatically.
-                        var security = new Security({
+                        let security = new Security({
                             id: row.doc._id,
                             name: row.doc.companyName,
                             symbol: row.doc.symbol,

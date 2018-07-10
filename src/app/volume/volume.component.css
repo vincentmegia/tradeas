@@ -50,3 +50,8 @@
 :host ::ng-deep body div[class="bs-datepicker-head"] {
     background-color: #7A9E9F;
 }
+
+/*increased chart font*/
+.ct-label {
+    font-size: 3rem !important;
+}

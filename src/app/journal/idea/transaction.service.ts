@@ -5,21 +5,23 @@ import PouchDB from 'pouchdb';
 import { Observable } from 'rxjs/rx';
 import * as moment from "moment";
 import PouchDBFind from 'pouchdb-find'
+import {ConfigurationService} from "../../shared/services/configuration.service";
 
 @Injectable()
 export class TransactionService {
     private _pouchDb: PouchDB;
 
-    constructor() {
-        this._pouchDb = new PouchDB('http://localhost:5984/transactions');
+    constructor(private configurationService: ConfigurationService) {
+        let url = configurationService.items["couchdbUrl"];
+        this._pouchDb = new PouchDB(url + 'transactions');
     }
 
     // /**
     //  * Gets all transaction for a position
     //  */
     getTransactions(ideas: Idea[]): Observable<Transaction[]> {
-        var keys = ideas.map(i => i.position.transactionIds)[0];
-        var options = {
+        let keys = ideas.map(i => i.position.transactionIds)[0];
+        let options = {
             include_docs: true,
             keys: keys
         };
@@ -28,8 +30,8 @@ export class TransactionService {
                 .allDocs(options)
                 .then(response => {
                     console.log(response);
-                    var transactions = response.rows.map(row => {
-                        var transaction = new Transaction({
+                    return response.rows.map(row => {
+                        return new Transaction({
                             id: row.doc._id,
                             rev: row.doc._rev,
                             symbol: row.doc.symbol,
@@ -40,9 +42,7 @@ export class TransactionService {
                             status: row.doc.status,
                             createdDate: row.doc.createdDate
                         });
-                        return transaction;
                     });
-                    return transactions;
                 })
             );
     }
