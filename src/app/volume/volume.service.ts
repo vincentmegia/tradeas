@@ -15,7 +15,6 @@ export class VolumeService {
 
     constructor(private configurationService: ConfigurationService) {
         let url = configurationService.items["couchdbUrl"];
-        url = 'http://localhost:5984/';
         this._pouchDb = new PouchDB(url + 'broker-transactions');
     }
 

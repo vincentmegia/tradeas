@@ -11,8 +11,9 @@ import { Chart } from "../dashboard/chart";
 import { DropdownItem } from "../shared/dropdown-item";
 import { TableColumn } from "../shared/table-column";
 import { CompareService } from "../shared/services/compare.service";
-import {Broker} from "../shared/services/broker";
-import {BrokerService} from "../shared/services/broker.service";
+import { Broker } from "../shared/services/broker";
+import { BrokerService } from "../shared/services/broker.service";
+import {VolumeDetailBuilder} from "./volume-detail-builder";
 
 @Component({
     selector: 'volume-cmp',
@@ -74,43 +75,9 @@ export class VolumeComponent implements OnInit {
                 volumes.map(v => {
                     v.details.map(d => mergedDetails.push(d));
                 });
-
-                let hashMap = [];
-                let totalValue = 0;
-                mergedDetails.map(m => {
-                    totalValue += m.totalValue;
-                    let broker = this.brokers.find(broker => broker.id === m.brokerCode);
-                    m.brokerName = broker.name;
-                    if (!hashMap[m.brokerCode]) {//use id for now
-                        hashMap[m.brokerCode] = m;
-                        return m;
-                    }
-
-                    
-                    hashMap[m.brokerCode].buyer.average += m.buyer.average;
-                    hashMap[m.brokerCode].buyer.amount += m.buyer.amount;
-                    hashMap[m.brokerCode].buyer.volume += m.buyer.volume;
-                    hashMap[m.brokerCode].seller.average += m.seller.average;
-                    hashMap[m.brokerCode].seller.amount += m.seller.amount;
-                    hashMap[m.brokerCode].seller.volume += m.seller.volume;
-                    hashMap[m.brokerCode].netAmount += m.netAmount;
-                    hashMap[m.brokerCode].totalValue += m.totalValue;
-                    return m;
-                });
-
-                let details = [];
-                //convert hasmap to array
-                hashMap.map(hashMap => {
-                    //compute for vol percentage
-                    hashMap.totalPercentage = (hashMap.totalValue / totalValue) * 100;
-                    details.push(hashMap);
-                });
-
-                details.sort((vol1, vol2): number => {
-                    if (vol1.totalValue > vol2.totalValue) return -1;
-                    if (vol1.totalValue < vol2.totalValue) return 1;
-                    return 0;
-                });
+    
+                let volumeDetailBuilder = new VolumeDetailBuilder({details: mergedDetails, brokers: this.brokers});
+                let details = volumeDetailBuilder.build();
 
                 this.pagination.totalItems = details.length;
                 this.detailsCache = details.slice(0);
@@ -205,11 +172,14 @@ export class VolumeComponent implements OnInit {
     onSort(column: TableColumn) {
         console.log("sorting column:" + column);
         this.compareService.sort(
-            this.volume.details,
+            this.detailsCache,
             column.key, 
             column.sortFlagToggle ? "asc" : "desc")
             .map(item => item.totalValue);
         column.sortFlagToggle = !column.sortFlagToggle;
+        let start = (this.pagination.currentPage - 1) * this.pagination.itemsPerPage;
+        let end = start + this.pagination.itemsPerPage;
+        this.volume.details = this.detailsCache.slice(start, end);
     }
 
     /**
@@ -255,7 +225,7 @@ export class VolumeComponent implements OnInit {
             .getAll()
             .subscribe(securities => this.securities = securities);
         this.columns = [
-            new TableColumn({key: 'brokerCode', value: 'Name'}),
+            new TableColumn({key: 'brokerName', value: 'Name'}),
             new TableColumn({key: 'buyer.volume', value: 'Buy Vol'}),
             new TableColumn({key: 'buyer.amount', value: 'Buy Value'}),
             new TableColumn({key: 'buyer.average', value: 'Buy Ave'}),
@@ -264,7 +234,7 @@ export class VolumeComponent implements OnInit {
             new TableColumn({key: 'seller.average', value: 'Sell Ave'}),
             new TableColumn({key: 'netAmount', value: 'Net Amount'}),
             new TableColumn({key: 'totalValue', value: 'Total Value'}),
-            new TableColumn({key: 'percentageVolume', value: '% Volume'})
+            new TableColumn({key: 'totalPercentage', value: '% Volume'})
         ];
     }
 }

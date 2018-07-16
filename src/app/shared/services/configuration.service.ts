@@ -6,6 +6,6 @@ export class ConfigurationService {
 
     constructor() {
         this.items = [];
-        this.items['couchdbUrl'] = 'https://couchdb-fecd7f.smileupps.com/';
+        this.items['couchdbUrl'] = 'http://104.215.158.74:5984/';
     }
 }

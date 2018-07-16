@@ -49,6 +49,7 @@ export class VolumeChartRenderer {
 
         let options = {
             stackBars: true,
+            seriesBarDistance: 1000,
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return (value / 1000) + 'k';
@@ -106,10 +107,15 @@ export class VolumeChartRenderer {
             seriesBarDistance: distance,
             reverseData: true,
             horizontalBars: true,
-            axisY: {
-                offset: 70
+            axisX: {
+                labelInterpolationFnc: function(value) {
+                    return ((value / 100000)) * 100 + 'k';
+                }  
             },
-            height: this.computeHeight()
+            axisY: {
+                offset: 200
+            },
+            height: this.computeHeight(),
         };
         let data = {
             labels: this.chart.data.labels,
@@ -118,7 +124,6 @@ export class VolumeChartRenderer {
         Chartist.Bar(elementName, data, options, responsiveOptions);
     }
 
-    
     /**
      *
      * @param elementName
@@ -170,7 +175,7 @@ export class VolumeChartRenderer {
      */
     private computeWidth(): string {
         if (this.chart.data.labels.length >= 50)
-            return this.chart.data.labels.length * 30 + 'px';
+            return this.chart.data.labels.length * 100 + 'px';
         if (this.chart.data.labels.length >= 40)
             return this.chart.data.labels.length * 40 + 'px';
         if (this.chart.data.labels.length >= 30)

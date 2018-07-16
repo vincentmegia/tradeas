@@ -10,6 +10,7 @@ export class VolumeDetail {
     totalValue: number;
     totalPercentage: number;
     
+    
     public constructor(init?: Partial<VolumeDetail>) {
         Object.assign(this, init);
     }
