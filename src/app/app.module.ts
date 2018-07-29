@@ -33,8 +33,9 @@ import { ChartService } from 'app/dashboard/chart.service';
 import { PortfolioService } from 'app/dashboard/portfolio.service';
 import { VolumeService } from "./volume/volume.service";
 import { CompareService } from "./shared/services/compare.service";
-import {BrokerService} from "./shared/services/broker.service";
-import {ConfigurationService} from "./shared/services/configuration.service";
+import { BrokerService } from "./shared/services/broker.service";
+import { ConfigurationService } from "./shared/services/configuration.service";
+import { LoadingBarModule } from "@ngx-loading-bar/core";
 
 @NgModule({
     declarations: [
@@ -64,7 +65,8 @@ import {ConfigurationService} from "./shared/services/configuration.service";
         BsDropdownModule.forRoot(),
         CollapseModule.forRoot(),
         AccordionModule.forRoot(),
-        ProgressbarModule.forRoot()
+        ProgressbarModule.forRoot(),
+        LoadingBarModule.forRoot()
     ],
     exports: [
     ],

@@ -13,7 +13,8 @@ import { TableColumn } from "../shared/table-column";
 import { CompareService } from "../shared/services/compare.service";
 import { Broker } from "../shared/services/broker";
 import { BrokerService } from "../shared/services/broker.service";
-import {VolumeDetailBuilder} from "./volume-detail-builder";
+import { VolumeDetailBuilder } from "./volume-detail-builder";
+import {LoadingBarService} from "@ngx-loading-bar/core";
 
 @Component({
     selector: 'volume-cmp',
@@ -37,13 +38,16 @@ export class VolumeComponent implements OnInit {
     chartTypeSelectedItem: DropdownItem;
     isChartCollapse: boolean;
     isBuyerSellerCollapsed: boolean;
-    brokers: Broker[];
+    brokers: Broker[];  
+    minDate: Date;
+    maxDate: Date;
 
     constructor(private securityService: SecurityService,
                 private volumeService: VolumeService,
                 private volumeChartRenderer: VolumeChartRenderer,
                 private compareService: CompareService,
-                private brokerService: BrokerService) {
+                private brokerService: BrokerService,
+                private loadingBar: LoadingBarService) {
         this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1});
         this.chartDropdownItems = [
             new DropdownItem({key: 'totalValue', value: 'Total value'}),
@@ -62,15 +66,25 @@ export class VolumeComponent implements OnInit {
         this.isChartCollapse = true;
         this.isBuyerSellerCollapsed = true;
         this.detailsCache = [];
+        this.minDate = new Date(2018, 5, 29);
+        this.maxDate = new Date();
     }
 
     /**
      *
      */
     onSearch(): void {
+        this.loadingBar.start();
         this.volumeService
             .getVolumes(this.selectedSymbol, moment(this.startDate), moment(this.endDate))
             .subscribe(volumes => {
+                if (volumes.length === 0) {
+                    this.volume.details = [];
+                    this.detailsCache = [];
+                    this.pagination.totalItems = 0;
+                    this.loadingBar.stop();
+                    return;
+                }
                 let mergedDetails = [];
                 volumes.map(v => {
                     v.details.map(d => mergedDetails.push(d));
@@ -86,9 +100,9 @@ export class VolumeComponent implements OnInit {
                 console.log(this.volume);
 
                 //set chart
-                let chart = new Chart();
                 let labels = this.detailsCache.map(d => d.brokerName);
                 let series = this.detailsCache.map(d => d.totalValue);
+                let chart = new Chart();
                 chart.data = {
                     labels: labels,
                     series: [series]
@@ -97,9 +111,18 @@ export class VolumeComponent implements OnInit {
                 this.volumeChartRenderer.draw(this.chartTypeSelectedItem.key,"#volumeChart");
                 this.isChartCollapse = false;
                 this.isBuyerSellerCollapsed = false;
+                this.loadingBar.stop();
             });
     }
 
+    /**
+     * 
+     * @returns {boolean}
+     */
+    isChartVisible(): string {
+        return (this.volume.details.length > 0) ? "block" : "none";
+    }
+    
     /**
      * 
      * @param event
