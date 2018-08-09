@@ -1,10 +1,12 @@
 import { Security } from './security';
 import PouchDB from 'pouchdb';
-import { Observable } from 'rxjs/rx';
+import { Observable, from } from 'rxjs';
 import { ConfigurationService } from "./configuration.service";
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class SecurityService {
     private _pouchDb: PouchDB;
 
@@ -17,7 +19,7 @@ export class SecurityService {
      * 
      */
     getAll(): Observable<Security[]> {
-        return Observable.fromPromise(
+        return from(
             this._pouchDb
                 .allDocs({include_docs: true})
                 .then(document => {
@@ -26,15 +28,14 @@ export class SecurityService {
                     // so let's map the array to contain just the .doc objects.
                     return document.rows.map(row => {
                         // Convert string to date, doesn't happen automatically.
-                        let security = new Security({
+                        return new Security({
                             id: row.doc._id,
                             name: row.doc.companyName,
                             symbol: row.doc.symbol,
                             sector: row.doc.sector,
                             subSector: row.doc.subSector
                         });
-                        return security;
-                });
-        }));
+                    });
+                }));
     }
 }

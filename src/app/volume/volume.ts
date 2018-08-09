@@ -6,8 +6,8 @@ export class Volume {
     details: VolumeDetail[];
 
     public constructor(init?: Partial<Volume>) {
+        this.details = [];
         Object.assign(this, init);
-        this.details = new Array<VolumeDetail>();
     }
 
     /**

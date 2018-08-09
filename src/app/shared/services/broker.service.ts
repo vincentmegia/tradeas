@@ -1,10 +1,12 @@
 import PouchDB from 'pouchdb';
-import { Observable } from 'rxjs/rx';
+import { Observable, from } from 'rxjs';
 import { Broker } from "./broker";
 import {ConfigurationService} from "./configuration.service";
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class BrokerService {
     private _pouchDb: PouchDB; 
 
@@ -17,7 +19,7 @@ export class BrokerService {
      *
      */
     getAll(): Observable<Broker[]> {
-        return Observable.fromPromise(
+        return from(
             this._pouchDb
                 .allDocs({include_docs: true})
                 .then(document => {

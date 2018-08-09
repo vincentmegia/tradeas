@@ -9,7 +9,7 @@ export class VolumeDetail {
     netAmount: number;
     totalValue: number;
     totalPercentage: number;
-    
+    createdDate: Date;
     
     public constructor(init?: Partial<VolumeDetail>) {
         Object.assign(this, init);

@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { Idea } from './idea';
 import { Transaction } from './transaction';
 import PouchDB from 'pouchdb';
-import { Observable } from 'rxjs/rx';
-import * as moment from "moment";
-import PouchDBFind from 'pouchdb-find'
+import { Observable, from } from 'rxjs';
 import {ConfigurationService} from "../../shared/services/configuration.service";
 
 @Injectable()
@@ -25,7 +23,7 @@ export class TransactionService {
             include_docs: true,
             keys: keys
         };
-        return Observable.fromPromise(
+        return from(
             this._pouchDb
                 .allDocs(options)
                 .then(response => {

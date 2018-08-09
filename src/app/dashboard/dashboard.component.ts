@@ -30,6 +30,9 @@ export class DashboardComponent implements OnInit {
     friday: moment.Moment;
     today: moment.Moment;
     totalProfitLossPercentage: number;
+    isDailyCollapsed: boolean;
+    isWeeklyCollapsed: boolean;
+    isMonthlyCollapsed: boolean;
 
     constructor(private portfolioService: PortfolioService,
         private chartService: ChartService,

@@ -13,7 +13,7 @@ import { TransactionService } from './idea/transaction.service';
     moduleId: module.id,
     templateUrl: 'journal.component.html',
     styleUrls: ['journal.component.css'],
-    providers: [ JournalService, SecurityService ]
+    providers: [ JournalService, SecurityService, TransactionService ]
 })
 
 export class JournalComponent implements OnInit{

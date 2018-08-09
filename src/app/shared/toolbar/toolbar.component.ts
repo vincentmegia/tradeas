@@ -1,7 +1,6 @@
 import { Component, OnInit, Renderer, ViewChild, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
     moduleId: module.id,
@@ -9,7 +8,6 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
     templateUrl: 'toolbar.component.html',
     styleUrls: ['toolbar.component.css'],
 })
-
 export class ToolbarComponent implements OnInit{
     private listTitles: any[];
     private location: Location;
@@ -28,7 +26,7 @@ export class ToolbarComponent implements OnInit{
 
     ngOnInit(){
         this.listTitles = ROUTES.filter(listTitle => listTitle);
-        var navbar : HTMLElement = this.element.nativeElement;
+        let navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
     }
 
@@ -36,9 +34,9 @@ export class ToolbarComponent implements OnInit{
      * 
      */
     getTitle(){
-        var titlee = window.location.pathname;
+        let titlee = window.location.pathname;
         titlee = titlee.substring(1);
-        for(var item = 0; item < this.listTitles.length; item++){
+        for(let item = 0; item < this.listTitles.length; item++){
             if(this.listTitles[item].path === titlee){
                 return this.listTitles[item].title;
             }
@@ -50,8 +48,8 @@ export class ToolbarComponent implements OnInit{
      * 
      */
     sidebarToggle(){
-        var toggleButton = this.toggleButton;
-        var body = document.getElementsByTagName('body')[0];
+        let toggleButton = this.toggleButton;
+        let body = document.getElementsByTagName('body')[0];
 
         if(this.sidebarVisible == false){
             setTimeout(function(){

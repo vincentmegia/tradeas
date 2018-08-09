@@ -14,7 +14,9 @@ import { CompareService } from "../shared/services/compare.service";
 import { Broker } from "../shared/services/broker";
 import { BrokerService } from "../shared/services/broker.service";
 import { VolumeDetailBuilder } from "./volume-detail-builder";
-import {LoadingBarService} from "@ngx-loading-bar/core";
+import { LoadingBarService } from "@ngx-loading-bar/core";
+import { map } from 'rxjs/operators';
+import {VolumeParameter} from "./volume-parameter";
 
 @Component({
     selector: 'volume-cmp',
@@ -47,7 +49,8 @@ export class VolumeComponent implements OnInit {
                 private volumeChartRenderer: VolumeChartRenderer,
                 private compareService: CompareService,
                 private brokerService: BrokerService,
-                private loadingBar: LoadingBarService) {
+                private loadingBar: LoadingBarService
+    ) {
         this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1});
         this.chartDropdownItems = [
             new DropdownItem({key: 'totalValue', value: 'Total value'}),
@@ -76,43 +79,50 @@ export class VolumeComponent implements OnInit {
     onSearch(): void {
         this.loadingBar.start();
         this.volumeService
-            .getVolumes(this.selectedSymbol, moment(this.startDate), moment(this.endDate))
-            .subscribe(volumes => {
-                if (volumes.length === 0) {
-                    this.volume.details = [];
-                    this.detailsCache = [];
-                    this.pagination.totalItems = 0;
-                    this.loadingBar.stop();
-                    return;
-                }
-                let mergedDetails = [];
-                volumes.map(v => {
-                    v.details.map(d => mergedDetails.push(d));
-                });
-    
-                let volumeDetailBuilder = new VolumeDetailBuilder({details: mergedDetails, brokers: this.brokers});
-                let details = volumeDetailBuilder.build();
+            .getVolumes(new VolumeParameter({
+                symbol: this.selectedSymbol, 
+                from: moment(this.startDate),
+                to: moment(this.endDate)}))
+            .subscribe(
+                (volumes) => {
+                    debugger;
+                    if (volumes.length === 0) {
+                        this.volume.details = [];
+                        this.detailsCache = [];
+                        this.pagination.totalItems = 0;
+                        this.loadingBar.stop();
+                        return;
+                    }
+                    let mergedDetails = [];
+                    volumes.map(v => {
+                        v.details.map(d => mergedDetails.push(d));
+                    });
 
-                this.pagination.totalItems = details.length;
-                this.detailsCache = details.slice(0);
-                volumes[0].details = this.detailsCache.slice(0, this.pagination.itemsPerPage);
-                this.volume = volumes[0];
-                console.log(this.volume);
+                    let volumeDetailBuilder = new VolumeDetailBuilder({details: mergedDetails, brokers: this.brokers});
+                    let details = volumeDetailBuilder.build();
 
-                //set chart
-                let labels = this.detailsCache.map(d => d.brokerName);
-                let series = this.detailsCache.map(d => d.totalValue);
-                let chart = new Chart();
-                chart.data = {
-                    labels: labels,
-                    series: [series]
-                };
-                this.volumeChartRenderer.chart = chart;
-                this.volumeChartRenderer.draw(this.chartTypeSelectedItem.key,"#volumeChart");
-                this.isChartCollapse = false;
-                this.isBuyerSellerCollapsed = false;
-                this.loadingBar.stop();
-            });
+                    this.pagination.totalItems = details.length;
+                    this.detailsCache = details.slice(0);
+                    volumes[0].details = this.detailsCache.slice(0, this.pagination.itemsPerPage);
+                    this.volume = volumes[0];
+                    console.log(this.volume);
+
+                    //set chart
+                    let labels = this.detailsCache.map(d => d.brokerName);
+                    let series = this.detailsCache.map(d => d.totalValue);
+                    let chart = new Chart();
+                    chart.data = {
+                        labels: labels,
+                        series: [series]
+                    };
+                    this.volumeChartRenderer.chart = chart;
+                    this.volumeChartRenderer.draw(this.chartTypeSelectedItem.key, "#volumeChart");
+                    this.isChartCollapse = false;
+                    this.isBuyerSellerCollapsed = false;
+                },
+                (error) => console.log(error),
+                () => this.loadingBar.stop()
+            );
     }
 
     /**

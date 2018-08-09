@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { FooterModule } from './shared/footer/footer.module';
-import { ToolbarModule } from './shared/toolbar/toolbar.module';
+//import { ToolbarModule } from './shared/toolbar/toolbar.module';
 import { FixedPluginModule } from './shared/fixedplugin/fixedplugin.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './user/user.component';
@@ -36,6 +36,7 @@ import { CompareService } from "./shared/services/compare.service";
 import { BrokerService } from "./shared/services/broker.service";
 import { ConfigurationService } from "./shared/services/configuration.service";
 import { LoadingBarModule } from "@ngx-loading-bar/core";
+import { JournalService } from "./journal/journal.service";
 
 @NgModule({
     declarations: [
@@ -78,7 +79,8 @@ import { LoadingBarModule } from "@ngx-loading-bar/core";
         VolumeService,
         CompareService,
         BrokerService,
-        ConfigurationService
+        ConfigurationService,
+        JournalService
     ],
     bootstrap: [AppComponent],
 })

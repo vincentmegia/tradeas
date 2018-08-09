@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { Idea } from './idea/idea';
 import { Position } from './idea/position';
 import PouchDB from 'pouchdb';
-import { Observable } from 'rxjs/rx';
+import { Observable, of } from 'rxjs';
 import * as moment from "moment";
 import PouchDBFind from 'pouchdb-find'
 import { TransactionService } from './idea/transaction.service';
 import { ConfigurationService } from "../shared/services/configuration.service";
 PouchDB.plugin(PouchDBFind);
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class JournalService {
     private _pouchDb: PouchDB;
 
@@ -23,7 +25,7 @@ export class JournalService {
      * Gets all Ideas based on date range
      */
     getIdeas(from: moment.Moment, to: moment.Moment): Observable<Idea[]> {
-        return Observable.fromPromise(
+        return of(
             this._pouchDb
                 .find({
                     selector: {

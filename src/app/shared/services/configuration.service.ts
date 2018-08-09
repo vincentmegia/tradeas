@@ -6,6 +6,6 @@ export class ConfigurationService {
 
     constructor() {
         this.items = [];
-        this.items['couchdbUrl'] = 'http://104.215.158.74:5984/';
+        this.items['couchdbUrl'] = 'http://tradeasdb.southeastasia.cloudapp.azure.com:5984/';
     }
 }
