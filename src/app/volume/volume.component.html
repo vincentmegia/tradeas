@@ -24,7 +24,7 @@
                    [maxDate]="maxDate">
         </div>
         <div class="col-md-1 form-group">
-            <button class="btn btn-primary btn-sm pull-right" (click)="startDatePicker.toggle()">Start Date</button>
+            <button id="startDate" class="btn btn-primary btn-sm pull-right" (click)="startDatePicker.toggle()">Start Date</button>
         </div>
         <div class="col-md-2 form-group">
             <input type="text" 
@@ -43,7 +43,7 @@
     <!-- Search -->
     <div class="row">
         <div class="col-md-6 form-group">
-            <button class="btn btn-primary btn-sm pull-right" (click)="onSearch()">Search</button>
+            <button id="search" class="btn btn-primary btn-sm pull-right" (click)="onSearch()">Search</button>
         </div>
     </div>
     <div class="row">
@@ -60,7 +60,7 @@
                     <p class="category">
                     </p>
                 </div>
-                <div class="content table-responsive table-full-width" [collapse]="isBuyerSellerCollapsed">
+                <div class="content table-responsive" [collapse]="isBuyerSellerCollapsed">
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -96,6 +96,12 @@
                         </ng-container>
                         </tbody>
                     </table>
+                    <div class="footer">
+                        <hr>
+                        <div class="stats">
+                            <i class="ti-reload"></i> Updated {{elapsedMinutes | number}} minutes ago
+                        </div>
+                    </div>
                 </div>
                 <hr *ngIf="isBuyerSellerCollapsed" />
             </div>
@@ -176,7 +182,7 @@
                         </div> -->
                         <hr>
                         <div class="stats">
-                            <i class="ti-reload"></i> Updated 3 minutes ago
+                            <i class="ti-reload"></i> Updated {{elapsedMinutes | number}} minutes ago
                         </div>
                     </div>
                 </div>

@@ -31,8 +31,7 @@ export class VolumeChartRenderer {
                 showPoint: false,
                 axisX: {
                     labelInterpolationFnc: function (value) {
-                        // Will return Mon, Tue, Wed etc. on medium screens
-                        return value.slice(0, 3);
+                        return value.substring(0, 3);
                     }
                 }
             }],
@@ -40,8 +39,7 @@ export class VolumeChartRenderer {
                 showLine: false,
                 axisX: {
                     labelInterpolationFnc: function (value) {
-                        // Will return M, T, W etc. on small screens
-                        return value[0];
+                        return value.substring(0, 3);
                     }
                 }
             }]
@@ -83,8 +81,7 @@ export class VolumeChartRenderer {
                 showPoint: false,
                 axisX: {
                     labelInterpolationFnc: function (value) {
-                        // Will return Mon, Tue, Wed etc. on medium screens
-                        return value.slice(0, 3);
+                        return (value / 10000) + 'k';
                     }
                 }
             }],
@@ -92,8 +89,7 @@ export class VolumeChartRenderer {
                 showLine: false,
                 axisX: {
                     labelInterpolationFnc: function (value) {
-                        // Will return M, T, W etc. on small screens
-                        return value[0];
+                        return (value / 100000) + 'k';
                     }
                 }
             }]

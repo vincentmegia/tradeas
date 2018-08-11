@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import * as moment from "moment";
 import { Pagination } from '../journal/pagination';
 import { Volume } from './volume';
@@ -43,14 +43,17 @@ export class VolumeComponent implements OnInit {
     brokers: Broker[];  
     minDate: Date;
     maxDate: Date;
+    startTime: moment.Moment;
+    elapsedMinutes: number;
+    elapsedTime: moment.Moment;
 
     constructor(private securityService: SecurityService,
                 private volumeService: VolumeService,
                 private volumeChartRenderer: VolumeChartRenderer,
                 private compareService: CompareService,
                 private brokerService: BrokerService,
-                private loadingBar: LoadingBarService
-    ) {
+                private loadingBar: LoadingBarService,
+                private zone: NgZone) {
         this.pagination = new Pagination({itemsPerPage: 10, currentPage: 1});
         this.chartDropdownItems = [
             new DropdownItem({key: 'totalValue', value: 'Total value'}),
@@ -71,12 +74,15 @@ export class VolumeComponent implements OnInit {
         this.detailsCache = [];
         this.minDate = new Date(2018, 5, 29);
         this.maxDate = new Date();
+        this.elapsedMinutes = 0;
+        this.startTime = moment();
     }
 
     /**
      *
      */
     onSearch(): void {
+        this.elapsedTime = this.startTime;
         this.loadingBar.start();
         this.volumeService
             .getVolumes(new VolumeParameter({
@@ -85,7 +91,6 @@ export class VolumeComponent implements OnInit {
                 to: moment(this.endDate)}))
             .subscribe(
                 (volumes) => {
-                    debugger;
                     if (volumes.length === 0) {
                         this.volume.details = [];
                         this.detailsCache = [];
@@ -121,7 +126,15 @@ export class VolumeComponent implements OnInit {
                     this.isBuyerSellerCollapsed = false;
                 },
                 (error) => console.log(error),
-                () => this.loadingBar.stop()
+                () => {
+                    this.loadingBar.stop();
+                    this.zone.run(() => {
+                        setInterval(() => {
+                            this.elapsedMinutes = moment.duration(moment().diff(this.elapsedTime)).asMinutes();
+                        }, 60000);                        
+                    });
+                    console.log(this.elapsedMinutes);
+                }
             );
     }
 
@@ -260,7 +273,7 @@ export class VolumeComponent implements OnInit {
         this.columns = [
             new TableColumn({key: 'brokerName', value: 'Name'}),
             new TableColumn({key: 'buyer.volume', value: 'Buy Vol'}),
-            new TableColumn({key: 'buyer.amount', value: 'Buy Value'}),
+            new TableColumn({key: 'buyer.amount', value: 'Buy Amt'}),
             new TableColumn({key: 'buyer.average', value: 'Buy Ave'}),
             new TableColumn({key: 'seller.volume', value: 'Sell Vol'}),
             new TableColumn({key: 'seller.amount', value: 'Sell Amt'}),

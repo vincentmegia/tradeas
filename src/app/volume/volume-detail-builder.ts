@@ -45,8 +45,8 @@ export class VolumeDetailBuilder {
         list.map(hashMap => {
             //compute for vol percentage
             hashMap.totalPercentage = (hashMap.totalValue / totalValue) * 100;
-            hashMap.buyer.average = hashMap.buyer.amount / hashMap.buyer.volume;
-            hashMap.seller.average = hashMap.seller.amount / hashMap.seller.volume;
+            hashMap.buyer.average = (hashMap.buyer.amount === 0) ? 0 : hashMap.buyer.amount / hashMap.buyer.volume;
+            hashMap.seller.average = (hashMap.seller.amount === 0) ? 0 : hashMap.seller.amount / hashMap.seller.volume;
             details.push(hashMap);
         });
         
