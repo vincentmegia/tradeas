@@ -1,46 +1,77 @@
 import { Injectable } from '@angular/core';
 import { Idea } from './idea/idea';
-//import { JournalMockData } from './journal-mock-data';
+import { Position } from './idea/position';
 import PouchDB from 'pouchdb';
-import { Observable } from 'rxjs/rx';
+import { Observable, of } from 'rxjs';
+import * as moment from "moment";
+import PouchDBFind from 'pouchdb-find'
+import { TransactionService } from './idea/transaction.service';
+import { ConfigurationService } from "../shared/services/configuration.service";
+PouchDB.plugin(PouchDBFind);
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class JournalService {
     private _pouchDb: PouchDB;
 
-    constructor() {
-        this._pouchDb = new PouchDB('http://localhost:5984/tradeas');
+    constructor(private transactionService: TransactionService,
+                private configurationService: ConfigurationService) {
+        let url = configurationService.items["couchdbUrl"];
+        this._pouchDb = new PouchDB(url + 'journal');
     }
 
     /**
      * Gets all Ideas based on date range
      */
-    getIdeas(from: Date, to: Date): Observable<Idea[]> {
-        return Observable.fromPromise(
+    getIdeas(from: moment.Moment, to: moment.Moment): Observable<Idea[]> {
+        return of(
             this._pouchDb
-                .allDocs({include_docs: true})
-                .then(document => {
-                    // Each row has a .doc object and we just want to send an 
-                    // array of birthday objects back to the calling code,
-                    // so let's map the array to contain just the .doc objects.
-                    return document.rows.map(row => {
-                        // Convert string to date, doesn't happen automatically.
+                .find({
+                    selector: {
+                        entryDate: { 
+                            $gte: from, 
+                            $lte: to
+                        }
+                    }
+                })
+                .then(response => {
+                    console.log(response);
+                    let ideas = response.docs.map(doc => {
                         var idea = new Idea({
-                            id: row.doc.id,
-                            symbol: row.doc.symbol, 
-                            type: row.doc.type, 
-                            totalShares: row.doc.totalShares, 
-                            averageBuyPrice: row.doc.averageBuyPrice, 
-                            averageSellPrice: row.doc.averageSellPrice, 
-                            chart: row.doc.chart, 
-                            entryDate: row.doc.entryDate,
-                            stars: row.doc.stars,
-                            positions: row.doc.positions,
-                            isSelected: row.doc.isSelected
+                            id: doc._id,
+                            revision: doc._rev,
+                            symbol: doc.symbol, 
+                            type: doc.type, 
+                            chart: doc.chart, 
+                            entryDate: doc.entryDate,
+                            status: doc.status,
+                            stars: doc.stars,
+                            position: new Position({
+                                transactionId: doc.position.transactionId,
+                                orderId: doc.position.orderId,
+                                symbol: doc.position.symbol,
+                                status: doc.position.status,
+                                createdDate: doc.position.createdDate,
+                                transactionIds: doc.position.transactionIds
+                            }),
+                            isSelected: false
                         });
+
+                        if (doc.position.transactionIds != null && doc.position.transactionIds.length > 0) {
+                            this.transactionService
+                                .getTransactions([idea])
+                                .subscribe(transactions => {
+                                    idea.position.transactionsStore = transactions;
+                                    idea.isSelected = true;
+                                });
+                        }
                         return idea;
-                });
-        }));
+                    });
+                    console.log(ideas);
+                    return ideas;
+                })
+        );
     }
 
     saveIdeas(): void {

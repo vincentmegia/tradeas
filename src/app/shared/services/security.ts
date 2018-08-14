@@ -21,7 +21,7 @@ export class Security implements ISecurity {
     }
 
     get id(): string {
-        return this.id;
+        return this._id;
     }
 
     set id(id: string) {

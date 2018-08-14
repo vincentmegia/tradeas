@@ -3,16 +3,31 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Paper Dashboard Headings</h4>
-                        <p class="category">Created using <a href="https://www.google.com/fonts/specimen/Muli">Muli</a> Font Family</p>
+                        <h4 class="title">Import Transaction(s)</h4>
                     </div>
                     <div class="content">
 
+
+
                         <div class="typo-line">
-                            <h1><p class="category">Header 1</p>Paper Dashboard Heading </h1>
+                            <h1><p class="category">Broker</p>
+                                <div class="btn-group" dropdown>
+                                    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+                                        Choose a broker
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                        <li role="menuitem">
+                                            <a class="dropdown-item" (click)="setTradeType('Swing')">Colfinancial</a>
+                                        </li>
+                                        <li role="menuitem">
+                                            <a class="dropdown-item" (click)="setTradeType('Tsupit')">Philstocks</a>
+                                        </li>
+                                    </ul>
+                                </div></h1>
                         </div>
 
-                            <div class="typo-line">
+                            <!-- <div class="typo-line">
                             <h2><p class="category">Header 2</p>Paper Dashboard Heading </h2>
                         </div>
                         <div class="typo-line">
@@ -49,9 +64,6 @@
                             </p>
                         </div>
                         <div class="typo-line">
-                            <!--
-                             there are also "text-info", "text-success", "text-warning", "text-danger" clases for the text
-                             -->
                             <p class="category">Coloured Text</p>
                             <p class="text-primary">
                                 Text Primary - Light Bootstrap Table Heading and complex bootstrap dashboard you've ever seen on the internet.
@@ -72,7 +84,7 @@
 
                         <div class="typo-line">
                             <h2><p class="category">Small Tag</p>Header with small subtitle <br><small>".small" is a tag for the headers</small> </h2>
-                        </div>
+                        </div> -->
 
 
                     </div>

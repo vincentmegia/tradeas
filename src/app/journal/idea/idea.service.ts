@@ -1,26 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Idea } from './idea';
 import PouchDB from 'pouchdb';
+import { ConfigurationService } from "../../shared/services/configuration.service";
 
 @Injectable()
 export class IdeaService {
     private _pouchDb: PouchDB;
 
-    constructor() {
-        this._pouchDb = new PouchDB('http://localhost:5984/tradeas');
+    constructor(private configurationService: ConfigurationService) {
+        let url = configurationService.items["couchdbUrl"];
+        this._pouchDb = new PouchDB(url + 'journal');
     }
 
     /**
      * Gets all Ideas based on date range
      */
     addIdea(idea: Idea): void {
-        let response = this._pouchDb.put(idea);
+        let ideaJson = idea.json;
+        let response = this._pouchDb.put(ideaJson);
     }
-
-
-
-    // saveAll(ideas: Idea[]): void {
-    //     debugger;
-    //     this._pouchDb.bulkDocs(ideas);
-    // }
 }

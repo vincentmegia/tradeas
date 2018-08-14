@@ -1,7 +1,22 @@
+/*@import '~bootstrap/dist/css/bootstrap.min.css';
+@import 'assets/css/paper-dashboard.css';
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import 'assets/css/themify-icons.css';
+@import 'assets/css/bs-datepicker.css';*/
+
+
 /* You can add global styles to this file, and also import other style files */
-p.gain {
+.gain {
     color: green;
 }
-p.loss {
+.loss {
     color: red;
+}
+
+.mouse-pointer {
+    cursor: pointer;
+}
+
+.no-mouse {
+    cursor: not-allowed;
 }

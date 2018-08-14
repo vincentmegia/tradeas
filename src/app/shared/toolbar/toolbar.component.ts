@@ -1,22 +1,22 @@
 import { Component, OnInit, Renderer, ViewChild, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
     moduleId: module.id,
     selector: 'toolbar',
-    templateUrl: 'toolbar.component.html'
+    templateUrl: 'toolbar.component.html',
+    styleUrls: ['toolbar.component.css'],
 })
-
-export class NavbarComponent implements OnInit{
+export class ToolbarComponent implements OnInit{
     private listTitles: any[];
-    location: Location;
+    private location: Location;
     private nativeElement: Node;
     private toggleButton;
     private sidebarVisible: boolean;
 
-    @ViewChild("toolbar") button;
+    @ViewChild("toolbar") 
+    public button;
 
     constructor(location:Location, private renderer : Renderer, private element : ElementRef) {
         this.location = location;
@@ -26,22 +26,30 @@ export class NavbarComponent implements OnInit{
 
     ngOnInit(){
         this.listTitles = ROUTES.filter(listTitle => listTitle);
-        var navbar : HTMLElement = this.element.nativeElement;
+        let navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
     }
+
+    /**
+     * 
+     */
     getTitle(){
-        var titlee = window.location.pathname;
+        let titlee = window.location.pathname;
         titlee = titlee.substring(1);
-        for(var item = 0; item < this.listTitles.length; item++){
+        for(let item = 0; item < this.listTitles.length; item++){
             if(this.listTitles[item].path === titlee){
                 return this.listTitles[item].title;
             }
         }
         return 'Dashboard';
     }
+
+    /**
+     * 
+     */
     sidebarToggle(){
-        var toggleButton = this.toggleButton;
-        var body = document.getElementsByTagName('body')[0];
+        let toggleButton = this.toggleButton;
+        let body = document.getElementsByTagName('body')[0];
 
         if(this.sidebarVisible == false){
             setTimeout(function(){

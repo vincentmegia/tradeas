@@ -1,0 +1,193 @@
+<div class="container-fluid">
+    <!-- Search autocomplete row -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" placeholder="Symbol" class="form-control" [(ngModel)]="selectedSymbol" [typeahead]="securities" typeaheadOptionField="symbol"
+                        />
+                <span class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-5"></div>
+    </div>
+    <!-- Date range pickers row -->
+    <div class="row">
+        <div class="col-md-2 form-group">
+            <input type="text" 
+                   class="form-control" 
+                   #startDatePicker="bsDatepicker" 
+                   bsDatepicker [(bsValue)]="startDate" 
+                   [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false, dateInputFormat: 'MMMM Do YYYY'}"
+                   [minDate]="minDate"
+                   [maxDate]="maxDate">
+        </div>
+        <div class="col-md-1 form-group">
+            <button id="startDate" class="btn btn-primary btn-sm pull-right" (click)="startDatePicker.toggle()">Start Date</button>
+        </div>
+        <div class="col-md-2 form-group">
+            <input type="text" 
+                   class="form-control" 
+                   #endDatePicker="bsDatepicker" 
+                   bsDatepicker 
+                   [(bsValue)]="endDate" 
+                   [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false, dateInputFormat: 'MMMM Do YYYY'}"
+                   [minDate]="minDate"
+                   [maxDate]="maxDate">
+        </div>
+        <div class="col-md-1 form-group">
+            <button class="btn btn-primary btn-sm pull-right" (click)="endDatePicker.toggle()">End Date</button>
+        </div>
+    </div>
+    <!-- Search -->
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <button id="search" class="btn btn-primary btn-sm pull-right" (click)="onSearch()">Search</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ngx-loading-bar [includeSpinner]="false" [fixed]="false"></ngx-loading-bar>
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        <span>Buyers & Sellers</span>
+                            <i class="mouse-pointer pull-right" 
+                               [ngClass]="{'ti-angle-down': !isBuyerSellerCollapsed, 'ti-angle-up': isBuyerSellerCollapsed}" 
+                               (click)="isBuyerSellerCollapsed = !isBuyerSellerCollapsed"></i>
+                    </h4>
+                    <p class="category">
+                    </p>
+                </div>
+                <div class="content table-responsive" [collapse]="isBuyerSellerCollapsed">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th *ngFor="let column of columns">
+                                    <a  class="mouse-pointer"
+                                        style="color: inherit"
+                                        (click)="onSort(column)">{{column.value}}
+                                        <i class="fas" [ngClass]="{'fa-caret-up': !column.sortFlagToggle, 'fa-caret-down': column.sortFlagToggle}"></i>
+                                    </a>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ng-container *ngFor="let detail of volume.details">
+                            <tr>
+                                <td>{{detail.brokerName}}</td>
+                                <td class="gain">{{detail.buyer.volume | number}}</td>
+                                <td class="gain">{{detail.buyer.amount | number}}</td>
+                                <td class="gain">{{detail.buyer.average | number: '1.2-4'}}</td>
+                                <td class="loss">{{detail.seller.volume | number}}</td>
+                                <td class="loss">{{detail.seller.amount | number}}</td>
+                                <td class="loss">{{detail.seller.average | number}}</td>
+                                <td [ngClass]="{'gain':detail.netAmount > 0, 'loss':detail.netAmount < 0}">{{detail.netAmount | number}}</td>
+                                <td [ngClass]="{'gain':detail.totalValue > 0, 'loss':detail.totalValue < 0}">{{detail.totalValue | number}}</td>
+                                <td>
+                                    <div class="progress" >
+                                        <!--<div class="progress-bar progress-bar-success" role="progressbar" style="width: 25%; display: block; float: right;"></div>-->
+                                        <div class="progress-bar progress-bar-success" role="progressbar" [ngStyle]="{ 'width': getProgressPercentage(detail), 'display': 'block', 'float': 'right'}"></div>
+                                        <span>{{detail.totalPercentage | number : '1.2-2'}}%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        </tbody>
+                    </table>
+                    <div class="footer">
+                        <hr>
+                        <div class="stats">
+                            <i class="ti-reload"></i> Updated {{elapsedMinutes | number}} minutes ago
+                        </div>
+                    </div>
+                </div>
+                <hr *ngIf="isBuyerSellerCollapsed" />
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-12 col-md-10">
+                    <pagination [directionLinks]="false" 
+                                [totalItems]="pagination.totalItems" 
+                                [(ngModel)]="pagination.currentPage" 
+                                [(itemsPerPage)]="pagination.itemsPerPage"
+                                (numPages)="pagination.smallnumPages = $event" pageBtnClass="btn btn-primary btn-sm">
+                    </pagination>
+                </div>
+                <div class="col-xs-12 col-12 col-md-2">
+                    <pager id="pager" 
+                           [totalItems]="pagination.totalItems" 
+                           [(ngModel)]="pagination.currentPage" 
+                           (pageChanged)="pageChanged($event)"
+                           pageBtnClass="btn btn-primary btn-sm" 
+                           [(itemsPerPage)]="pagination.itemsPerPage" class="pull-right">
+                    </pager>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CHARTS -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        <span>Charts</span>
+                            <i class="mouse-pointer pull-right" [ngClass]="{'ti-angle-down': !isChartCollapse,
+                                     'ti-angle-up': isChartCollapse}" (click)="isChartCollapse = !isChartCollapse"></i>
+                    </h4>
+                    
+                    <p class="category"></p>
+                </div>
+                <div class="content" [collapse]="isChartCollapse">
+                    <div class="btn-group" dropdown [isDisabled]="volume.details.length === 0">
+                        <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                                aria-controls="dropdown-basic">
+                            {{chartSelectedItem.value}} <span class="caret"></span>
+                        </button>
+                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                            role="menu" aria-labelledby="button-basic">
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('totalValue')">Total value</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('netAmount')">Net amount</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('buyer.volume')">Buy volume</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('seller.volume')">Sell volume</a>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartColumnClick('totalPercentage')">% Volume</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="btn-group" dropdown [isDisabled]="volume.details.length === 0">
+                        <button id="chartTypeButton" 
+                                dropdownToggle 
+                                type="button" 
+                                class="btn btn-primary dropdown-toggle"
+                                aria-controls="dropdown-basic">
+                            {{chartTypeSelectedItem.value}} <span class="caret"></span>
+                        </button>
+                        <ul id="chartType" *dropdownMenu class="dropdown-menu"
+                            role="menu" aria-labelledby="button-basic">
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartTypeClick(chartTypeDropdownItems[0].key)">{{chartTypeDropdownItems[0].value}}</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartTypeClick(chartTypeDropdownItems[1].key)">{{chartTypeDropdownItems[1].value}}</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="onChartTypeClick(chartTypeDropdownItems[2].key)">{{chartTypeDropdownItems[2].value}}</a></li>
+                        </ul>
+                    </div>
+                    <div id="volumeChart" 
+                         class="ct-chart ct-square ct-label" 
+                         style="height: 700px; font-size: 1.5rem !important;"
+                         [ngStyle]="{'overflow-x': getOverflowX(), 'overflow-y': getOverflowY(), 'display': isChartVisible()}" ></div>
+                    <div class="footer">
+                        <!-- <div class="chart-legend">
+                            <i class="fa fa-circle text-info"></i> Open
+                            <i class="fa fa-circle text-danger"></i> Click
+                            <i class="fa fa-circle text-warning"></i> Click Second Time
+                        </div> -->
+                        <hr>
+                        <div class="stats">
+                            <i class="ti-reload"></i> Updated {{elapsedMinutes | number}} minutes ago
+                        </div>
+                    </div>
+                </div>
+                <hr *ngIf="isChartCollapse" />
+            </div>
+        </div>
+    </div>
+</div>
