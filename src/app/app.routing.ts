@@ -6,35 +6,29 @@ import { UserComponent }   from './user/user.component';
 import { TypographyComponent }   from './typography/typography.component';
 import { VolumeComponent }   from './volume/volume.component';
 import { NotificationsComponent }   from './notifications/notifications.component';
+import {AdminLayoutComponent} from "./layouts/admin/admin-layout.component";
+import {AuthLayoutComponent} from "./layouts/auth/auth-layout.component";
 
 export const AppRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'volume',
         pathMatch: 'full',
     },
     {
-        path: 'dashboard',
-        component: DashboardComponent
-    },
-    {
-        path: 'user',
-        component: UserComponent
+        path: '',
+        component: AdminLayoutComponent,
+        children: [{
+            path: '',
+            loadChildren: './volume/volume.module#VolumeModule'
+        }]
     },
     /*{
-        path: 'journal',
-        component: JournalComponent
-    },*/
-    {
-        path: 'typography',
-        component: TypographyComponent
-    },
-    {
-        path: 'volume',
-        component: VolumeComponent
-    },
-    {
-        path: 'notifications',
-        component: NotificationsComponent
-    }
+        path: '',
+            component: AuthLayoutComponent,
+            children: [{
+            path: 'pages',
+            loadChildren: './pages/pages.module#PagesModule'
+    }]
+    }*/
 ];

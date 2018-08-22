@@ -3,11 +3,10 @@ import { IdeaService } from './idea.service';
 import { JournalService } from '../journal.service'
 import { Idea } from './idea';
 import { Star } from './star';
-import { ModalDirective } from 'ngx-bootstrap/modal';
 import { SecurityService } from '../../shared/services/security.service';
 import { Security } from '../../shared/services/security';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ValidationComponent } from '../../shared/validation/validation.component';
+//import { ValidationComponent } from '../../shared/validation/validation.component';
 import * as moment from "moment";
 import { Position } from 'app/journal/idea/position';
 import { TransactionService } from 'app/journal/idea/transaction.service';
@@ -31,8 +30,8 @@ export class IdeaComponent {
     public securities: Security[];
     public userForm: any;
     
-    @ViewChild('childModal') 
-    public modal: ModalDirective;
+    //@ViewChild('childModal') 
+    //public modal: ModalDirective;
     
     constructor(private ideaService: IdeaService,
                 private journalService: JournalService,
@@ -68,14 +67,14 @@ export class IdeaComponent {
      * 
      */
     show(): void {
-        this.modal.show();
+        //this.modal.show();
     }
      
      /**
       * 
       */
     hide(): void {
-        this.modal.hide();
+        //this.modal.hide();
     }
 
     /**

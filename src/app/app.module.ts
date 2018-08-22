@@ -15,7 +15,7 @@ import { VolumeComponent } from './volume/volume.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { IdeaComponent } from './journal/idea/idea.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { 
+/*import { 
     TypeaheadModule, 
     PaginationModule, 
     BsDatepickerModule, 
@@ -24,11 +24,11 @@ import {
     CollapseModule,
     AccordionModule,
     ProgressbarModule
-} from 'ngx-bootstrap';
-import { ValidationComponent } from 'app/shared/validation/validation.component';
+} from 'ngx-bootstrap';*/
+//import { ValidationComponent } from 'app/shared/validation/validation.component';
 import { SecurityService } from './shared/services/security.service';
 import { TransactionService } from 'app/journal/idea/transaction.service';
-import { ToolbarComponent } from 'app/shared/toolbar/toolbar.component';
+//import { ToolbarComponent } from 'app/shared/toolbar/toolbar.component';
 import { ChartService } from 'app/dashboard/chart.service';
 import { PortfolioService } from 'app/dashboard/portfolio.service';
 import { VolumeService } from "./volume/volume.service";
@@ -37,6 +37,13 @@ import { BrokerService } from "./shared/services/broker.service";
 import { ConfigurationService } from "./shared/services/configuration.service";
 import { LoadingBarModule } from "@ngx-loading-bar/core";
 import { JournalService } from "./journal/journal.service";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NavbarModule } from "./shared/navbar/navbar.module";
+import { AuthLayoutComponent } from "./layouts/auth/auth-layout.component";
+import { AdminLayoutComponent } from "./layouts/admin/admin-layout.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { DataTablesModule } from "angular-datatables";
+import { JwBootstrapSwitchNg2Module } from "jw-bootstrap-switch-ng2";
 
 @NgModule({
     declarations: [
@@ -45,14 +52,15 @@ import { JournalService } from "./journal/journal.service";
         UserComponent,
         JournalComponent,
         TypographyComponent,
-        VolumeComponent,
         NotificationsComponent,
         IdeaComponent,
-        ValidationComponent,
-        ToolbarComponent
+        AdminLayoutComponent,
+        AuthLayoutComponent,
+        /*ValidationComponent,
+        ToolbarComponent*/
     ],
     imports: [
-        BrowserModule,
+        /*BrowserModule,
         RouterModule.forRoot(AppRoutes),
         SidebarModule,
         FooterModule,
@@ -67,7 +75,19 @@ import { JournalService } from "./journal/journal.service";
         CollapseModule.forRoot(),
         AccordionModule.forRoot(),
         ProgressbarModule.forRoot(),
-        LoadingBarModule.forRoot()
+        LoadingBarModule.forRoot(),
+        DataTablesModule,*/
+        BrowserAnimationsModule,
+        FormsModule,
+        RouterModule.forRoot(AppRoutes),
+        SidebarModule,
+        NavbarModule,
+        FooterModule,
+        FixedPluginModule,
+        LoadingBarModule.forRoot(),
+        NgbModule,
+        DataTablesModule,
+        JwBootstrapSwitchNg2Module
     ],
     exports: [
     ],

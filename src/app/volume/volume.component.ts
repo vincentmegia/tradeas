@@ -1,4 +1,4 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {AfterViewInit, Component, NgZone, OnDestroy, OnInit} from '@angular/core';
 import * as moment from "moment";
 import { Pagination } from '../journal/pagination';
 import { Volume } from './volume';
@@ -15,8 +15,19 @@ import { Broker } from "../shared/services/broker";
 import { BrokerService } from "../shared/services/broker.service";
 import { VolumeDetailBuilder } from "./volume-detail-builder";
 import { LoadingBarService } from "@ngx-loading-bar/core";
-import { map } from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {VolumeParameter} from "./volume-parameter";
+import {Subject} from "rxjs/Subject";
+import {Observable} from "rxjs/Observable";
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
+
+declare var $:any;
+
+declare interface DataTable {
+    headerRow: string[];
+    footerRow: string[];
+    dataRows: string[][];
+}
 
 @Component({
     selector: 'volume-cmp',
@@ -25,7 +36,7 @@ import {VolumeParameter} from "./volume-parameter";
     styleUrls: ['volume.component.css'],
     providers: [VolumeChartRenderer, CompareService]
 })
-export class VolumeComponent implements OnInit {
+export class VolumeComponent implements OnInit, OnDestroy {
     columns: TableColumn[];
     pagination: Pagination;
     volume: Volume;
@@ -33,7 +44,7 @@ export class VolumeComponent implements OnInit {
     securities: Security[];
     startDate: Date;
     endDate: Date;
-    selectedSymbol: string;
+    selectedSecurity: Security;
     chartDropdownItems: DropdownItem[];
     chartSelectedItem: DropdownItem;
     chartTypeDropdownItems: DropdownItem[];
@@ -41,11 +52,14 @@ export class VolumeComponent implements OnInit {
     isChartCollapse: boolean;
     isBuyerSellerCollapsed: boolean;
     brokers: Broker[];  
-    minDate: Date;
     maxDate: Date;
     startTime: moment.Moment;
     elapsedMinutes: number;
     elapsedTime: moment.Moment;
+    dataTableOptions: DataTables.Settings = {};
+    dataTableTrigger: Subject<Volume> = new Subject();
+    chartSwitch: boolean;
+    stockSwitch: boolean;
 
     constructor(private securityService: SecurityService,
                 private volumeService: VolumeService,
@@ -72,12 +86,26 @@ export class VolumeComponent implements OnInit {
         this.isChartCollapse = true;
         this.isBuyerSellerCollapsed = true;
         this.detailsCache = [];
-        this.minDate = new Date(2018, 5, 29);
         this.maxDate = new Date();
         this.elapsedMinutes = 0;
         this.startTime = moment();
+        this.chartSwitch = true;
+        this.stockSwitch = true;
     }
 
+    /**
+     * 
+     * @returns {NgbDateStruct}
+     */
+    getMaxDate(): NgbDateStruct {
+        let now = new Date();
+        let date = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
+        //console.log(date);
+        return date;
+    }
+
+
+    
     /**
      *
      */
@@ -86,7 +114,7 @@ export class VolumeComponent implements OnInit {
         this.loadingBar.start();
         this.volumeService
             .getVolumes(new VolumeParameter({
-                symbol: this.selectedSymbol, 
+                symbol: this.selectedSecurity.symbol, 
                 from: moment(this.startDate),
                 to: moment(this.endDate)}))
             .subscribe(
@@ -108,7 +136,8 @@ export class VolumeComponent implements OnInit {
 
                     this.pagination.totalItems = details.length;
                     this.detailsCache = details.slice(0);
-                    volumes[0].details = this.detailsCache.slice(0, this.pagination.itemsPerPage);
+                    //volumes[0].details = this.detailsCache.slice(0, this.pagination.itemsPerPage);
+                    volumes[0].details = this.detailsCache.slice(0);
                     this.volume = volumes[0];
                     console.log(this.volume);
 
@@ -124,6 +153,8 @@ export class VolumeComponent implements OnInit {
                     this.volumeChartRenderer.draw(this.chartTypeSelectedItem.key, "#volumeChart");
                     this.isChartCollapse = false;
                     this.isBuyerSellerCollapsed = false;
+                    
+                    this.dataTableTrigger.next();
                 },
                 (error) => console.log(error),
                 () => {
@@ -133,7 +164,6 @@ export class VolumeComponent implements OnInit {
                             this.elapsedMinutes = moment.duration(moment().diff(this.elapsedTime)).asMinutes();
                         }, 60000);                        
                     });
-                    console.log(this.elapsedMinutes);
                 }
             );
     }
@@ -144,18 +174,6 @@ export class VolumeComponent implements OnInit {
      */
     isChartVisible(): string {
         return (this.volume.details.length > 0) ? "block" : "none";
-    }
-    
-    /**
-     * 
-     * @param event
-     */
-    pageChanged(event: any): void {
-        let start = event.page * event.itemsPerPage;
-        let end = start + event.itemsPerPage;
-        this.volume.details = this.detailsCache.slice(start, end);
-        console.log('Page changed to: ' + event.page);
-        console.log('Number items per page: ' + event.itemsPerPage);
     }
     
     /**
@@ -209,24 +227,6 @@ export class VolumeComponent implements OnInit {
         
         this.volumeChartRenderer.draw(this.chartTypeSelectedItem.key,"#volumeChart");
     }
-    
-
-    /**
-     *
-     * @param {TableColumn} column
-     */
-    onSort(column: TableColumn) {
-        console.log("sorting column:" + column);
-        this.compareService.sort(
-            this.detailsCache,
-            column.key, 
-            column.sortFlagToggle ? "asc" : "desc")
-            .map(item => item.totalValue);
-        column.sortFlagToggle = !column.sortFlagToggle;
-        let start = (this.pagination.currentPage - 1) * this.pagination.itemsPerPage;
-        let end = start + this.pagination.itemsPerPage;
-        this.volume.details = this.detailsCache.slice(start, end);
-    }
 
     /**
      *
@@ -248,6 +248,35 @@ export class VolumeComponent implements OnInit {
             return "hidden"
     }
 
+    /**
+     * 
+     * @param {Observable<string>} text$
+     * @returns {Observable<any[] | Security[]>}
+     */
+    searchSecurities = (text$: Observable<string>) => text$.pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        map(term => term.length < 1
+            ? []
+            : this
+                .securities
+                .filter(v => v.symbol.toLowerCase().indexOf(term.toLowerCase()) > -1))
+        );
+
+    /**
+     * 
+     * @param {string} result
+     * @returns {string}
+     */
+    securitiesResultFormatter = (result: Security) => result.symbol.toUpperCase();
+
+    /**
+     * 
+     * @param {Security} result
+     * @returns {string}
+     */
+    securitiesInputFormatter = (result: Security) => `${result.symbol.toUpperCase()} - ${result.name}`;
+    
     /**
      *
      * @returns {string}
@@ -282,5 +311,20 @@ export class VolumeComponent implements OnInit {
             new TableColumn({key: 'totalValue', value: 'Total Value'}),
             new TableColumn({key: 'totalPercentage', value: '% Volume'})
         ];
+        
+        this.dataTableOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 10,
+            destroy: true
+        };
+    }
+
+    /**
+     * 
+     */
+    ngOnDestroy(): void {
+        // Do not forget to unsubscribe the event
+        this.dataTableTrigger.unsubscribe();
+        //$('#datatable').DataTable().destroy(true);
     }
 }

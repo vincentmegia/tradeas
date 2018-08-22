@@ -146,8 +146,8 @@ export class JournalComponent implements OnInit{
         this.columns = ['Symbol', 'Type', 'Shares', 'Remaining Shares', 'Average Price', 'Sell', '%Gain/Loss', 'Market Value', 'Chart', 'Entry Date', 'Rating']
         this.subColumns = ['Matched Quantity', 'Price', 'Side', 'Status', 'Created Date'];
 
-        this.childModal.modal.onHidden.subscribe((reason: string) => {
+        /*this.childModal.modal.onHidden.subscribe((reason: string) => {
             this.getIdeas(moment(this.startDate), moment(this.endDate));
-        });
+        });*/
     }
 }
