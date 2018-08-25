@@ -6,6 +6,7 @@ interface IBroker {
 export class Broker implements IBroker {
     private _id: string;
     public name: string;
+    
 
     public constructor(init?: Partial<Broker>) {
         Object.assign(this, init);

@@ -1,23 +1,25 @@
 import { Routes } from '@angular/router';
-
-import { DashboardComponent }   from './dashboard/dashboard.component';
-import { UserComponent }   from './user/user.component';
-//import { JournalComponent }   from './journal/journal.component';
-import { TypographyComponent }   from './typography/typography.component';
-import { VolumeComponent }   from './volume/volume.component';
-import { NotificationsComponent }   from './notifications/notifications.component';
-import {AdminLayoutComponent} from "./layouts/admin/admin-layout.component";
-import {AuthLayoutComponent} from "./layouts/auth/auth-layout.component";
+import { AdministrationLayoutComponent } from "./layouts/administration/administration-layout.component";
+import { LoginComponent } from "./login/login.component";
+import {HomeComponent} from "./home/home.component";
 
 export const AppRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'volume',
+        redirectTo: 'home',
         pathMatch: 'full',
     },
     {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: 'home',
+        component: HomeComponent
+    },
+    {
         path: '',
-        component: AdminLayoutComponent,
+        component: AdministrationLayoutComponent,
         children: [{
             path: '',
             loadChildren: './volume/volume.module#VolumeModule'

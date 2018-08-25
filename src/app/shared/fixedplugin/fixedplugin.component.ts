@@ -34,6 +34,7 @@ export class FixedPluginComponent implements OnInit{
         });
 
         $('.fixed-plugin .background-color span').click(function(){
+            debugger;
             $(this).siblings().removeClass('active');
             $(this).addClass('active');
 

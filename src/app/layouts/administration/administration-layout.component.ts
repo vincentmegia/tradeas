@@ -8,10 +8,10 @@ import PerfectScrollbar from 'perfect-scrollbar';
 
 @Component({
     selector: 'app-layout',
-    templateUrl: './admin-layout.component.html'
+    templateUrl: './administration-layout.component.html'
 })
 
-export class AdminLayoutComponent implements OnInit {
+export class AdministrationLayoutComponent implements OnInit {
     private _router: Subscription;
     // url: string;
      url: string;

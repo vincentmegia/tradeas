@@ -1,0 +1,125 @@
+<div class="login-page">
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container">
+            <div class="navbar-wrapper">
+                <div class="navbar-toggle">
+                    <button type="button" class="navbar-toggler">
+                        <span class="navbar-toggler-bar bar1"></span>
+                        <span class="navbar-toggler-bar bar2"></span>
+                        <span class="navbar-toggler-bar bar3"></span>
+                    </button>
+                </div>
+                <a class="navbar-brand" routerLinkActive="active" [routerLink]="['/dashboard']">Tradeas</a>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar navbar-kebab"></span>
+                <span class="navbar-toggler-bar navbar-kebab"></span>
+                <span class="navbar-toggler-bar navbar-kebab"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                <ul class="navbar-nav">
+                    <li class="nav-item ">
+                        <a routerLinkActive="active" [routerLink]="['/pages/register']" class="nav-link">
+                            <i class="nc-icon nc-book-bookmark"></i> Register
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="wrapper wrapper-full-page ">
+        <div class="full-page section-image" filter-color="black">
+            <div class="full-page-background" style="background-image: url('../../assets/img/12.jpg') "></div>
+            <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+            <div class="content" data-color="default-color">
+                <div class="container">
+                    <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+                        <form #f="ngForm" novalidate (ngSubmit)="onLogin()">
+                            <div class="card card-login">
+                                <div class="card-header ">
+                                    <div class="card-header ">
+                                        <h3 class="header text-center">Login</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group has-label">
+                                        <div class="input-group" [ngClass]="{'input-group-focus': focus}">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                  <i class="nc-icon nc-single-02"></i>
+                                                </span>
+                                            </div>
+                                            <input name="username"
+                                                   required
+                                                   #username="ngModel"
+                                                   [(ngModel)]="user.username"
+                                                   type="text"
+                                                   class="form-control"
+                                                   placeholder="Username"
+                                                   (focus)="focus = true"
+                                                   (blur)="focus = false">
+
+                                        </div>
+                                        <small [hidden]="username.valid || (username.pristine && !f.submitted)" class="text-danger">
+                                            Username is required
+                                        </small>
+                                    </div>
+                                    <div class="form-group has-label">
+                                        <div class="input-group"  [ngClass]="{'input-group-focus': focus1}">
+                                            <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="nc-icon nc-key-25"></i>
+                    </span>
+                                            </div>
+                                            <input  name="password"
+                                                    required
+                                                    #password="ngModel"
+                                                    [(ngModel)]="user.password"
+                                                    type="password"
+                                                    placeholder="Password"
+                                                    class="form-control"
+                                                    (focus)=" focus1 = true"
+                                                    (blur)="focus1 = false">
+                                        </div>
+                                        <small [hidden]="password.valid || (password.pristine && !f.submitted)" class="text-danger">
+                                            Password is required
+                                        </small>
+                                        <br/>
+
+                                    </div>
+
+                                </div>
+                                <br/>
+                                <div class="card-footer">
+                                    <button class="btn btn-round btn-block mb-3" (click)="onLogin()">Submit</button>
+                                    <small [hidden]="!isValid" class="text-danger center-block">
+                                        Password is incorrect
+                                    </small>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer footer-black  footer-white ">
+                <div class="container">
+                    <div class="row">
+                        <nav class="footer-nav">
+                            <ul>
+                                <li>
+                                    <a href="http://blog.creative-tim.com/" target="_blank">Agora Securities</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="credits ml-auto">
+            <span class="copyright">
+              &copy; {{test | date: 'yyyy'}}, made with <i class="fa fa-heart heart"></i> by Agora securities
+            </span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>

@@ -15,7 +15,7 @@
                            [resultFormatter]="securitiesResultFormatter"
                            [inputFormatter]="securitiesInputFormatter"
                            [resultTemplate]="rt"
-                    />
+                           (selectItem)="selectemItem($event)"/>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <i class="nc-icon nc-zoom-split"></i>
@@ -104,7 +104,42 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="content" [ngbCollapse]="isStockCollapse"></div>
+                        <div class="content" [ngbCollapse]="isStockCollapse">
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Symbol</label>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <p class="form-control-static">{{selectedSecurity?.symbol}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Company name</label>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <p class="form-control-static">{{selectedSecurity?.name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Known broker(s)</label>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <ng-container *ngFor="let broker of selectedSecurity?.brokers">
+                                            <p class="text-muted text-danger">{{broker.name}}</p>    
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-2 col-form-label">Note(s)</label>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <p class="form-control-static danger">{{selectedSecurity?.notes}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <hr *ngIf="isStockCollapse" />
                     </div>
                 </div>

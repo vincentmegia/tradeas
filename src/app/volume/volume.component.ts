@@ -20,6 +20,8 @@ import {VolumeParameter} from "./volume-parameter";
 import {Subject} from "rxjs/Subject";
 import {Observable} from "rxjs/Observable";
 import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
+import {b} from "@angular/core/src/render3";
+import {forkJoin} from "rxjs/internal/observable/forkJoin";
 
 declare var $:any;
 
@@ -250,6 +252,14 @@ export class VolumeComponent implements OnInit, OnDestroy {
 
     /**
      * 
+     * @param event
+     */
+    selectemItem(event: any) {
+        this.selectedSecurity = event.item;
+    }
+    
+    /**
+     * 
      * @param {Observable<string>} text$
      * @returns {Observable<any[] | Security[]>}
      */
@@ -292,13 +302,25 @@ export class VolumeComponent implements OnInit, OnDestroy {
      *
      */
     ngOnInit() {
-        this.brokerService
-            .getAll()
-            .subscribe(brokers => this.brokers = brokers);
+        let brokers$ = this.brokerService
+            .getAll();
+            //.subscribe(brokers => this.brokers = brokers);
         //data is of array type and should be later changed to a more model centric appraoch
-        this.securityService
-            .getAll()
-            .subscribe(securities => this.securities = securities);
+        let securities$ = this.securityService
+            .getAll();
+            //.subscribe(securities => this.securities = securities);
+
+        forkJoin(brokers$, securities$)
+            .subscribe(response => {
+                this.brokers = response[0];
+                this.securities = response[1];
+                this.securities.map(security => security.brokerIds.map(id => {
+                    let broker = this.brokers.find(b => b.id === id);
+                    security.brokers.push(broker);
+                }));
+                console.log(this.securities);
+            });
+        
         this.columns = [
             new TableColumn({key: 'brokerName', value: 'Name'}),
             new TableColumn({key: 'buyer.volume', value: 'Buy Vol'}),
