@@ -12,7 +12,7 @@ export class FixedPluginComponent implements OnInit{
     ngOnInit(){
         var $sidebar = $('.sidebar');
         var $off_canvas_sidebar = $('.off-canvas-sidebar');
-        var window_width = $(window).width();
+        var window_width = window.outerWidth;
 
         if(window_width > 767){
             if($('.fixed-plugin .dropdown').hasClass('show-dropdown')){
@@ -34,17 +34,17 @@ export class FixedPluginComponent implements OnInit{
         });
 
         $('.fixed-plugin .background-color span').click(function(){
+            debugger;
             $(this).siblings().removeClass('active');
             $(this).addClass('active');
 
             var new_color = $(this).data('color');
-
             if($sidebar.length != 0){
-                $sidebar.attr('data-background-color',new_color);
+                $sidebar.attr('data-color',new_color);
             }
 
             if($off_canvas_sidebar.length != 0){
-                $off_canvas_sidebar.attr('data-background-color',new_color);
+                $off_canvas_sidebar.attr('data-color',new_color);
             }
         });
 

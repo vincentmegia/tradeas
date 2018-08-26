@@ -4,8 +4,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="input-group">
-                <input type="text" placeholder="Symbol" class="form-control" [(ngModel)]="selected" [typeahead]="securities" typeaheadOptionField="symbol"
-                    (input)="onInput($event.target.value)" />
+                <!--input type="text" placeholder="Symbol" class="form-control" [(ngModel)]="selected" [typeahead]="securities" typeaheadOptionField="symbol"
+                    (input)="onInput($event.target.value)" /-->
                 <span class="input-group-addon">
                     <i class="fa fa-search"></i>
                 </span>
@@ -22,13 +22,13 @@
     <!-- Date range pickers row -->
     <div class="row">
         <div class="col-md-2 form-group">
-            <input type="text" class="form-control" #startDatePicker="bsDatepicker" bsDatepicker [(bsValue)]="startDate" [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false}">
+            <!--input type="text" class="form-control" #d="bsDatepicker" ngbDatepicker [(bsValue)]="startDate" [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false}"-->
         </div>
         <div class="col-md-1 form-group">
             <button class="btn btn-primary btn-sm pull-right" (click)="startDatePicker.toggle()">Start Date</button>
         </div>
         <div class="col-md-2 form-group">
-            <input type="text" class="form-control" #endDatePicker="bsDatepicker" bsDatepicker [(bsValue)]="endDate" [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false}">
+            <!--input type="text" class="form-control" #d="bsDatepicker" ngbDatepicker [(bsValue)]="endDate" [bsConfig]="{containerClass: 'theme-default', showWeekNumbers: false}"-->
         </div>
         <div class="col-md-1 form-group">
             <button class="btn btn-primary btn-sm pull-right" (click)="endDatePicker.toggle()">End Date</button>
@@ -123,14 +123,14 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-12 col-md-10">
-                    <pagination [directionLinks]="false" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage" [(itemsPerPage)]="pagination.itemsPerPage"
+                    <!--pagination [directionLinks]="false" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage" [(itemsPerPage)]="pagination.itemsPerPage"
                         (numPages)="pagination.smallnumPages = $event" pageBtnClass="btn btn-primary btn-sm">
-                    </pagination>
+                    </pagination-->
                 </div>
                 <div class="col-xs-12 col-12 col-md-2">
-                    <pager id="pager" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
+                    <!--pager id="pager" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
                         pageBtnClass="btn btn-primary btn-sm" [(itemsPerPage)]="pagination.itemsPerPage" class="pull-right">
-                    </pager>
+                    </pager-->
                 </div>
             </div>
         </div>

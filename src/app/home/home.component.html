@@ -1,0 +1,251 @@
+<!-- Navigation -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-white fixed-top">
+    <div class="container">
+        <div class="navbar-wrapper">
+            <div class="navbar-toggle" (click)="sidebarToggle()">
+                <button type="button" class="navbar-toggler">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+            <a class="navbar-brand" routerLinkActive="active" [routerLink]="['/home']">Tradeas</a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <ul class="navbar-nav">
+                <!--<li class="nav-item ">-->
+                    <!--<a routerLinkActive="active" [routerLink]="['/pages/register']" class="nav-link">-->
+                        <!--<i class="nc-icon nc-book-bookmark"></i> Register-->
+                    <!--</a>-->
+                <!--</li>-->
+                <li class="nav-item ">
+                    <a routerLinkActive="active" [routerLink]="['/login']"  class="nav-link">
+                        <i class="nc-icon nc-tap-01"></i> Enter
+                    </a>
+                </li>
+                <!--<li class="nav-item ">-->
+                    <!--<a routerLinkActive="active" [routerLink]="['/pages/user']" class="nav-link">-->
+                        <!--<i class="nc-icon nc-satisfied"></i> About-->
+                    <!--</a>-->
+                <!--</li>-->
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <!-- Slide One - Set the background image for this slide in the line below -->
+            <div class="carousel-item active" style="background-image: url('../../assets/img/home-canvas-1.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>Idea</h2>
+                    <p>Ideas transforms the world! plan and execute into a successful trade.</p>
+                </div>
+            </div>
+            <!-- Slide Two - Set the background image for this slide in the line below -->
+            <div class="carousel-item" style="background-image: url('../../assets/img/home-canvas-2.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>Journal</h2>
+                    <p>Success is not an overnight process, record your journey with us</p>
+                </div>
+            </div>
+            <!-- Slide Three - Set the background image for this slide in the line below -->
+            <div class="carousel-item" style="background-image: url('../../assets/img/home-canvas-3.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>Financial freedom</h2>
+                    <p>Take the first step and register with us</p>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</header>
+
+<!-- Page Content -->
+<div class="container">
+
+    <h1 class="my-4">Every trade starts with an idea</h1>
+
+    <!-- Marketing Icons Section -->
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <h4 class="card-header">Volume analysis</h4>
+                <div class="card-body">
+                    <p class="card-text">We offer historical transactions that brokers lack.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <h4 class="card-header">Journal</h4>
+                <div class="card-body">
+                    <p class="card-text">Journaling has never been easier, our features ensures you will never be lazy to journal again.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <h4 class="card-header">Portfolio dashboard</h4>
+                <div class="card-body">
+                    <p class="card-text">A light dashboard for metrics available at fingertips, no more excel!</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <h4 class="card-header">Playbook</h4>
+                <div class="card-body">
+                    <p class="card-text">Trading environment always evolves and keeping track of all those plays can be difficult but not anymore!</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <!-- Portfolio Section -->
+    <!--<h2>Portfolio Heading</h2>-->
+
+    <!--<div class="row">-->
+        <!--<div class="col-lg-4 col-sm-6 portfolio-item">-->
+            <!--<div class="card h-100">-->
+                <!--<a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
+                <!--<div class="card-body">-->
+                    <!--<h4 class="card-title">-->
+                        <!--<a href="#">Project One</a>-->
+                    <!--</h4>-->
+                    <!--<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-lg-4 col-sm-6 portfolio-item">-->
+            <!--<div class="card h-100">-->
+                <!--<a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
+                <!--<div class="card-body">-->
+                    <!--<h4 class="card-title">-->
+                        <!--<a href="#">Project Two</a>-->
+                    <!--</h4>-->
+                    <!--<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-lg-4 col-sm-6 portfolio-item">-->
+            <!--<div class="card h-100">-->
+                <!--<a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
+                <!--<div class="card-body">-->
+                    <!--<h4 class="card-title">-->
+                        <!--<a href="#">Project Three</a>-->
+                    <!--</h4>-->
+                    <!--<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam, error quod sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere atque iure perspiciatis mollitia recusandae vero vel quam!</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-lg-4 col-sm-6 portfolio-item">-->
+            <!--<div class="card h-100">-->
+                <!--<a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
+                <!--<div class="card-body">-->
+                    <!--<h4 class="card-title">-->
+                        <!--<a href="#">Project Four</a>-->
+                    <!--</h4>-->
+                    <!--<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-lg-4 col-sm-6 portfolio-item">-->
+            <!--<div class="card h-100">-->
+                <!--<a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
+                <!--<div class="card-body">-->
+                    <!--<h4 class="card-title">-->
+                        <!--<a href="#">Project Five</a>-->
+                    <!--</h4>-->
+                    <!--<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-lg-4 col-sm-6 portfolio-item">-->
+            <!--<div class="card h-100">-->
+                <!--<a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>-->
+                <!--<div class="card-body">-->
+                    <!--<h4 class="card-title">-->
+                        <!--<a href="#">Project Six</a>-->
+                    <!--</h4>-->
+                    <!--<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum nostrum suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!-- /.row -->
+
+    <!-- Features Section -->
+    <div class="row">
+        <div class="col-lg-6">
+            <h2>Our goal is financial freedom without cost!</h2>
+            <p>We simply want to help the small population of trader's in the Philippine markets, our goals are</p>
+            <ul>
+                <li>Empower trader's with the rich features we provide</li>
+                <li>Webinars at zero cost</li>
+                <li>Discord support group</li>
+            </ul>
+            <p>We believe that every Filipino should be given a chance to learn to trade or invest and enjoy the road to financial freedom.</p>
+        </div>
+        <div class="col-lg-6">
+            <img class="img-fluid rounded" src="../../assets/img/13.jpg" alt="">
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <hr>
+
+    <!-- Call to Action Section -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <p>We love to hear your suggestion or feedback, please reach us!</p>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-lg btn-secondary btn-block" href="#">Contact Us</a>
+        </div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-white">
+    <div class="container">
+
+        <p class="m-0 text-center">Copyright &copy; Tradeas by Agora securities, all rights reserved.</p>
+    </div>
+    <!-- /.container -->
+</footer>

@@ -14,43 +14,6 @@
     color: black;
 }
 
-:host ::ng-deep .pagination li > a {
-    background-color: transparent;
-    color:#7A9E9F;
-    font-weight: bold;
-    border-color: #7A9E9F;
-    border-width: 1px;
-}
-:host ::ng-deep .pagination li > a:hover {
-    background-color: rgb(108, 129, 129);
-    border-color: #7A9E9F;
-    color: rgba(255, 255, 255, 0.7);
-}
-:host ::ng-deep .pagination li[class="pagination-page page-item active"] > a {
-    background-color: #7A9E9F;
-    border-color: #7A9E9F;
-    color: rgba(255, 255, 255, 0.7);
-}
-:host ::ng-deep .pager .disabled > a, .pager .disabled > a:hover, .pager .disabled > a:focus, .pager .disabled > span {
-    background-color: transparent;
-    border: none;
-    color:#7A9E9F;
-    font-weight: bold
-}
-/*e9edf0*/
-:host ::ng-deep .pager li > a {
-    background-color: transparent;
-    border: none;
-    color:#7A9E9F;
-    font-weight: bold
-}
-:host ::ng-deep .pager li[class="btn btn-primary btn-sm"] > a:hover {
-    color: rgba(255, 255, 255, 0.7);
-}
-:host ::ng-deep body div[class="bs-datepicker-head"] {
-    background-color: #7A9E9F;
-}
-
 /*increased chart font*/
 .ct-label {
     font-size: 3rem !important;
@@ -122,3 +85,4 @@ only screen and (max-width: 760px),
     td:nth-of-type(9):before { content: "Total Value"; }
     td:nth-of-type(10):before { content: "% Volume"; }
 }
+

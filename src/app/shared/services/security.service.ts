@@ -3,6 +3,7 @@ import PouchDB from 'pouchdb';
 import { Observable, from } from 'rxjs';
 import { ConfigurationService } from "./configuration.service";
 import { Injectable } from "@angular/core";
+import {Broker} from "./broker";
 
 @Injectable({
     providedIn: 'root',
@@ -33,7 +34,12 @@ export class SecurityService {
                             name: row.doc.companyName,
                             symbol: row.doc.symbol,
                             sector: row.doc.sector,
-                            subSector: row.doc.subSector
+                            subSector: row.doc.subSector,
+                            brokerIds: (row.doc.brokers !== undefined) 
+                                ? row.doc.brokers
+                                : [],
+                            brokers: [],
+                            notes: row.doc.notes
                         });
                     });
                 }));

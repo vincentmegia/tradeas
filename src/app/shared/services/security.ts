@@ -1,3 +1,5 @@
+import {Broker} from "./broker";
+
 interface ISecurity {
     id: string;
     name: string;
@@ -5,16 +7,23 @@ interface ISecurity {
     closePrice: number;
     openPrice: number;
     previousClosePrice: number;
+    brokerIds: string[];
+    brokers: Broker[];
+    notes: string;
 }
+
 export class Security implements ISecurity {
     private _id: string;
-    public name: string;
-    public symbol: string;
-    public sector: string;
-    public subSector: string;
-    public closePrice: number;
-    public openPrice: number;
-    public previousClosePrice: number;
+    name: string;
+    symbol: string;
+    sector: string;
+    subSector: string;
+    closePrice: number;
+    openPrice: number;
+    previousClosePrice: number;
+    brokerIds: string[];
+    brokers: Broker[];
+    notes: string;
 
     public constructor(init?: Partial<Security>) {
         Object.assign(this, init);
